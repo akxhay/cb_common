@@ -2,4 +2,9 @@
 <resources>
 
     <style name="Theme.CbCommon" parent="android:Theme.Material.Light.NoActionBar" />
+
+
+    <style name="SplashTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 </resources>

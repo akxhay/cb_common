@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Cb Common</string>
+    <string name="app_desc">test desc</string>
 </resources>
