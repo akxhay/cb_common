@@ -52,9 +52,9 @@ fun PermissionDialog(
             ConstantSetUp.getPermissionAskMap()[currentPermission]!![0]
         )
         if (!permissionState.hasPermission) {
-            confirmButtonText.value = "Allow from settings"
-            action = if (permissionState.shouldShowRationale) {
-                {
+            if (permissionState.shouldShowRationale) {
+                confirmButtonText.value = "Allow from settings"
+                action = {
                     CustomToast.showToast(
                         context,
                         "Please Enable " + ConstantSetUp.getPermissionType()[currentPermission] + " permission for " + appName
@@ -67,7 +67,7 @@ fun PermissionDialog(
                     context.startActivity(intent)
                 }
             } else {
-                { permissionState.launchPermissionRequest() }
+                action = { permissionState.launchPermissionRequest() }
             }
         }
     }
