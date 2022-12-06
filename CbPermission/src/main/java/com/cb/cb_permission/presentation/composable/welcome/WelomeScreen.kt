@@ -45,6 +45,7 @@ fun PermissionScreen(
             appDescColor = appDescColor
         )
         PermissionButton(
+            appName = appName,
             context = context,
             visiblePermission = visiblePermission,
             currentPermission = currentPermission,

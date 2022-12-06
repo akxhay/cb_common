@@ -73,7 +73,7 @@ object PermissionUtil {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun requestNotificationAccess(context: Activity) {
+    fun requestNotificationAccess(context: Activity, appName: String?) {
         try {
             val notificationListenerString = Settings.Secure.getString(
                 context.contentResolver,
@@ -81,7 +81,7 @@ object PermissionUtil {
             )
             //Check notifications access permission
             if (notificationListenerString == null || !notificationListenerString.contains(context.packageName)) {
-                showToast(context, "Please Enable Notification access for Chat Bin")
+                showToast(context, "Please Enable Notification access for $appName")
                 val intent = Intent(
                     "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"
                 )

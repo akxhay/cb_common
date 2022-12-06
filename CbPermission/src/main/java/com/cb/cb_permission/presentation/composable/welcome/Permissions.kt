@@ -8,8 +8,11 @@ import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.cb.cb_permission.constants.ConstantSetUp
 import com.cb.cb_permission.constants.Constants
+import com.cb.cb_permission.presentation.utils.CustomToast
 import com.cb.cb_permission.presentation.utils.PermissionUtil
 import com.cb.cb_permission.presentation.utils.ShowAlert
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -31,23 +34,31 @@ private const val PRE_DENIED_TEXT =
 @RequiresApi(Build.VERSION_CODES.M)
 @Composable
 fun PermissionDialog(
+    appName: String,
     context: Activity,
     currentPermission: String,
     showPermissionAlert: MutableState<Boolean>,
 ) {
-    var text: String? = null
+    val text = getDialogText(currentPermission)
     val title = getDialogTitle(currentPermission)
-    var action: () -> Unit = getDialogAction(context, currentPermission)
+    var action: () -> Unit = getDialogAction(appName, context, currentPermission)
+    val confirmButtonText = remember {
+        mutableStateOf("Confirm")
+    }
 
     val permissionType = ConstantSetUp.getPermissionResolver()[currentPermission]
     if (permissionType == Constants.simplePermission || (permissionType == Constants.manageExternalStoragePermission && Build.VERSION.SDK_INT < Build.VERSION_CODES.R)) {
-        val cameraPermissionState = rememberPermissionState(
+        val permissionState = rememberPermissionState(
             ConstantSetUp.getPermissionAskMap()[currentPermission]!![0]
         )
-        if (!cameraPermissionState.hasPermission) {
-            if (cameraPermissionState.shouldShowRationale) {
-                text = "The camera is important for this app. Please grant the permission."
-                action = {
+        if (!permissionState.hasPermission) {
+            confirmButtonText.value = "Allow from settings"
+            action = if (permissionState.shouldShowRationale) {
+                {
+                    CustomToast.showToast(
+                        context,
+                        "Please Enable " + ConstantSetUp.getPermissionType()[currentPermission] + " permission for " + appName
+                    )
                     val intent = Intent(
                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                         Uri.fromParts(PACKAGE, context.packageName, null)
@@ -56,19 +67,16 @@ fun PermissionDialog(
                     context.startActivity(intent)
                 }
             } else {
-                text = "Camera permission required for this feature to be available. " +
-                        "Please grant the permission"
-                action = { cameraPermissionState.launchPermissionRequest() }
+                { permissionState.launchPermissionRequest() }
             }
         }
-    } else {
-        text = getDialogText(currentPermission)
     }
 
     ShowAlert(
         text = text,
         title = title,
-        showAlert = showPermissionAlert
+        showAlert = showPermissionAlert,
+        confirmButtonText = confirmButtonText.value
     ) {
         action()
     }
@@ -76,6 +84,7 @@ fun PermissionDialog(
 
 @RequiresApi(Build.VERSION_CODES.M)
 fun getDialogAction(
+    appName: String,
     context: Activity,
     currentPermission: String,
 ): () -> Unit {
@@ -85,7 +94,7 @@ fun getDialogAction(
                 PermissionUtil.requestManageAllStorageAccess(context)
             }
             Constants.notificationAccess -> {
-                PermissionUtil.requestNotificationAccess(context)
+                PermissionUtil.requestNotificationAccess(context, appName)
             }
             Constants.batteryOptimization -> {
                 PermissionUtil.requestIgnoreBatteryOptimization(context)

@@ -81,7 +81,7 @@ object ConstantSetUp {
         map[Constants.manageExternalStoragePermission] = "Manage all files"
         map[Constants.batteryOptimization] = "Battery optimization"
         map[Constants.notificationAccess] = "Notification"
-        map[Constants.postNotification] = "Post Notification"
+        map[Constants.postNotification] = "Notification"
 
         return map
     }
@@ -114,7 +114,7 @@ object ConstantSetUp {
         map[Constants.readCallLog] =
             "Call logs access is important for this app. Please grant the permission."
         map[Constants.readWriteCallLog] =
-            "The camera is important for this app. Please grant the permission."
+            "Call logs is important for this app. Please grant the permission."
         map[Constants.writeExternalStorage] =
             "Storage access is important for this app. Please grant the permission."
         map[Constants.manageExternalStoragePermission] =

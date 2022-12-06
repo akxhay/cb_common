@@ -36,7 +36,8 @@ fun PermissionButton(
     currentPermission: String,
     modifier: Modifier,
     permissionCardBackground: Color,
-    permissionTextColor: Color
+    permissionTextColor: Color,
+    appName: String
 ) {
     val density = LocalDensity.current
     val showPermissionAlert = remember {
@@ -116,6 +117,7 @@ fun PermissionButton(
             }
             if (showPermissionAlert.value) {
                 PermissionDialog(
+                    appName,
                     context,
                     currentPermission,
                     showPermissionAlert,
