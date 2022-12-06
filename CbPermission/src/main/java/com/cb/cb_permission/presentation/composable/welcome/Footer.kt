@@ -2,22 +2,27 @@ package com.cb.cb_permission.presentation.composable.common
 
 import android.app.Activity
 import androidx.compose.animation.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cb.cb_permission.constants.ConstantSetUp
 import com.cb.cb_permission.presentation.utils.PermissionUtil
+import com.cb.cb_permission.presentation.utils.ShowAlert
 
 @Composable
 fun Footer(
@@ -29,7 +34,10 @@ fun Footer(
 ) {
     val density = LocalDensity.current
 
+
     AnimatedVisibility(
+        modifier = Modifier
+            .fillMaxWidth(),
         visible = ConstantSetUp.canPermissionSkipped()[currentPermission] == true,
         enter = slideInVertically {
             // Slide in from 40 dp from the top.
@@ -44,38 +52,55 @@ fun Footer(
         exit = slideOutVertically() + shrinkVertically() + fadeOut()
 
     ) {
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 6.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.SpaceBetween,
+        val showSkipAlert = remember {
+            mutableStateOf(false)
+        }
+        Column(
+            Modifier
+                .fillMaxWidth()
+        ) {
 
-            ) {
             Row(
-                horizontalArrangement = Arrangement.Start
-            ) {
-                SmallButton(
-                    Modifier,
-                    "Skip",
-                    onClick = {
-                        PermissionUtil.skipPermission(
-                            currentPermission = currentPermission,
-                            context = context
-                        )
-                        onclickSkip()
-                    },
-                    skipButtonBackground = skipButtonColor,
-                    skipButtonTextColor = skipButtonTextColor
-                )
-            }
-            Spacer(modifier = Modifier.width(6.dp))
-//            Row(
-//                horizontalArrangement = Arrangement.End,
-//            ) {
-//                SmallButton(Modifier, "next", onclickNext, nextButtonColor)
-//            }
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 6.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.SpaceBetween,
 
+                ) {
+                Row(
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .clickable {
+                                showSkipAlert.value = true
+                            },
+                        text = "Skip >>",
+                        style = TextStyle(
+                            color = skipButtonTextColor,
+                            textDecoration = TextDecoration.Underline,
+                        ),
+                    )
+                }
+            }
+
+
+            if (showSkipAlert.value) {
+                ShowAlert(
+                    text = "Some feature might not work as expected",
+                    title = "Skip Optional permission",
+                    confirmButtonText = "Proceed anyway",
+                    showAlert = showSkipAlert
+                ) {
+                    PermissionUtil.skipPermission(
+                        currentPermission = currentPermission,
+                        context = context
+                    )
+                    onclickSkip()
+                }
+            }
         }
     }
 }
