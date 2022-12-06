@@ -14,12 +14,14 @@ import androidx.compose.ui.Modifier
 import com.cb.cb_permission.constants.Constants.batteryOptimization
 import com.cb.cb_permission.constants.Constants.notificationAccess
 import com.cb.cb_permission.constants.Constants.postNotification
-import com.cb.cb_permission.ui.ComposableWrapper.WelcomeScreen
-import com.cb.cb_permission.utils.Util.getPermission
+import com.cb.cb_permission.presentation.composable.CbPermission.WelcomeScreen
+import com.cb.cb_permission.presentation.utils.PermissionUtil.getPermission
 import com.cb.cbcommon.ui.theme.CbCommonTheme
 
 private val requiredPermissionOnStartup = arrayListOf(
-    notificationAccess, postNotification, batteryOptimization
+    notificationAccess,
+    postNotification,
+    batteryOptimization
 )
 
 

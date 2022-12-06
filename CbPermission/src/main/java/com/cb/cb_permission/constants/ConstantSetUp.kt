@@ -100,6 +100,28 @@ object ConstantSetUp {
         return map
     }
 
+    fun getPermissionPopUpText(): Map<String, String> {
+        val map: MutableMap<String, String> = HashMap()
+        map[Constants.notificationAccess] =
+            "Notification access is required for core features of this app.\nPlease grant the permission."
+        map[Constants.postNotification] =
+            "Foreground notification permission is required from Android 13 and above.\nPlease grant the permission."
+        map[Constants.batteryOptimization] =
+            "Battery optimization is important for this app to run in background.\nPlease grant the permission."
+
+        map[Constants.readWriteContacts] =
+            "Contact access is important for this app. Please grant the permission."
+        map[Constants.readCallLog] =
+            "Call logs access is important for this app. Please grant the permission."
+        map[Constants.readWriteCallLog] =
+            "The camera is important for this app. Please grant the permission."
+        map[Constants.writeExternalStorage] =
+            "Storage access is important for this app. Please grant the permission."
+        map[Constants.manageExternalStoragePermission] =
+            "Storage access is important for this app. Please grant the permission."
+        return map
+    }
+
     fun getPermissionButtonText(): Map<String, String> {
         val map: MutableMap<String, String> = HashMap()
         map[Constants.readWriteContacts] = "Provide access to Contacts"
@@ -130,14 +152,16 @@ object ConstantSetUp {
 
     fun canPermissionSkipped(): Map<String, Boolean> {
         val map: MutableMap<String, Boolean> = HashMap()
+        map[Constants.notificationAccess] = false
+        map[Constants.postNotification] = false
+        map[Constants.batteryOptimization] = true
+
         map[Constants.readWriteContacts] = false
         map[Constants.readCallLog] = false
         map[Constants.readWriteCallLog] = false
         map[Constants.writeExternalStorage] = false
         map[Constants.manageExternalStoragePermission] = false
-        map[Constants.batteryOptimization] = true
-        map[Constants.notificationAccess] = false
-        map[Constants.postNotification] = false
+
 
         return map
     }
