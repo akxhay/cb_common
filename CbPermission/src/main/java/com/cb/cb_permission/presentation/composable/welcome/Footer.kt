@@ -57,7 +57,7 @@ fun Footer(
             ) {
                 SmallButton(
                     Modifier,
-                    "Skip >>",
+                    "Skip",
                     onClick = {
                         PermissionUtil.skipPermission(
                             currentPermission = currentPermission,

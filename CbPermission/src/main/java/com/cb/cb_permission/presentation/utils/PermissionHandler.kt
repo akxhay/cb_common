@@ -43,6 +43,7 @@ fun PermissionButton(
         mutableStateOf(false)
     }
     AnimatedVisibility(
+        modifier = modifier.fillMaxWidth(),
         visible = visiblePermission.value,
         enter = slideInVertically {
             // Slide in from 40 dp from the top.
@@ -113,13 +114,14 @@ fun PermissionButton(
                     }
                 }
             }
+            if (showPermissionAlert.value) {
+                PermissionDialog(
+                    context,
+                    currentPermission,
+                    showPermissionAlert,
+                )
+            }
         }
-        if (showPermissionAlert.value) {
-            PermissionDialog(
-                context,
-                currentPermission,
-                showPermissionAlert,
-            )
-        }
+
     }
 }
