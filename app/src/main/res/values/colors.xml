@@ -7,4 +7,32 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="icon">#2196F3</color>
+    <color name="icon_background">#00C853</color>
+
+    <color name="welcomeText">#c62828</color>
+
+    <color name="DarkGray">#A9A9A9</color>
+    <color name="Snow">#FFFAFA</color>
+    <color name="Gray">#808080</color>
+    <color name="DimGray">#696969</color>
+    <color name="LightGrey">#D3D3D3</color>
+    <!-- dots inactive colors -->
+    <color name="DarkSlateGray">#2F4F4F</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen3">#93c6fd</color>
+
+
+    <color name="cyan_50">#E1F5FE</color>
+    <color name="light_black">#424242</color>
+    <color name="transparent">#00000000</color>
+
+    <!--    <color name="incoming">#ff9100</color>-->
+    <!--    <color name="outgoing">#00b0ff</color>-->
+
+    <color name="incoming">#ffffff</color>
+    <color name="outgoing">#212121</color>
+    <color name="yellow">#FFDE03</color>
 </resources>

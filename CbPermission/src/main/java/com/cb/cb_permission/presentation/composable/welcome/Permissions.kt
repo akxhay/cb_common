@@ -15,8 +15,7 @@ import com.cb.cb_permission.constants.Constants
 import com.cb.cb_permission.presentation.utils.CustomToast
 import com.cb.cb_permission.presentation.utils.PermissionUtil
 import com.cb.cb_permission.presentation.utils.ShowAlert
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.*
 
 private const val CB_PERMISSIONS_SKIPPED = "CB_PERMISSIONS_SKIPPED"
 private const val GRANTED = "GG"
@@ -51,8 +50,8 @@ fun PermissionDialog(
         val permissionState = rememberPermissionState(
             ConstantSetUp.getPermissionAskMap()[currentPermission]!![0]
         )
-        if (!permissionState.hasPermission) {
-            if (permissionState.shouldShowRationale) {
+        if (!permissionState.status.isGranted) {
+            if (permissionState.status.shouldShowRationale) {
                 confirmButtonText.value = "Allow from settings"
                 action = {
                     CustomToast.showToast(

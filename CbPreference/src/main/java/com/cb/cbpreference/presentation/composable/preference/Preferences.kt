@@ -1,11 +1,10 @@
-package com.cb.cbpreference.presentation.composable.welcome
+package com.cb.cbpreference.presentation.composable.preference
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,8 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cb.cb_permission.constants.PreferenceType
 
+
+
 @Composable
-fun PreferenceCategory(modifier: Modifier, title: String) {
+fun PreferenceCategory(modifier: Modifier, title: String, color: Color) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -29,19 +30,38 @@ fun PreferenceCategory(modifier: Modifier, title: String) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier.width(50.dp))
-            PreferenceCategoryTitle(title)
+            Spacer(modifier = Modifier.width(70.dp))
+            PreferenceCategoryTitle(title, color)
         }
     }
 
 }
 
 @Composable
-fun Preference(
+fun PreferenceHeader(modifier: Modifier, title: String, color: Color) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.width(70.dp))
+            PreferenceCategoryTitle(title, color)
+        }
+    }
+
+}
+
+@Composable
+fun PreferenceComposable(
     modifier: Modifier,
     title: String,
     summary: String? = null,
     icon: ImageVector,
+    titleColor: Color,
+    summaryColor: Color,
+    iconColor: Color,
     preferenceType: PreferenceType = PreferenceType.DEFAULT,
     onclick: () -> Unit
 ) {
@@ -59,14 +79,14 @@ fun Preference(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start
         ) {
-            PreferenceIcon(icon)
+            PreferenceIcon(icon, iconColor)
 
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(3.0f, true)) {
-                PreferenceTitle(title)
+                PreferenceTitle(title, titleColor)
                 summary?.let {
                     Spacer(modifier = Modifier.height(2.dp))
-                    PreferenceSummary(it)
+                    PreferenceSummary(it, summaryColor)
                 }
             }
             if (preferenceType != PreferenceType.DEFAULT) {
@@ -103,12 +123,12 @@ fun PreferenceAction(preferenceType: PreferenceType) {
 }
 
 @Composable
-fun PreferenceCategoryTitle(title: String) {
+fun PreferenceCategoryTitle(title: String, color: Color) {
     Text(
         text = title,
         style = TextStyle(
             fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.primary,
+            color = color,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic
         ),
@@ -119,12 +139,12 @@ fun PreferenceCategoryTitle(title: String) {
 
 
 @Composable
-fun PreferenceTitle(title: String) {
+fun PreferenceTitle(title: String, titleColor: Color) {
     Text(
         text = title,
         style = TextStyle(
             fontSize = 18.sp,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = titleColor,
             fontWeight = FontWeight.Medium
         ),
         maxLines = 1,
@@ -134,12 +154,12 @@ fun PreferenceTitle(title: String) {
 
 
 @Composable
-fun PreferenceSummary(summary: String) {
+fun PreferenceSummary(summary: String, summaryColor: Color) {
     Text(
         text = summary,
         style = TextStyle(
             fontSize = 15.sp,
-            color = MaterialTheme.colorScheme.inversePrimary,
+            color = summaryColor,
             fontWeight = FontWeight.Light
         ),
         overflow = TextOverflow.Ellipsis
@@ -147,7 +167,7 @@ fun PreferenceSummary(summary: String) {
 }
 
 @Composable
-fun PreferenceIcon(icon: ImageVector) {
+fun PreferenceIcon(icon: ImageVector, iconColor: Color) {
     Box(
         modifier = Modifier.size(50.dp),
         contentAlignment = Alignment.Center
@@ -156,7 +176,7 @@ fun PreferenceIcon(icon: ImageVector) {
             modifier = Modifier.size(30.dp),
             imageVector = icon,
             contentDescription = "dp",
-            tint = MaterialTheme.colorScheme.primary
+            tint = iconColor
         )
     }
 }

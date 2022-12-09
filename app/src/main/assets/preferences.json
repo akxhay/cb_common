@@ -1,0 +1,29 @@
+{
+  "preferenceCategories": [
+    {
+      "title": "Test header",
+      "preferences": [
+        {
+          "type": "Preference",
+          "title": "Test title",
+          "summary": "Test summary"
+        },
+        {
+          "type": "Preference",
+          "title": "Test title 3",
+          "summary": "Test summary 3"
+        }
+      ]
+    },
+    {
+      "title": "Test header 2",
+      "preferences": [
+        {
+          "type": "Preference",
+          "title": "Test title 2",
+          "summary": "Test summary 2"
+        }
+      ]
+    }
+  ]
+}
