@@ -1,5 +1,9 @@
 {
   "appName": "Application",
+  "observables": {
+    "switch": true,
+    "check": true
+  },
   "preferenceStyle": {
     "appName": "Application",
     "titleColor": {
@@ -40,7 +44,7 @@
       "title": "Category 1",
       "preferences": [
         {
-          "type": "Preference",
+          "type": "DEFAULT",
           "title": "Make a toast",
           "summary": "Tap to say hello",
           "icon": {
@@ -58,9 +62,9 @@
       "title": "Category 2",
       "preferences": [
         {
-          "type": "Preference",
-          "title": "Make a toast",
-          "summary": "Tap to say bye",
+          "type": "SWITCH",
+          "title": "test switch",
+          "summary": "It will change something",
           "icon": {
             "type": "base64",
             "value": "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\">"
@@ -68,7 +72,22 @@
           "action": [
             "TOAST",
             "bye"
-          ]
+          ],
+          "observe": "switch"
+        },
+        {
+          "type": "CHECKBOX",
+          "title": "test checkbox",
+          "summary": "It will check something",
+          "icon": {
+            "type": "base64",
+            "value": "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\">"
+          },
+          "action": [
+            "TOAST",
+            "bye"
+          ],
+          "observe": "check"
         }
       ]
     },
@@ -76,7 +95,7 @@
       "title": "Other",
       "preferences": [
         {
-          "type": "Preference",
+          "type": "DEFAULT",
           "title": "FAQ",
           "summary": "View frequently asked question",
           "icon": {
@@ -89,7 +108,7 @@
           ]
         },
         {
-          "type": "Preference",
+          "type": "DEFAULT",
           "title": "Share something",
           "summary": "tap to share",
           "icon": {
@@ -104,7 +123,7 @@
           ]
         },
         {
-          "type": "Preference",
+          "type": "DEFAULT",
           "title": "Connect on Instagram",
           "summary": "@akxhay",
           "icon": {
@@ -117,7 +136,7 @@
           ]
         },
         {
-          "type": "Preference",
+          "type": "DEFAULT",
           "title": "Connect on Telegram",
           "summary": "@tele",
           "icon": {
@@ -130,7 +149,7 @@
           ]
         },
         {
-          "type": "Preference",
+          "type": "DEFAULT",
           "title": "Open youtube",
           "summary": "Tap to open",
           "icon": {

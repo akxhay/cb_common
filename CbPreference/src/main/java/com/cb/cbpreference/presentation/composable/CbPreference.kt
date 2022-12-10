@@ -1,9 +1,6 @@
 package com.cb.cbpreference.presentation.composable
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.navigation.NavController
 import com.cb.cbpreference.data.PreferenceScreen
 import com.cb.cbpreference.presentation.composable.preference.PreferenceScreenComposable
@@ -13,7 +10,8 @@ object CbPreference {
     @Composable
     fun SettingsScreen(
         navController: NavController,
-        preferencesScreen: PreferenceScreen
+        preferencesScreen: PreferenceScreen,
+        map: MutableState<HashMap<String, Any>>
     ) {
         val visiblePermission = remember { mutableStateOf(false) }
         LaunchedEffect(visiblePermission) {
@@ -23,7 +21,8 @@ object CbPreference {
         }
         PreferenceScreenComposable(
             preferencesScreen = preferencesScreen,
-            navController = navController
+            navController = navController,
+            map = map
         )
     }
 }

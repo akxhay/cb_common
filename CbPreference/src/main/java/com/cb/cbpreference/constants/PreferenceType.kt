@@ -1,4 +1,4 @@
-package com.cb.cb_permission.constants
+package com.cb.cbpreference.constants
 
 enum class PreferenceType {
     DEFAULT, SWITCH, CHECKBOX

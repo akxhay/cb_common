@@ -1,19 +1,19 @@
 package com.cb.cbpreference.presentation.composable.preference
 
-import android.graphics.BitmapFactory
-import android.util.Base64
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cb.cb_permission.constants.PreferenceType
+import com.cb.cbpreference.constants.PreferenceType
 import com.cb.cbpreference.data.Preference
 import com.cb.cbpreference.data.PreferenceIcon
 import com.cb.cbpreference.util.IconResolver
@@ -62,6 +62,7 @@ fun PreferenceHeader(modifier: Modifier, title: String, color: Color) {
 
 @Composable
 fun PreferenceComposable(
+    map: MutableState<HashMap<String, Any>>,
     preference: Preference,
     modifier: Modifier,
     icon: ImageVector,
@@ -93,7 +94,10 @@ fun PreferenceComposable(
 
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(3.0f, true)) {
-                PreferenceTitle(preference.title!!, titleColor)
+                PreferenceTitle(
+                    preference.title!!,
+                    titleColor
+                )
                 preference.summary?.let {
                     Spacer(modifier = Modifier.height(2.dp))
                     PreferenceSummary(it, summaryColor)
@@ -105,7 +109,9 @@ fun PreferenceComposable(
                     horizontalAlignment = Alignment.End
                 ) {
                     PreferenceAction(
-                        preferenceType
+                        preferenceType,
+                        map,
+                        preference.observe
                     )
 
                 }
@@ -116,20 +122,45 @@ fun PreferenceComposable(
 }
 
 @Composable
-fun PreferenceAction(preferenceType: PreferenceType) {
+fun PreferenceAction(
+    preferenceType: PreferenceType,
+    map: MutableState<HashMap<String, Any>>,
+    observe: String?
+) {
     Box(
         modifier = Modifier
+            .padding(end = 20.dp)
             .size(30.dp),
         contentAlignment = Alignment.Center
     ) {
-        if (preferenceType == PreferenceType.SWITCH)
-            Icon(
-                imageVector = Icons.Filled.ArrowBack,
-                contentDescription = null,
-                tint = Color.Green
+        val observing = map.value[observe]
+        if (preferenceType == PreferenceType.SWITCH) {
+            val checkedState = remember { mutableStateOf(observing as Boolean) }
+            Switch(
+                modifier = Modifier.padding(end = 20.dp),
+                checked = checkedState.value,
+                onCheckedChange = { changedValue ->
+                    checkedState.value = changedValue
+                    observe?.let {
+                        map.value[observe] = changedValue
+                    }
+                }
             )
-    }
+        } else if (preferenceType == PreferenceType.CHECKBOX) {
+            val checkedState = remember { mutableStateOf(observing as Boolean) }
+            Checkbox(
+                modifier = Modifier.padding(end = 20.dp),
+                checked = checkedState.value,
+                onCheckedChange = { changedValue ->
+                    checkedState.value = changedValue
+                    observe?.let {
+                        map.value[observe] = changedValue
+                    }
+                }
+            )
+        }
 
+    }
 }
 
 @Composable
