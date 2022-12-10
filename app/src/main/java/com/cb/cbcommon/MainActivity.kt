@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun OpenSettingsScreen(navController: NavHostController) {
-        SettingsScreen(navController = navController, context=this)
+        SettingsScreen(navController = navController)
     }
 
 }

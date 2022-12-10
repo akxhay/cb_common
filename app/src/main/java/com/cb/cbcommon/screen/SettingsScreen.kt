@@ -1,33 +1,21 @@
 package com.cb.cbcommon.screen
 
-import android.app.Activity
-import androidx.compose.animation.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.cb.cbcommon.ui.theme.Blue40
-import com.cb.cbcommon.ui.theme.lightAppBar
 import com.cb.cbpreference.presentation.composable.CbPreference
 import com.cb.cbpreference.util.getPreferenceScreen
-import java.util.*
 
 @ExperimentalAnimationApi
 @Composable
 fun SettingsScreen(
-    navController: NavController,
-    context: Activity,
+    navController: NavController
 ) {
     val preferencesScreen = getPreferenceScreen(LocalContext.current)
     CbPreference.SettingsScreen(
         navController = navController,
         preferencesScreen = preferencesScreen,
-        headerColor = lightAppBar,
-        iconColor = Blue40
     )
 }
 
