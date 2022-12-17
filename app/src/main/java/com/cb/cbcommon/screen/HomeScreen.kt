@@ -58,7 +58,7 @@ fun HomeScreen(
                         Column {
                             Row(modifier = Modifier.padding(20.dp, 10.dp)) {
                                 Box(
-                                    modifier = Modifier.fillMaxWidth(),
+                                    modifier=Modifier.fillMaxWidth(),
                                     contentAlignment = Alignment.Center
                                 ) {
 
