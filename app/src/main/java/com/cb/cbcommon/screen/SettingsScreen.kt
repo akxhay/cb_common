@@ -2,35 +2,33 @@ package com.cb.cbcommon.screen
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.cb.cbpreference.data.PreferenceScreen
 import com.cb.cbpreference.presentation.composable.CbPreference
-import com.cb.cbpreference.util.getPreferenceScreen
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalAnimationApi
 @Composable
 fun SettingsScreen(
-    navController: NavController
+    navController: NavController,
+    observableMap: MutableState<HashMap<String, Any>>,
+    preferencesScreen: PreferenceScreen
 ) {
-    val preferencesScreen = getPreferenceScreen(LocalContext.current)
-    val map = remember { mutableStateOf(HashMap<String, Any>()) }
 
-    preferencesScreen.observables?.let {
-        for (item in it) {
-            map.value[item.key] = item.value
-        }
+    Column(modifier = Modifier.fillMaxSize()) {
+        CbPreference.SettingsScreen(
+            navController = navController,
+            preferencesScreen = preferencesScreen,
+            map = observableMap
+        )
     }
 
 
-    CbPreference.SettingsScreen(
-        navController = navController,
-        preferencesScreen = preferencesScreen,
-        map = map
-    )
 }
 
 

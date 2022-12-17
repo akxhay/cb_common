@@ -15,7 +15,7 @@ fun getPreferenceScreen(context: Context): PreferenceScreen {
             .bufferedReader()
             .use { it.readText() }
     } catch (ioException: IOException) {
-        Log.e("getCountryCode", ioException.toString())
+        Log.e("ioException", ioException.toString())
     }
     val listCountryType = object : TypeToken<PreferenceScreen>() {}.type
     return Gson().fromJson(jsonString, listCountryType)

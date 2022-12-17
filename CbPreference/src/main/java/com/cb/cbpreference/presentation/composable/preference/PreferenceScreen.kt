@@ -93,7 +93,6 @@ fun TopAppBar(
 
 @Composable
 fun Settings(
-    appName: String = "Application",
     titleColor: Color,
     headerColor: Color,
     summaryColor: Color,
@@ -119,7 +118,6 @@ fun Settings(
                     dividerColor = dividerColor,
                     iconColor = iconColor,
                     backgroundColor = backgroundColor,
-                    preferencesScreen = preferencesScreen,
                     map = map
                 )
             }
@@ -138,7 +136,6 @@ fun PreferenceCategoryComposable(
     dividerColor: Color,
     iconColor: Color,
     backgroundColor: Color,
-    preferencesScreen: PreferenceScreen,
     map: MutableState<HashMap<String, Any>>
 ) {
     val context = LocalContext.current
