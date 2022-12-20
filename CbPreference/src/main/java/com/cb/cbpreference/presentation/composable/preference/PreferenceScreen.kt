@@ -118,7 +118,9 @@ fun Settings(
                     dividerColor = dividerColor,
                     iconColor = iconColor,
                     backgroundColor = backgroundColor,
-                    map = map
+                    map = map,
+                    preferencesScreen=preferencesScreen
+
                 )
             }
         }
@@ -136,7 +138,8 @@ fun PreferenceCategoryComposable(
     dividerColor: Color,
     iconColor: Color,
     backgroundColor: Color,
-    map: MutableState<HashMap<String, Any>>
+    map: MutableState<HashMap<String, Any>>,
+    preferencesScreen: PreferenceScreen
 ) {
     val context = LocalContext.current
     Column(
@@ -172,7 +175,8 @@ fun PreferenceCategoryComposable(
                     icon = Icons.Filled.Settings,
                     summaryColor = summaryColor,
                     iconColor = iconColor,
-                    preferenceType = preference.type
+                    preferenceType = preference.type,
+                    preferencesScreen=preferencesScreen
                 ) {
                     ActionResolver.getAction(context, preference.action)()
                 }

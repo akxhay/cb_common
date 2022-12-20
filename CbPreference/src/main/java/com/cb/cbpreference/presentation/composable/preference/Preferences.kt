@@ -1,5 +1,6 @@
 package com.cb.cbpreference.presentation.composable.preference
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.cb.cbpreference.constants.PreferenceType
 import com.cb.cbpreference.data.Preference
 import com.cb.cbpreference.data.PreferenceIcon
+import com.cb.cbpreference.data.PreferenceScreen
 import com.cb.cbpreference.util.IconResolver
 
 
@@ -70,6 +73,7 @@ fun PreferenceComposable(
     summaryColor: Color,
     iconColor: Color,
     preferenceType: PreferenceType = PreferenceType.DEFAULT,
+    preferencesScreen: PreferenceScreen,
     onclick: () -> Unit,
 ) {
     Box(
@@ -111,7 +115,8 @@ fun PreferenceComposable(
                     PreferenceAction(
                         preferenceType,
                         map,
-                        preference.observe
+                        preference.observe,
+                        preferencesScreen.sharedPrefName
                     )
 
                 }
@@ -125,8 +130,10 @@ fun PreferenceComposable(
 fun PreferenceAction(
     preferenceType: PreferenceType,
     map: MutableState<HashMap<String, Any>>,
-    observe: String?
+    observe: String?,
+    sharedPrefName: String
 ) {
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .padding(end = 20.dp)
@@ -143,6 +150,8 @@ fun PreferenceAction(
                     checkedState.value = changedValue
                     observe?.let {
                         map.value[observe] = changedValue
+                        context.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE).edit()
+                            .putBoolean(observe, changedValue).apply()
                     }
                 }
             )
@@ -155,6 +164,8 @@ fun PreferenceAction(
                     checkedState.value = changedValue
                     observe?.let {
                         map.value[observe] = changedValue
+                        context.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE).edit()
+                            .putBoolean(observe, changedValue).apply()
                     }
                 }
             )

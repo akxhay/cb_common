@@ -19,7 +19,6 @@ import com.cb.cbcommon.route.Screen
 import com.cb.cbcommon.screen.HomeScreen
 import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
-import com.cb.cbpreference.data.PreferenceScreen
 import com.cb.cbpreference.util.getPreferenceScreen
 
 class MainActivity : ComponentActivity() {
@@ -33,15 +32,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    val observableMap = remember { mutableStateOf(HashMap<String, Any>()) }
-                    val preferencesScreen = getPreferenceScreen(LocalContext.current)
-
-                    preferencesScreen.observables?.let {
-                        for (item in it) {
-                            observableMap.value[item.key] = item.value
-                        }
-                    }
-
                     NavHost(
                         navController = navController,
                         startDestination = Screen.HomeScreen.route
@@ -49,12 +39,12 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.HomeScreen.route
                         ) {
-                            OpenHomeScreen(navController, observableMap)
+                            OpenHomeScreen(navController)
                         }
                         composable(
                             route = Screen.SettingsScreen.route
                         ) {
-                            OpenSettingsScreen(navController, observableMap, preferencesScreen)
+                            OpenSettingsScreen(navController)
                         }
                     }
                 }
@@ -64,19 +54,16 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun OpenHomeScreen(
-        navController: NavHostController,
-        observableMap: MutableState<HashMap<String, Any>>
+        navController: NavHostController
     ) {
-        HomeScreen(navController = navController, observableMap)
+        HomeScreen(navController = navController)
     }
 
     @Composable
     fun OpenSettingsScreen(
         navController: NavHostController,
-        observableMap: MutableState<HashMap<String, Any>>,
-        preferencesScreen: PreferenceScreen
     ) {
-        SettingsScreen(navController = navController, observableMap,preferencesScreen)
+        SettingsScreen(navController = navController)
     }
 
 }
