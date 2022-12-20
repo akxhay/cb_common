@@ -106,8 +106,7 @@ fun Settings(
     preferenceCategories?.let {
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize(),
-            contentPadding = PaddingValues(top = 8.dp, bottom = 8.dp)
+                .fillMaxSize()
         ) {
             items(it) { preferenceCategory ->
                 PreferenceCategoryComposable(

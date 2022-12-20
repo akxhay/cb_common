@@ -201,11 +201,10 @@ fun PreferenceTitle(title: String, titleColor: Color) {
     Text(
         text = title,
         style = TextStyle(
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             color = titleColor,
             fontWeight = FontWeight.Medium
         ),
-        maxLines = 1,
         overflow = TextOverflow.Ellipsis
     )
 }
@@ -216,7 +215,7 @@ fun PreferenceSummary(summary: String, summaryColor: Color) {
     Text(
         text = summary,
         style = TextStyle(
-            fontSize = 15.sp,
+            fontSize = 14.sp,
             color = summaryColor,
             fontWeight = FontWeight.Light
         ),

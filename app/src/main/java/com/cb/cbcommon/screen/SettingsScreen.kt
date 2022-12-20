@@ -22,19 +22,12 @@ fun SettingsScreen(
     activity: Activity
 ) {
 
-    val observableMap = remember { mutableStateOf(HashMap<String, Any>()) }
     val preferencesScreen = getPreferenceScreen(LocalContext.current)
 
-    preferencesScreen.observables?.let {
-        for (item in it) {
-            observableMap.value[item.key] = item.value
-        }
-    }
     Column(modifier = Modifier.fillMaxSize()) {
         CbPreference.SettingsScreen(
             navController = navController,
             preferencesScreen = preferencesScreen,
-            map = observableMap,
             activity = activity
         )
     }

@@ -12,15 +12,8 @@ object CbPreference {
     fun SettingsScreen(
         navController: NavController,
         preferencesScreen: PreferenceScreen,
-        map: MutableState<HashMap<String, Any>>,
         activity: Activity
     ) {
-        val visiblePermission = remember { mutableStateOf(false) }
-        LaunchedEffect(visiblePermission) {
-            visiblePermission.value = false
-            delay(200) // to avoid repeated delays
-            visiblePermission.value = true
-        }
         PreferenceScreenComposable(
             preferencesScreen = preferencesScreen,
             navController = navController,
