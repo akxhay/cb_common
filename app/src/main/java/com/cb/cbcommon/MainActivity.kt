@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,7 +18,6 @@ import com.cb.cbcommon.route.Screen
 import com.cb.cbcommon.screen.HomeScreen
 import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
-import com.cb.cbpreference.util.getPreferenceScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.HomeScreen.route
+                        startDestination = Screen.SettingsScreen.route
                     ) {
                         composable(
                             route = Screen.HomeScreen.route
@@ -63,7 +61,7 @@ class MainActivity : ComponentActivity() {
     fun OpenSettingsScreen(
         navController: NavHostController,
     ) {
-        SettingsScreen(navController = navController)
+        SettingsScreen(navController = navController, activity = this)
     }
 
 }

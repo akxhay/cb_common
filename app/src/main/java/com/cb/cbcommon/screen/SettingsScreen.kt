@@ -1,6 +1,7 @@
 package com.cb.cbcommon.screen
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +18,8 @@ import com.cb.cbpreference.util.getPreferenceScreen
 @ExperimentalAnimationApi
 @Composable
 fun SettingsScreen(
-    navController: NavController
+    navController: NavController,
+    activity: Activity
 ) {
 
     val observableMap = remember { mutableStateOf(HashMap<String, Any>()) }
@@ -32,7 +34,8 @@ fun SettingsScreen(
         CbPreference.SettingsScreen(
             navController = navController,
             preferencesScreen = preferencesScreen,
-            map = observableMap
+            map = observableMap,
+            activity = activity
         )
     }
 

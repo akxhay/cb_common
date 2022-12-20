@@ -10,7 +10,7 @@ data class Preference(
     @SerializedName("summary") @Expose var summary: String? = null,
     @SerializedName("action") @Expose var action: Array<String>? = null,
     @SerializedName("icon") @Expose var icon: PreferenceIcon? = null,
-    @SerializedName("observe") @Expose var observe: String? = null,
+    @SerializedName("pref") @Expose var pref: String? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

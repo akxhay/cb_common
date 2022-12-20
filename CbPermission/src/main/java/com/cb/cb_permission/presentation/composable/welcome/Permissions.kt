@@ -86,6 +86,7 @@ fun getDialogAction(
     appName: String,
     context: Activity,
     currentPermission: String,
+    navigateAnyways: Boolean = false
 ): () -> Unit {
     return {
         when (ConstantSetUp.getPermissionResolver()[currentPermission]) {
@@ -93,7 +94,7 @@ fun getDialogAction(
                 PermissionUtil.requestManageAllStorageAccess(context)
             }
             Constants.notificationAccess -> {
-                PermissionUtil.requestNotificationAccess(context, appName)
+                PermissionUtil.requestNotificationAccess(context, appName, navigateAnyways)
             }
             Constants.batteryOptimization -> {
                 PermissionUtil.requestIgnoreBatteryOptimization(context)

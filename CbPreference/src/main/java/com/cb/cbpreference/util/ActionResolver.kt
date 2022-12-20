@@ -1,15 +1,18 @@
 package com.cb.cbpreference.util
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import com.cb.cb_permission.presentation.composable.welcome.getDialogAction
 
 object ActionResolver {
     val TAG = "ActionResolver"
 
-    fun getAction(context: Context, args: Array<String>?): () -> Unit {
+    fun getAction(appName: String, context: Activity, args: Array<String>?): () -> Unit {
         try {
             args?.let {
                 Log.d(TAG, "getAction: ${args.asList()}")
@@ -35,6 +38,15 @@ object ActionResolver {
                                 )
                             }
                         }
+                        "PERMISSION" -> {
+                            {
+                                permissionAction(
+                                    appName = appName,
+                                    context = context,
+                                    currentPermission = args[1]
+                                )
+                            }
+                        }
 
                         else -> {
                             {}
@@ -53,6 +65,17 @@ object ActionResolver {
         }
 
         return {}
+    }
+
+    private fun permissionAction(
+        appName: String,
+        context: Activity,
+        currentPermission: String
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getDialogAction(appName, context, currentPermission, false)()
+        }
+
     }
 
 
@@ -88,7 +111,6 @@ object ActionResolver {
     private fun openExternalUrl(context: Context, url: String?) {
         try {
             val intent = Intent(Intent.ACTION_VIEW)
-            Toast.makeText(context, url, Toast.LENGTH_SHORT).show()
             intent.data = Uri.parse(url)
             context.startActivity(intent)
         } catch (e: Exception) {

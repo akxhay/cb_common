@@ -1,5 +1,6 @@
 package com.cb.cbpreference.presentation.composable.preference
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbpreference.data.PreferenceCategory
@@ -26,7 +26,7 @@ import com.cb.cbpreference.util.ColorResolver
 fun PreferenceScreenComposable(
     navController: NavController,
     preferencesScreen: PreferenceScreen,
-    map: MutableState<HashMap<String, Any>>
+    activity: Activity
 ) {
     var style = preferencesScreen.style
     if (style == null) style = PreferenceStyle()
@@ -55,7 +55,7 @@ fun PreferenceScreenComposable(
                     color = style.backgroundColor, Color.Black
                 ),
                 preferencesScreen = preferencesScreen,
-                map = map
+                activity = activity
             )
         }
     }
@@ -100,7 +100,7 @@ fun Settings(
     iconColor: Color,
     backgroundColor: Color,
     preferencesScreen: PreferenceScreen,
-    map: MutableState<HashMap<String, Any>>
+    activity: Activity
 ) {
     val preferenceCategories: List<PreferenceCategory>? = preferencesScreen.preferences
     preferenceCategories?.let {
@@ -118,8 +118,8 @@ fun Settings(
                     dividerColor = dividerColor,
                     iconColor = iconColor,
                     backgroundColor = backgroundColor,
-                    map = map,
-                    preferencesScreen=preferencesScreen
+                    preferencesScreen = preferencesScreen,
+                    activity = activity
 
                 )
             }
@@ -138,10 +138,9 @@ fun PreferenceCategoryComposable(
     dividerColor: Color,
     iconColor: Color,
     backgroundColor: Color,
-    map: MutableState<HashMap<String, Any>>,
-    preferencesScreen: PreferenceScreen
+    preferencesScreen: PreferenceScreen,
+    activity: Activity
 ) {
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -168,7 +167,6 @@ fun PreferenceCategoryComposable(
         preferenceCategory.preferences?.let {
             for (preference in it) {
                 PreferenceComposable(
-                    map = map,
                     preference=preference,
                     modifier = Modifier.fillMaxWidth(),
                     titleColor = titleColor,
@@ -178,7 +176,11 @@ fun PreferenceCategoryComposable(
                     preferenceType = preference.type,
                     preferencesScreen=preferencesScreen
                 ) {
-                    ActionResolver.getAction(context, preference.action)()
+                    ActionResolver.getAction(
+                        preferencesScreen.appName,
+                        activity,
+                        preference.action
+                    )()
                 }
                 Divider(
                     color = dividerColor

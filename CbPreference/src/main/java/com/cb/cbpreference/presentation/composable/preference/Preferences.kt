@@ -9,7 +9,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -65,7 +64,6 @@ fun PreferenceHeader(modifier: Modifier, title: String, color: Color) {
 
 @Composable
 fun PreferenceComposable(
-    map: MutableState<HashMap<String, Any>>,
     preference: Preference,
     modifier: Modifier,
     icon: ImageVector,
@@ -99,12 +97,15 @@ fun PreferenceComposable(
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(3.0f, true)) {
                 PreferenceTitle(
-                    preference.title!!,
+                    preference.title!!.replace("#APP_NAME#", preferencesScreen.appName),
                     titleColor
                 )
                 preference.summary?.let {
                     Spacer(modifier = Modifier.height(2.dp))
-                    PreferenceSummary(it, summaryColor)
+                    PreferenceSummary(
+                        it.replace("#APP_NAME#", preferencesScreen.appName),
+                        summaryColor
+                    )
                 }
             }
             if (preferenceType != PreferenceType.DEFAULT) {
@@ -114,8 +115,7 @@ fun PreferenceComposable(
                 ) {
                     PreferenceAction(
                         preferenceType,
-                        map,
-                        preference.observe,
+                        preference.pref,
                         preferencesScreen.sharedPrefName
                     )
 
@@ -129,7 +129,6 @@ fun PreferenceComposable(
 @Composable
 fun PreferenceAction(
     preferenceType: PreferenceType,
-    map: MutableState<HashMap<String, Any>>,
     observe: String?,
     sharedPrefName: String
 ) {
@@ -140,30 +139,37 @@ fun PreferenceAction(
             .size(30.dp),
         contentAlignment = Alignment.Center
     ) {
-        val observing = map.value[observe]
         if (preferenceType == PreferenceType.SWITCH) {
-            val checkedState = remember { mutableStateOf(observing as Boolean) }
+            val checkedState = remember {
+                mutableStateOf(
+                    context.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+                        .getBoolean(observe, true)
+                )
+            }
             Switch(
                 modifier = Modifier.padding(end = 20.dp),
                 checked = checkedState.value,
                 onCheckedChange = { changedValue ->
                     checkedState.value = changedValue
                     observe?.let {
-                        map.value[observe] = changedValue
                         context.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE).edit()
                             .putBoolean(observe, changedValue).apply()
                     }
                 }
             )
         } else if (preferenceType == PreferenceType.CHECKBOX) {
-            val checkedState = remember { mutableStateOf(observing as Boolean) }
+            val checkedState = remember {
+                mutableStateOf(
+                    context.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE)
+                        .getBoolean(observe, true)
+                )
+            }
             Checkbox(
                 modifier = Modifier.padding(end = 20.dp),
                 checked = checkedState.value,
                 onCheckedChange = { changedValue ->
                     checkedState.value = changedValue
                     observe?.let {
-                        map.value[observe] = changedValue
                         context.getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE).edit()
                             .putBoolean(observe, changedValue).apply()
                     }

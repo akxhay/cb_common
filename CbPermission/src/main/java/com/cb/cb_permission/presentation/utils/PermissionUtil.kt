@@ -73,15 +73,24 @@ object PermissionUtil {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun requestNotificationAccess(context: Activity, appName: String?) {
+    fun requestNotificationAccess(
+        context: Activity,
+        appName: String?,
+        navigateAnyways: Boolean
+    ) {
         try {
             val notificationListenerString = Settings.Secure.getString(
                 context.contentResolver,
                 "enabled_notification_listeners"
             )
             //Check notifications access permission
-            if (notificationListenerString == null || !notificationListenerString.contains(context.packageName)) {
-                showToast(context, "Please Enable Notification access for $appName")
+            if (navigateAnyways || (notificationListenerString == null || !notificationListenerString.contains(
+                    context.packageName
+                ))
+            ) {
+                if (!navigateAnyways) {
+                    showToast(context, "Please Enable Notification access for $appName")
+                }
                 val intent = Intent(
                     "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"
                 )
