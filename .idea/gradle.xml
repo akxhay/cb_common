@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CbCPP" />
             <option value="$PROJECT_DIR$/CbPermission" />
             <option value="$PROJECT_DIR$/CbPreference" />
             <option value="$PROJECT_DIR$/app" />

@@ -16,3 +16,4 @@ rootProject.name = "Cb Common"
 include ':app'
 include ':CbPermission'
 include ':CbPreference'
+include ':CbCPP'
