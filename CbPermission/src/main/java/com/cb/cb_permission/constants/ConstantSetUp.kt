@@ -2,6 +2,9 @@ package com.cb.cb_permission.constants
 
 import android.Manifest
 import android.os.Build
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.cb.cb_permission.R
 
 object ConstantSetUp {
@@ -146,6 +149,20 @@ object ConstantSetUp {
         map[Constants.batteryOptimization] = R.drawable.ic_permission_battery
         map[Constants.notificationAccess] = R.drawable.ic_permission_notification
         map[Constants.postNotification] = R.drawable.ic_permission_notification
+
+        return map
+    }
+
+    fun getPermissionIcon(): Map<String, ImageVector> {
+        val map: MutableMap<String, ImageVector> = HashMap()
+        map[Constants.readWriteContacts] = Icons.Default.Contacts
+        map[Constants.readCallLog] = Icons.Default.CallMissed
+        map[Constants.readWriteCallLog] = Icons.Default.CallMissed
+        map[Constants.writeExternalStorage] = Icons.Default.Storage
+        map[Constants.manageExternalStoragePermission] = Icons.Default.Storage
+        map[Constants.batteryOptimization] = Icons.Default.BatteryAlert
+        map[Constants.notificationAccess] = Icons.Default.Notifications
+        map[Constants.postNotification] = Icons.Default.NotificationsActive
 
         return map
     }

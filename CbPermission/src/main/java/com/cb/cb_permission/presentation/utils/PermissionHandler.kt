@@ -4,11 +4,11 @@ import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -17,9 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -91,11 +89,17 @@ fun PermissionButton(
                             horizontalArrangement = Arrangement.Center
                         ) {
 
-                            Image(
-                                painterResource(ConstantSetUp.getPermissionDrawable()[currentPermission]!!),
-                                contentDescription = "",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(30.dp)
+//                            Image(
+//                                painterResource(ConstantSetUp.getPermissionDrawable()[currentPermission]!!),
+//                                contentDescription = "",
+//                                contentScale = ContentScale.Crop,
+//                                modifier = Modifier.size(30.dp)
+//                            )
+
+                            Icon(
+                                imageVector = ConstantSetUp.getPermissionIcon()[currentPermission]!!,
+                                contentDescription = "icon",
+                                tint = permissionTextColor
                             )
                             Spacer(
                                 modifier = Modifier
