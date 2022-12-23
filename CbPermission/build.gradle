@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation project(path: ':CbTools')
+
     implementation 'androidx.compose.material3:material3:1.1.0-alpha03'
 
     implementation "androidx.compose.ui:ui:$compose_version"

@@ -1,13 +1,13 @@
-package com.cb.cb_permission.presentation.composable.common
+package com.cb.cb_permission.presentation.composable.welcome
 
 import android.app.Activity
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cb.cb_permission.constants.ConstantSetUp
 import com.cb.cb_permission.presentation.utils.PermissionUtil
-import com.cb.cb_permission.presentation.utils.ShowAlert
+import com.cb.cbtools.composables.CbAlertDialog
 
 @Composable
 fun Footer(
@@ -78,6 +78,7 @@ fun Footer(
                                 showSkipAlert.value = true
                             },
                         text = "Skip >>",
+
                         style = TextStyle(
                             color = skipButtonTextColor,
                             textDecoration = TextDecoration.Underline,
@@ -88,18 +89,25 @@ fun Footer(
 
 
             if (showSkipAlert.value) {
-                ShowAlert(
-                    text = "Some feature might not work as expected",
+                CbAlertDialog(
+                    showAlert = showSkipAlert,
+                    onPositiveClick = {
+                        showSkipAlert.value = false
+                        PermissionUtil.skipPermission(
+                            currentPermission = currentPermission,
+                            context = context
+                        )
+                        onclickSkip()
+                    },
                     title = "Skip Optional permission",
-                    confirmButtonText = "Proceed anyway",
-                    showAlert = showSkipAlert
-                ) {
-                    PermissionUtil.skipPermission(
-                        currentPermission = currentPermission,
-                        context = context
-                    )
-                    onclickSkip()
-                }
+                    body = {
+                        Text(
+                            text = "Some feature might not work as expected",
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    },
+                    positiveText = "Proceed anyway"
+                )
             }
         }
     }
@@ -121,7 +129,6 @@ fun SmallButton(
     ) {
         Button(
             onClick = onClick,
-            colors = ButtonDefaults.buttonColors(backgroundColor = skipButtonBackground),
             shape = RoundedCornerShape(10.dp),
         ) {
             Text(

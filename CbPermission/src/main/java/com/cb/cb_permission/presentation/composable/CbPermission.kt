@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import com.cb.cb_permission.presentation.composable.welcome.PermissionScreen
@@ -22,13 +22,13 @@ object CbPermission {
         appName: String,
         appDesc: String,
         onclickSkip: () -> Unit,
-        appNameColor: Color = Color.White,
-        appDescColor: Color = Color.White,
-        permissionCardBackground: Color = Color.White,
-        permissionTextColor: Color = Color.Black,
-        skipButtonColor: Color = Color.DarkGray,
-        skipButtonTextColor: Color = Color.White,
-        backgroundColor: Color = Color.DarkGray
+        appNameColor: Color = MaterialTheme.colorScheme.onSurface,
+        appDescColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+        permissionCardBackground: Color = MaterialTheme.colorScheme.primary,
+        permissionTextColor: Color = MaterialTheme.colorScheme.onPrimary,
+        skipButtonColor: Color = MaterialTheme.colorScheme.secondary,
+        skipButtonTextColor: Color = MaterialTheme.colorScheme.primary,
+        backgroundColor: Color = MaterialTheme.colorScheme.surface
     ) {
         val visiblePermission = remember { mutableStateOf(false) }
         LaunchedEffect(visiblePermission) {

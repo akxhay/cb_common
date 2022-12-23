@@ -6,15 +6,19 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import com.cb.cb_permission.constants.ConstantSetUp
 import com.cb.cb_permission.constants.Constants
 import com.cb.cb_permission.presentation.utils.CustomToast
 import com.cb.cb_permission.presentation.utils.PermissionUtil
-import com.cb.cb_permission.presentation.utils.ShowAlert
+import com.cb.cbtools.composables.CbAlertDialog
 import com.google.accompanist.permissions.*
 
 private const val CB_PERMISSIONS_SKIPPED = "CB_PERMISSIONS_SKIPPED"
@@ -71,14 +75,23 @@ fun PermissionDialog(
         }
     }
 
-    ShowAlert(
-        text = text,
-        title = title,
+    CbAlertDialog(
         showAlert = showPermissionAlert,
-        confirmButtonText = confirmButtonText.value
-    ) {
-        action()
-    }
+        onPositiveClick = {
+            action()
+            showPermissionAlert.value = false
+        },
+        title = title,
+        positiveText = confirmButtonText.value,
+        body =
+        {
+            Text(
+                text = text,
+                style = TextStyle(color = Color.Gray, fontSize = 13.sp)
+            )
+
+        }
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.M)
