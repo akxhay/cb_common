@@ -104,7 +104,11 @@ class MainActivity : ComponentActivity() {
                 TextButton(onClick = {
                     showAlert.value = false
                 })
-                { Text(text = "Cancel") }
+                {
+                    Text(
+                        text = "Cancel", color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             },
             title = {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
