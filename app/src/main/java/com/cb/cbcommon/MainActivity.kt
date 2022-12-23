@@ -2,9 +2,6 @@
 
 package com.cb.cbcommon
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -12,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -25,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -36,16 +35,12 @@ import com.cb.cbcommon.screen.HomeScreen
 import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
 import com.cb.cbcpp.presentation.component.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CbCommonTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -90,17 +85,25 @@ class MainActivity : ComponentActivity() {
         AlertDialog(
             onDismissRequest = { showAlert.value = false },
             confirmButton = {
-                TextButton(onClick = {
-                    if (!isPhoneNumber()) {
-                        CoroutineScope(Dispatchers.Default).launch {
-                            sendWhatsappBlank(context, getFullPhoneNumber())
+                Card(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                    ),
+                )
+                {
+                    TextButton(onClick = {
+                        if (!isPhoneNumber()) {
+                            Toast.makeText(context, getFullPhoneNumber(), Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Please enter valid number", Toast.LENGTH_SHORT)
+                                .show()
                         }
-                    } else {
-                        Toast.makeText(context, "Please enter valid number", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                })
-                { Text(text = "Proceed") }
+                    })
+                    { Text(text = "Proceed", color = MaterialTheme.colorScheme.onPrimary) }
+                }
             },
             dismissButton = {
                 TextButton(onClick = {
@@ -111,8 +114,12 @@ class MainActivity : ComponentActivity() {
             title = {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "Send text without saving number",
-                        style = TextStyle(color = Color.Black, fontSize = 18.sp)
+                        text = "Send message without saving number",
+                        style = TextStyle(
+                            color = Color.Black,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium
+                        )
                     )
                 }
 
@@ -134,21 +141,6 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    private fun sendWhatsappBlank(context: Context, phoneStr: String) {
-        val packageManager = context.packageManager
-        val i = Intent(Intent.ACTION_VIEW)
-        try {
-            val url = "https://api.whatsapp.com/send?phone=$phoneStr"
-            i.setPackage("com.whatsapp")
-            i.data = Uri.parse(url)
-            if (i.resolveActivity(packageManager) != null) {
-                context.startActivity(i)
-            }
-            context.startActivity(i)
-        } catch (e: Exception) {
-
-        }
-    }
 
     @Composable
     fun FloatingActionButtons(
