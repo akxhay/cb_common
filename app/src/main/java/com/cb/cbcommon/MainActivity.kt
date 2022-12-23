@@ -9,7 +9,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -22,10 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,6 +31,7 @@ import com.cb.cbcommon.screen.HomeScreen
 import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
 import com.cb.cbcpp.presentation.component.*
+import com.cb.cbtools.composables.CbAlertDialog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,53 +74,18 @@ class MainActivity : ComponentActivity() {
     ) {
         val context = LocalContext.current
         val phoneNumber = rememberSaveable { mutableStateOf("") }
-        AlertDialog(
-            onDismissRequest = { showAlert.value = false },
-            confirmButton = {
-                Card(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                    ),
-                )
-                {
-                    TextButton(onClick = {
-                        if (!isPhoneNumber()) {
-                            Toast.makeText(context, getFullPhoneNumber(), Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(context, "Please enter valid number", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    })
-                    { Text(text = "Proceed", color = MaterialTheme.colorScheme.onPrimary) }
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    showAlert.value = false
-                })
-                {
-                    Text(
-                        text = "Cancel", color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            },
-            title = {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = "Send message without saving number",
-                        style = TextStyle(
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    )
-                }
 
+        CbAlertDialog(
+            showAlert = showAlert,
+            onPositiveClick = {
+                if (!isPhoneNumber()) {
+                    Toast.makeText(context, getFullPhoneNumber(), Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Please enter valid number", Toast.LENGTH_SHORT)
+                        .show()
+                }
             },
-            text = {
+            title = "Send message without saving number", body = {
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
@@ -136,8 +98,7 @@ class MainActivity : ComponentActivity() {
                         onValueChange = { phoneNumber.value = it },
                     )
                 }
-            }
-        )
+            })
     }
 
 

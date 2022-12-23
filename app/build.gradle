@@ -50,6 +50,7 @@ dependencies {
     implementation project(path: ':CbPermission')
     implementation project(path: ':CbPreference')
     implementation project(path: ':CbCPP')
+    implementation project(path: ':CbTools')
 
     implementation "com.google.code.gson:gson:2.9.0"
 
