@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.cb.cbcpp.presentation.data.utils.checkPhoneNumber
 import com.cb.cbcpp.presentation.data.utils.getDefaultLangCode
@@ -70,62 +71,61 @@ fun CbCCC(
 
 
     Surface {
-        Column(modifier = Modifier.padding(horizontal = 5.dp, vertical = 5.dp)) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
-                Row {
-                    Column {
-                        TogiCodeDialog(
-                            pickedCountry = {
-                                phoneCode = it.countryPhoneCode
-                                defaultLang = it.countryCode
-                            },
-                            defaultSelectedCountry = getLibCountries.single { it.countryCode == defaultLang },
-                            showCountryCode = showCountryCode,
-                            showFlag = showCountryFlag
-                        )
-                    }
-                }
-                OutlinedTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 15.dp, vertical = 2.dp)
-                        .onFocusChanged { focusState ->
-                            showClearButton = (focusState.isFocused)
-                        }
-                        .focusRequester(focusRequester)
-                        .drawBehind {
-                            val strokeWidth = Stroke.DefaultMiter
-                            val y = size.height - strokeWidth / 2
-
-                            drawLine(
-                                Color.LightGray,
-                                Offset(0f, y),
-                                Offset(size.width, y),
-                                strokeWidth
-                            )
+            Row {
+                Column {
+                    TogiCodeDialog(
+                        pickedCountry = {
+                            phoneCode = it.countryPhoneCode
+                            defaultLang = it.countryCode
                         },
-                    value = textFieldValue,
-                    onValueChange = {
-                        textFieldValue = it
-                        if (text != it) {
-                            onValueChange(it)
-                        }
-                    },
-                    placeholder = { Text(text = "Enter number") },
+                        defaultSelectedCountry = getLibCountries.single { it.countryCode == defaultLang },
+                        showCountryCode = showCountryCode,
+                        showFlag = showCountryFlag
+                    )
+                }
+            }
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 15.dp)
+                    .onFocusChanged { focusState ->
+                        showClearButton = (focusState.isFocused)
+                    }
+                    .focusRequester(focusRequester)
+                    .drawBehind {
+                        val strokeWidth = Stroke.DefaultMiter
+                        val y = size.height - strokeWidth / 2
 
-                    colors = TextFieldDefaults.textFieldColors(
-                        textColor = MaterialTheme.colorScheme.onSurface,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        containerColor = Color.Transparent,
-                        cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
-                    ),
-                    trailingIcon = {
-                        AnimatedVisibility(
+                        drawLine(
+                            Color.LightGray,
+                            Offset(0f, y),
+                            Offset(size.width, y),
+                            strokeWidth
+                        )
+                    },
+                value = textFieldValue,
+                onValueChange = {
+                    textFieldValue = it
+                    if (text != it) {
+                        onValueChange(it)
+                    }
+                },
+                placeholder = { Text(text = "Enter number") },
+
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colorScheme.onSurface,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    containerColor = Color.Transparent,
+                    cursorColor = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+                ),
+                trailingIcon = {
+                    AnimatedVisibility(
                             visible = textFieldValue.isNotEmpty(),
                             enter = fadeIn(),
                             exit = fadeOut()
@@ -140,16 +140,18 @@ fun CbCCC(
                                 )
                             }
 
-                        }
-                    },
-                    maxLines = 1,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                    keyboardActions = KeyboardActions(onDone = {
-                        keyboardController?.hide()
-                    }),
-                )
-            }
+                    }
+                },
+                maxLines = 1,
+                singleLine = true,
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Number
+                ),
+                keyboardActions = KeyboardActions(onDone = {
+                    keyboardController?.hide()
+                }),
+            )
         }
     }
 }
