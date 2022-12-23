@@ -2,6 +2,9 @@
 
 package com.cb.cbcommon
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -33,6 +36,9 @@ import com.cb.cbcommon.screen.HomeScreen
 import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
 import com.cb.cbcpp.presentation.component.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,17 +87,14 @@ class MainActivity : ComponentActivity() {
     ) {
         val context = LocalContext.current
         val phoneNumber = rememberSaveable { mutableStateOf("") }
-        val fullPhoneNumber = rememberSaveable { mutableStateOf("") }
-        val onlyPhoneNumber = rememberSaveable { mutableStateOf("") }
-
         AlertDialog(
             onDismissRequest = { showAlert.value = false },
             confirmButton = {
                 TextButton(onClick = {
                     if (!isPhoneNumber()) {
-                        fullPhoneNumber.value = getFullPhoneNumber()
-                        onlyPhoneNumber.value = getOnlyPhoneNumber()
-
+                        CoroutineScope(Dispatchers.Default).launch {
+                            sendWhatsappBlank(context, getFullPhoneNumber())
+                        }
                     } else {
                         Toast.makeText(context, "Please enter valid number", Toast.LENGTH_SHORT)
                             .show()
@@ -129,6 +132,22 @@ class MainActivity : ComponentActivity() {
                 }
             }
         )
+    }
+
+    private fun sendWhatsappBlank(context: Context, phoneStr: String) {
+        val packageManager = context.packageManager
+        val i = Intent(Intent.ACTION_VIEW)
+        try {
+            val url = "https://api.whatsapp.com/send?phone=$phoneStr"
+            i.setPackage("com.whatsapp")
+            i.data = Uri.parse(url)
+            if (i.resolveActivity(packageManager) != null) {
+                context.startActivity(i)
+            }
+            context.startActivity(i)
+        } catch (e: Exception) {
+
+        }
     }
 
     @Composable

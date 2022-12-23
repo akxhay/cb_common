@@ -146,7 +146,11 @@ fun CountryDialog(
             ) {
                 Scaffold { scaffold ->
                     scaffold.calculateBottomPadding()
-                    Column(modifier = Modifier.fillMaxSize().padding(vertical = 10.dp)) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(vertical = 10.dp)
+                    ) {
                         SearchTextField(
                             value = searchValue, onValueChange = { searchValue = it },
                             textColor = MaterialTheme.colors.onSurface,
@@ -189,7 +193,8 @@ fun CountryDialog(
                                         ), contentDescription = null
                                     )
                                     Text(
-                                        stringResource(id = getCountryName(countryItem.countryCode.lowercase())),
+                                        text = countryItem.countryPhoneCode + " " +
+                                                stringResource(id = getCountryName(countryItem.countryCode.lowercase())),
                                         Modifier.padding(horizontal = 18.dp),
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily.Serif,

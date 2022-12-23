@@ -8,7 +8,8 @@ fun List<CountryData>.searchCountry(key: String, context: Context): MutableList<
     val tempList = mutableListOf<CountryData>()
     this.forEach {
         if (context.resources.getString(getCountryName(it.countryCode)).lowercase()
-                .contains(key.lowercase())
+                .contains(key.lowercase()) || it.countryPhoneCode
+                .contains(key)
         ) {
             tempList.add(it)
         }
