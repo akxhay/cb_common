@@ -5,9 +5,12 @@ import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.graphics.drawable.PictureDrawable
 import android.util.Base64
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import com.caverock.androidsvg.SVG
@@ -28,6 +31,7 @@ object IconResolver {
             }
         }
     }
+
 
     private fun parseDrawable(context: Context, value: String?): ImageBitmap {
         val resources: Resources = context.resources
@@ -52,6 +56,46 @@ object IconResolver {
     private fun parseSvg(svgString: String?): ImageBitmap {
         val svg = SVG.getFromString(svgString)
         return PictureDrawable(svg.renderToPicture()).toBitmap().asImageBitmap()
+    }
+
+    fun getImageVector(icon: PreferenceIcon?, defaultIcon: ImageVector): ImageVector {
+        if (icon?.imageVector != null) {
+            return when (icon.imageVector) {
+                "default" -> getDefaultIcon(icon.value, defaultIcon)
+                "filled" -> getFilledIcon(icon.value, defaultIcon)
+
+                else -> defaultIcon
+            }
+
+        }
+        return defaultIcon
+    }
+
+    private fun getFilledIcon(value: String?, defaultIcon: ImageVector): ImageVector {
+        return when (value) {
+            "money" -> Icons.Filled.MonetizationOn
+            "notification" -> Icons.Filled.Notifications
+            "battery" -> Icons.Filled.BatteryAlert
+            "notification2" -> Icons.Filled.NotificationsActive
+            "question" -> Icons.Filled.QuestionMark
+            "share" -> Icons.Filled.Share
+
+            else -> defaultIcon
+        }
+
+    }
+
+    private fun getDefaultIcon(value: String?, defaultIcon: ImageVector): ImageVector {
+        return when (value) {
+            "money" -> Icons.Default.MonetizationOn
+            "notification" -> Icons.Default.Notifications
+            "battery" -> Icons.Default.BatteryAlert
+            "notification2" -> Icons.Default.NotificationsActive
+            "question" -> Icons.Default.QuestionMark
+            "share" -> Icons.Default.Share
+
+            else -> defaultIcon
+        }
     }
 
 

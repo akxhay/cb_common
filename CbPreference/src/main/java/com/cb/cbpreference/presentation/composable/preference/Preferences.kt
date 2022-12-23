@@ -89,7 +89,12 @@ fun PreferenceComposable(
             horizontalArrangement = Arrangement.Start
         ) {
             if (preference.icon != null) {
-                PreferenceIcon(preference.icon!!)
+                if (preference.icon!!.imageVector == null) {
+                    PreferenceIcon(preference.icon!!)
+                } else {
+                    PreferenceIcon(icon, iconColor)
+
+                }
             } else {
                 PreferenceIcon(icon, iconColor)
             }

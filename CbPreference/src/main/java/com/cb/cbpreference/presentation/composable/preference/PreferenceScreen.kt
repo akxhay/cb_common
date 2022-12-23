@@ -20,6 +20,7 @@ import com.cb.cbpreference.data.PreferenceScreen
 import com.cb.cbpreference.data.PreferenceStyle
 import com.cb.cbpreference.util.ActionResolver
 import com.cb.cbpreference.util.ColorResolver
+import com.cb.cbpreference.util.IconResolver
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,9 +35,12 @@ fun PreferenceScreenComposable(
         topBar = {
             TopAppBar(
                 title = "Settings",
-                titleColor = ColorResolver.getColor(color = style.appbarTitleColor, Color.Black),
+                titleColor = ColorResolver.getColor(
+                    color = style.appbarTitleColor,
+                    MaterialTheme.colorScheme.onPrimary
+                ),
                 backgroundColor = ColorResolver.getColor(
-                    color = style.appbarBackgroundColor, Color.White
+                    color = style.appbarBackgroundColor, MaterialTheme.colorScheme.primary
                 ),
                 navController = navController,
             )
@@ -44,15 +48,27 @@ fun PreferenceScreenComposable(
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
             Settings(
-                titleColor = ColorResolver.getColor(color = style.titleColor, Color.Black),
-                headerColor = ColorResolver.getColor(color = style.headerColor, Color.Black),
-                summaryColor = ColorResolver.getColor(color = style.summaryColor, Color.Gray),
-                dividerColor = ColorResolver.getColor(
-                    color = style.dividerColor, Color.Transparent
+                titleColor = ColorResolver.getColor(
+                    color = style.titleColor,
+                    MaterialTheme.colorScheme.onSurface
                 ),
-                iconColor = ColorResolver.getColor(color = style.iconColor, Color.Green),
+                headerColor = ColorResolver.getColor(
+                    color = style.headerColor,
+                    MaterialTheme.colorScheme.onSurface
+                ),
+                summaryColor = ColorResolver.getColor(
+                    color = style.summaryColor,
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                ),
+                dividerColor = ColorResolver.getColor(
+                    color = style.dividerColor, MaterialTheme.colorScheme.primary
+                ),
+                iconColor = ColorResolver.getColor(
+                    color = style.iconColor,
+                    MaterialTheme.colorScheme.primary
+                ),
                 backgroundColor = ColorResolver.getColor(
-                    color = style.backgroundColor, Color.Black
+                    color = style.backgroundColor, MaterialTheme.colorScheme.surface
                 ),
                 preferencesScreen = preferencesScreen,
                 activity = activity
@@ -166,14 +182,17 @@ fun PreferenceCategoryComposable(
         preferenceCategory.preferences?.let {
             for (preference in it) {
                 PreferenceComposable(
-                    preference=preference,
+                    preference = preference,
                     modifier = Modifier.fillMaxWidth(),
                     titleColor = titleColor,
-                    icon = Icons.Filled.Settings,
+                    icon = IconResolver.getImageVector(
+                        preference.icon,
+                        Icons.Filled.Settings
+                    ),
                     summaryColor = summaryColor,
                     iconColor = iconColor,
                     preferenceType = preference.type,
-                    preferencesScreen=preferencesScreen
+                    preferencesScreen = preferencesScreen
                 ) {
                     ActionResolver.getAction(
                         preferencesScreen.appName,
