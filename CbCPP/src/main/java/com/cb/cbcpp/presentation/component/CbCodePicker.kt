@@ -9,10 +9,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +39,7 @@ import java.util.*
 
 
 @Composable
-fun TogiCodeDialog(
+fun CountryCodeDialog(
     modifier: Modifier = Modifier,
     padding: Dp = 15.dp,
     defaultSelectedCountry: CountryData = getLibCountries.first(),
@@ -90,7 +90,7 @@ fun TogiCodeDialog(
                         .padding(start = 6.dp)
                         .padding(horizontal = 5.dp),
                     fontSize = 18.sp,
-                    color = MaterialTheme.colors.onSurface
+                    color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface,
                 )
             }
             if (showCountryCode) {
@@ -99,7 +99,7 @@ fun TogiCodeDialog(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 6.dp),
                     fontSize = 18.sp,
-                    color = MaterialTheme.colors.onSurface
+                    color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface,
                 )
                 Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
             }
@@ -123,6 +123,7 @@ fun TogiCodeDialog(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountryDialog(
     modifier: Modifier = Modifier,
@@ -139,7 +140,7 @@ fun CountryDialog(
         onDismissRequest = onDismissRequest,
         content = {
             Surface(
-                color = MaterialTheme.colors.onSurface,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(25.dp))
@@ -153,13 +154,13 @@ fun CountryDialog(
                     ) {
                         SearchTextField(
                             value = searchValue, onValueChange = { searchValue = it },
-                            textColor = MaterialTheme.colors.onSurface,
+                            textColor = MaterialTheme.colorScheme.onSurface,
                             fontSize = 16.sp,
                             leadingIcon = {
                                 Icon(
                                     imageVector = Icons.Filled.Search,
                                     contentDescription = "Search",
-                                    tint = MaterialTheme.colors.onSurface,
+                                    tint = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.padding(horizontal = 3.dp)
                                 )
                             },
@@ -221,15 +222,16 @@ private fun SearchTextField(
     textColor: Color = Color.Black,
     onValueChange: (String) -> Unit,
     hint: String = stringResource(id = R.string.search),
-    fontSize: TextUnit = MaterialTheme.typography.body2.fontSize
+    fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize
 ) {
-    BasicTextField(modifier = modifier
-        .fillMaxWidth()
-        .padding(horizontal = 18.dp),
+    BasicTextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 18.dp),
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
-        cursorBrush = SolidColor(MaterialTheme.colors.primary),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         textStyle = LocalTextStyle.current.copy(
             color = textColor,
             fontSize = fontSize

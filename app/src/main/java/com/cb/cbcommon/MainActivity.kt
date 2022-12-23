@@ -40,12 +40,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CbCommonTheme {
+            val darkTheme = remember {
+                mutableStateOf(false)
+            }
+            CbCommonTheme(darkTheme = darkTheme.value) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val dialog = remember { mutableStateOf(false) }
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
@@ -54,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.HomeScreen.route
                         ) {
-                            OpenHomeScreen(navController)
+                            OpenHomeScreen(navController, darkTheme)
                         }
                         composable(
                             route = Screen.SettingsScreen.route
@@ -62,14 +64,7 @@ class MainActivity : ComponentActivity() {
                             OpenSettingsScreen(navController)
                         }
                     }
-                    FloatingActionButtons(icon = Icons.Default.Chat) {
-                        dialog.value = true
-                    }
-                    if (dialog.value) {
-                        ShowDialog(
-                            showAlert = dialog
-                        )
-                    }
+
                 }
             }
         }
@@ -116,7 +111,7 @@ class MainActivity : ComponentActivity() {
                     Text(
                         text = "Send message without saving number",
                         style = TextStyle(
-                            color = Color.Black,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium
                         )
@@ -173,9 +168,21 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun OpenHomeScreen(
-        navController: NavHostController
+        navController: NavHostController,
+        darkTheme: MutableState<Boolean>
     ) {
-        HomeScreen(navController = navController)
+
+        HomeScreen(navController = navController, darkTheme)
+        val dialog = remember { mutableStateOf(false) }
+
+        FloatingActionButtons(icon = Icons.Default.Chat) {
+            dialog.value = true
+        }
+        if (dialog.value) {
+            ShowDialog(
+                showAlert = dialog
+            )
+        }
     }
 
     @Composable

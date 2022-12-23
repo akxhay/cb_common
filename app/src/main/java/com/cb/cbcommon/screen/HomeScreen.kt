@@ -5,6 +5,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,12 +22,14 @@ import java.util.*
 @Composable
 fun HomeScreen(
     navController: NavController,
+    darkTheme: MutableState<Boolean>,
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = "title",
                 navController = navController,
+                darkTheme = darkTheme
             )
         },
     ) { padding ->
@@ -39,7 +43,8 @@ fun HomeScreen(
 @Composable
 fun TopAppBar(
     title: String,
-    navController: NavController
+    navController: NavController,
+    darkTheme: MutableState<Boolean>
 ) {
     var showMenu by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -51,6 +56,15 @@ fun TopAppBar(
             Text(title, color = MaterialTheme.colorScheme.onPrimary)
         },
         actions = {
+            IconButton(onClick = {
+                darkTheme.value = !darkTheme.value
+            }) {
+                Icon(
+                    if (darkTheme.value) Icons.Default.LightMode else Icons.Default.DarkMode,
+                    "DarkMode",
+                    tint = Color.White
+                )
+            }
             IconButton(onClick = { showMenu = !showMenu }) {
                 Icon(Icons.Default.MoreVert, "Menu icon", tint = Color.White)
             }

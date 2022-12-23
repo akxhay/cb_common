@@ -78,7 +78,7 @@ fun CbCCC(
 
             Row {
                 Column {
-                    TogiCodeDialog(
+                    CountryCodeDialog(
                         pickedCountry = {
                             phoneCode = it.countryPhoneCode
                             defaultLang = it.countryCode
@@ -115,7 +115,11 @@ fun CbCCC(
                         onValueChange(it)
                     }
                 },
-                placeholder = { Text(text = "Enter number") },
+                placeholder = {
+                    Text(
+                        text = "Enter number", color = MaterialTheme.colorScheme.onSurface,
+                    )
+                },
 
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = MaterialTheme.colorScheme.onSurface,
@@ -136,8 +140,10 @@ fun CbCCC(
                             }) {
                                 Icon(
                                     imageVector = Icons.Filled.Close,
-                                    contentDescription = ""
-                                )
+                                    contentDescription = "",
+                                    tint = MaterialTheme.colorScheme.onSurface,
+
+                                    )
                             }
 
                     }
