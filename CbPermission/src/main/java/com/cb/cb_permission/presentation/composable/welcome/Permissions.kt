@@ -6,12 +6,15 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
@@ -86,11 +89,16 @@ fun PermissionDialog(
         positiveText = confirmButtonText.value,
         body =
         {
-            Text(
-                text = text,
-                color = MaterialTheme.colorScheme.onSurface,
-                style = TextStyle(color = Color.Gray, fontSize = 13.sp)
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = text,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = TextStyle(color = Color.Gray, fontSize = 13.sp)
+                )
+            }
 
         }
     )

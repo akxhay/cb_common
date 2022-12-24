@@ -101,10 +101,15 @@ fun Footer(
                     },
                     title = "Skip Optional permission",
                     body = {
-                        Text(
-                            text = "Some feature might not work as expected",
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                text = "Some feature might not work as expected",
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     },
                     positiveText = "Proceed anyway"
                 )
