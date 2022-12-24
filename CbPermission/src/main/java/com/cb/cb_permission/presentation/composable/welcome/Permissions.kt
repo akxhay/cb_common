@@ -7,6 +7,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -87,6 +88,7 @@ fun PermissionDialog(
         {
             Text(
                 text = text,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = TextStyle(color = Color.Gray, fontSize = 13.sp)
             )
 
