@@ -33,8 +33,8 @@ import com.cb.cbcommon.ui.theme.CbCommonTheme
 import com.cb.cbtools.ccp.component.CbCCC
 import com.cb.cbtools.ccp.component.getFullPhoneNumber
 import com.cb.cbtools.ccp.component.isPhoneNumber
+import com.cb.cbtools.composables.CbGenericDialog
 
-import com.cb.cbtools.composables.CbAlertDialog
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,8 +77,7 @@ class MainActivity : ComponentActivity() {
     ) {
         val context = LocalContext.current
         val phoneNumber = rememberSaveable { mutableStateOf("") }
-
-        CbAlertDialog(
+        CbGenericDialog(
             showAlert = showAlert,
             onPositiveClick = {
                 if (!isPhoneNumber()) {
@@ -88,7 +87,8 @@ class MainActivity : ComponentActivity() {
                         .show()
                 }
             },
-            title = "Send message without saving number", body = {
+            title = "Send message without saving number",
+            text = {
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
@@ -100,8 +100,11 @@ class MainActivity : ComponentActivity() {
                         text = phoneNumber.value,
                         onValueChange = { phoneNumber.value = it },
                     )
+
                 }
-            })
+            },
+            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+        )
     }
 
 

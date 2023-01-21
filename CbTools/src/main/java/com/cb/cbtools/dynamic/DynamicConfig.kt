@@ -163,6 +163,14 @@ class DynamicConfig(private val context: Context) {
     }
 
     @Composable
+    fun getIconTintOnBackgroundColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.iconTintOnBackgroundColor,
+            MaterialTheme.colorScheme.primary
+        )
+    }
+
+    @Composable
     fun getCardColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.cardColor,

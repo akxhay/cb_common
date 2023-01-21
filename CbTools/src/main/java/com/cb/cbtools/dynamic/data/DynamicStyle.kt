@@ -25,6 +25,7 @@ data class DynamicStyle(
     @SerializedName("backgroundColor") @Expose var backgroundColor: DynamicColor? = null,
     @SerializedName("primaryTextOnBackgroundColor") @Expose var primaryTextOnBackgroundColor: DynamicColor? = null,
     @SerializedName("secondaryTextOnBackgroundColor") @Expose var secondaryTextOnBackgroundColor: DynamicColor? = null,
+    @SerializedName("iconTintOnBackgroundColor") @Expose var iconTintOnBackgroundColor: DynamicColor? = null,
 
     @SerializedName("cardColor") @Expose var cardColor: DynamicColor? = null,
     @SerializedName("cardBorderColor") @Expose var cardBorderColor: DynamicColor? = null,

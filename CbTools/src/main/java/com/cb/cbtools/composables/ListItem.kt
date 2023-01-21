@@ -78,7 +78,7 @@ fun CbListItem(
                             modifier = Modifier.size(primaryIconSize),
                             imageVector = primaryImageVector,
                             contentDescription = "dp",
-                            tint = dynamicConfig.getPrimaryTextOnBackGroundColor()
+                            tint = dynamicConfig.getIconTintOnBackgroundColor()
                         )
                     } else {
                         Image(

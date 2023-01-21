@@ -9,103 +9,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.cb.cbcommon.DynamicConfig
 
 
-@Composable
-fun CbAlertDialog(
-    showAlert: MutableState<Boolean>,
-    onPositiveClick: () -> Unit,
-    title: String,
-    body: @Composable (() -> Unit),
-    positiveText: String = "Ok",
-    negativeText: String = "Cancel"
-
-) {
-    AlertDialog(
-        onDismissRequest = { showAlert.value = false },
-        confirmButton = {
-            Card(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-            )
-            {
-                TextButton(
-                    onClick =
-                    onPositiveClick
-                )
-                {
-                    Text(
-                        text = positiveText,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = { showAlert.value = false })
-            {
-                Text(
-                    text = negativeText,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-        },
-
-        title = {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = title,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                )
-
-            }
-        },
-        text = body
-    )
-}
-
-@Composable
-fun AlertTitleText(
-    text: String,
-    color: Color
-) {
-    Box(
-        Modifier
-            .fillMaxWidth(),
-        Alignment.Center
-    ) {
-        Text(
-            textAlign = TextAlign.Center,
-            text = text,
-            style = MaterialTheme.typography.titleMedium,
-            color = color
-        )
-    }
-}
-
-
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CbDecisionDialog(
+fun CbGenericDialog(
     showAlert: MutableState<Boolean>,
     onPositiveClick: () -> Unit,
     title: String,
-    text: String,
+    text: @Composable () -> Unit,
     confirmText: String = "Ok",
     dismissText: String = "Cancel",
     dynamicConfig: DynamicConfig
@@ -162,6 +78,30 @@ fun CbDecisionDialog(
             }
         },
         text = {
+            text()
+        }
+    )
+}
+
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun CbDecisionDialog(
+    showAlert: MutableState<Boolean>,
+    onPositiveClick: () -> Unit,
+    title: String,
+    text: String,
+    confirmText: String = "Ok",
+    dismissText: String = "Cancel",
+    dynamicConfig: DynamicConfig
+) {
+    CbGenericDialog(
+        showAlert = showAlert,
+        onPositiveClick = onPositiveClick,
+        title = title,
+        confirmText = confirmText,
+        dismissText = dismissText,
+        text = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -172,7 +112,27 @@ fun CbDecisionDialog(
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
-
-        }
+        },
+        dynamicConfig = dynamicConfig
     )
+
+}
+
+@Composable
+fun AlertTitleText(
+    text: String,
+    color: Color
+) {
+    Box(
+        Modifier
+            .fillMaxWidth(),
+        Alignment.Center
+    ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+            color = color
+        )
+    }
 }
