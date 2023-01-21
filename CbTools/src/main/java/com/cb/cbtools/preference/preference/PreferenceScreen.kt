@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.DynamicConfig
@@ -21,7 +20,6 @@ import com.cb.cbtools.composables.CbListItem
 import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ActionResolver
 import com.cb.cbtools.dynamic.util.IconResolver
-import com.cb.cbtools.preference.SharedPreference
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -109,7 +107,6 @@ fun PreferenceCategoryComposable(
     activity: Activity,
     dynamicConfig: DynamicConfig
 ) {
-    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -121,7 +118,7 @@ fun PreferenceCategoryComposable(
     ) {
         Spacer(
             modifier = Modifier
-                .height(10.dp)
+                .height(5.dp)
         )
         PreferenceHeader(
             modifier = Modifier
@@ -131,7 +128,7 @@ fun PreferenceCategoryComposable(
         )
         Spacer(
             modifier = Modifier
-                .height(10.dp)
+                .height(5.dp)
         )
         preferenceCategory.preferences?.let {
             for (preference in it) {
@@ -147,9 +144,11 @@ fun PreferenceCategoryComposable(
                     ),
                     dynamicConfig = dynamicConfig,
                     actionType = preference.type,
-                    checked = SharedPreference.getBooleanPref(preference.pref, true, context),
+                    checked = dynamicConfig.getSharedPreferences()
+                        .getBoolean(preference.pref, true),
                     onChange = { value ->
-                        SharedPreference.setBooleanPref(preference.pref, value, context)
+                        dynamicConfig.getSharedPreferences().edit()
+                            .putBoolean(preference.pref, value).apply()
                     },
                     onClick = {
                         ActionResolver.getAction(

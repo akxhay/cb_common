@@ -132,7 +132,6 @@ fun Action(
 ) {
     Box(
         modifier = Modifier
-            .padding(end = 20.dp)
             .size(30.dp),
         contentAlignment = Alignment.Center
     ) {

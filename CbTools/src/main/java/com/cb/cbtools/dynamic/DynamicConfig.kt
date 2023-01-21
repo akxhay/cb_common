@@ -1,6 +1,7 @@
 package com.cb.cbcommon
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -31,8 +32,8 @@ class DynamicConfig(private val context: Context) {
         return dynamicApp.appName
     }
 
-    fun getSharedPrefName(): String {
-        return dynamicApp.sharedPrefName
+    fun getSharedPreferences(): SharedPreferences {
+        return context.getSharedPreferences(dynamicApp.sharedPrefName, Context.MODE_PRIVATE)
     }
 
 
