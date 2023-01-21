@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.cb.cbtools.preference.CbPreference
-import com.cb.cbtools.customise.util.getPreferenceScreen
+import com.cb.cbtools.dynamic.util.buildDynamicApp
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalAnimationApi
@@ -20,7 +20,7 @@ fun SettingsScreen(
     activity: Activity
 ) {
 
-    val preferencesScreen = getPreferenceScreen(LocalContext.current)
+    val preferencesScreen = buildDynamicApp(LocalContext.current)
 
     Column(modifier = Modifier.fillMaxSize()) {
         CbPreference.SettingsScreen(

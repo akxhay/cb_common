@@ -1,22 +1,22 @@
-package com.cb.cbtools.customise.util
+package com.cb.cbtools.dynamic.util
 
 import android.content.Context
 import android.util.Log
-import com.cb.cbtools.customise.data.PreferenceScreen
+import com.cb.cbtools.dynamic.data.DynamicApp
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.IOException
 
-fun getPreferenceScreen(context: Context): PreferenceScreen {
+fun buildDynamicApp(context: Context): DynamicApp {
 
     lateinit var jsonString: String
     try {
-        jsonString = context.assets.open("preferences.json")
+        jsonString = context.assets.open("dynamic_app.json")
             .bufferedReader()
             .use { it.readText() }
     } catch (ioException: IOException) {
         Log.e("ioException", ioException.toString())
     }
-    val listCountryType = object : TypeToken<PreferenceScreen>() {}.type
+    val listCountryType = object : TypeToken<DynamicApp>() {}.type
     return Gson().fromJson(jsonString, listCountryType)
 }

@@ -15,22 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.cb.cbtools.customise.data.PreferenceCategory
-import com.cb.cbtools.customise.data.PreferenceScreen
-import com.cb.cbtools.customise.data.PreferenceStyle
-import com.cb.cbtools.customise.util.ActionResolver
-import com.cb.cbtools.customise.util.ColorResolver
-import com.cb.cbtools.customise.util.IconResolver
+import com.cb.cbtools.dynamic.data.PreferenceCategory
+import com.cb.cbtools.dynamic.data.DynamicApp
+import com.cb.cbtools.dynamic.data.DynamicStyle
+import com.cb.cbtools.dynamic.util.ActionResolver
+import com.cb.cbtools.dynamic.util.ColorResolver
+import com.cb.cbtools.dynamic.util.IconResolver
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PreferenceScreenComposable(
     navController: NavController,
-    preferencesScreen: PreferenceScreen,
+    preferencesScreen: DynamicApp,
     activity: Activity
 ) {
     var style = preferencesScreen.style
-    if (style == null) style = PreferenceStyle()
+    if (style == null) style = DynamicStyle()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -115,7 +115,7 @@ fun Settings(
     dividerColor: Color,
     iconColor: Color,
     backgroundColor: Color,
-    preferencesScreen: PreferenceScreen,
+    preferencesScreen: DynamicApp,
     activity: Activity
 ) {
     val preferenceCategories: List<PreferenceCategory>? = preferencesScreen.preferences
@@ -153,7 +153,7 @@ fun PreferenceCategoryComposable(
     dividerColor: Color,
     iconColor: Color,
     backgroundColor: Color,
-    preferencesScreen: PreferenceScreen,
+    preferencesScreen: DynamicApp,
     activity: Activity
 ) {
     Column(

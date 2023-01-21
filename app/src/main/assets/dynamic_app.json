@@ -1,7 +1,6 @@
 {
-  "appName": "Chat bin",
   "sharedPrefName": "CB_SETTINGS",
-  "preferenceStyle": {
+  "dynamicStyle": {
     "appName": "Application",
     "titleColor": {
       "type": "default",

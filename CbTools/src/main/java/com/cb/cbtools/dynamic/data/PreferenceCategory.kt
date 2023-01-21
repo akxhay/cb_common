@@ -1,4 +1,4 @@
-package com.cb.cbtools.customise.data
+package com.cb.cbtools.dynamic.data
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

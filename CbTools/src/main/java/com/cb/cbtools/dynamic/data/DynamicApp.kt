@@ -1,12 +1,12 @@
-package com.cb.cbtools.customise.data
+package com.cb.cbtools.dynamic.data
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class PreferenceScreen(
+data class DynamicApp(
     @SerializedName("appName") @Expose var appName: String = "Application",
     @SerializedName("sharedPrefName") @Expose var sharedPrefName: String = "CB_SETTINGS",
-    @SerializedName("preferenceStyle") @Expose var style: PreferenceStyle? = null,
+    @SerializedName("dynamicStyle") @Expose var style: DynamicStyle = DynamicStyle(),
     @SerializedName("preferenceCategories") @Expose var preferences: List<PreferenceCategory>? = null,
     @SerializedName("observables") @Expose var observables: Map<String, Any>? = null,
 

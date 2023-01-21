@@ -1,4 +1,4 @@
-package com.cb.cbtools.customise.util
+package com.cb.cbtools.dynamic.util
 
 import android.content.Context
 import android.content.res.Resources
@@ -14,12 +14,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import com.caverock.androidsvg.SVG
-import com.cb.cbtools.customise.data.PreferenceIcon
+import com.cb.cbtools.dynamic.data.DynamicIcon
 
 object IconResolver {
 
     @Composable
-    fun getBitmap(icon: PreferenceIcon): ImageBitmap {
+    fun getBitmap(icon: DynamicIcon): ImageBitmap {
         val context = LocalContext.current
         return when (icon.type) {
             "base64" -> parseBase64(icon.value)
@@ -58,7 +58,7 @@ object IconResolver {
         return PictureDrawable(svg.renderToPicture()).toBitmap().asImageBitmap()
     }
 
-    fun getImageVector(icon: PreferenceIcon?, defaultIcon: ImageVector): ImageVector {
+    fun getImageVector(icon: DynamicIcon?, defaultIcon: ImageVector): ImageVector {
         if (icon?.imageVector != null) {
             return when (icon.imageVector) {
                 "default" -> getDefaultIcon(icon.value, defaultIcon)

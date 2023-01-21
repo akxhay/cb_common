@@ -23,11 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cb.cbtools.customise.constants.PreferenceType
-import com.cb.cbtools.customise.data.Preference
-import com.cb.cbtools.customise.data.PreferenceIcon
-import com.cb.cbtools.customise.data.PreferenceScreen
-import com.cb.cbtools.customise.util.IconResolver
+import com.cb.cbtools.dynamic.constants.PreferenceType
+import com.cb.cbtools.dynamic.data.Preference
+import com.cb.cbtools.dynamic.data.DynamicIcon
+import com.cb.cbtools.dynamic.data.DynamicApp
+import com.cb.cbtools.dynamic.util.IconResolver
 
 
 @Composable
@@ -71,7 +71,7 @@ fun PreferenceComposable(
     summaryColor: Color,
     iconColor: Color,
     preferenceType: PreferenceType = PreferenceType.DEFAULT,
-    preferencesScreen: PreferenceScreen,
+    preferencesScreen: DynamicApp,
     onclick: () -> Unit,
 ) {
     Box(
@@ -244,13 +244,13 @@ fun PreferenceIcon(icon: ImageVector, iconColor: Color) {
 }
 
 @Composable
-fun PreferenceIcon(preferenceIcon: PreferenceIcon) {
+fun PreferenceIcon(dynamicIcon: DynamicIcon) {
     Box(
         modifier = Modifier.size(50.dp),
         contentAlignment = Alignment.Center
     ) {
         Image(
-            bitmap = IconResolver.getBitmap(icon = preferenceIcon),
+            bitmap = IconResolver.getBitmap(icon = dynamicIcon),
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier.size(30.dp)

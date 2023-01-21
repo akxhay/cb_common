@@ -1,14 +1,14 @@
-package com.cb.cbtools.customise.util
+package com.cb.cbtools.dynamic.util
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.cb.cbtools.customise.data.PreferenceColor
+import com.cb.cbtools.dynamic.data.DynamicColor
 
 object ColorResolver {
 
     @Composable
-    fun getColor(color: PreferenceColor?, defaultColor: Color): Color {
+    fun getColor(color: DynamicColor?, defaultColor: Color): Color {
         color?.let {
             return when (color.type) {
                 "hex" -> getHexColor(color.value, defaultColor)

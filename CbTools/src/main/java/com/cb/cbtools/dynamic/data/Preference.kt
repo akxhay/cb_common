@@ -1,6 +1,6 @@
-package com.cb.cbtools.customise.data
+package com.cb.cbtools.dynamic.data
 
-import com.cb.cbtools.customise.constants.PreferenceType
+import com.cb.cbtools.dynamic.constants.PreferenceType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -9,7 +9,7 @@ data class Preference(
     @SerializedName("title") @Expose var title: String? = null,
     @SerializedName("summary") @Expose var summary: String? = null,
     @SerializedName("action") @Expose var action: Array<String>? = null,
-    @SerializedName("icon") @Expose var icon: PreferenceIcon? = null,
+    @SerializedName("icon") @Expose var icon: DynamicIcon? = null,
     @SerializedName("pref") @Expose var pref: String? = null,
 ) {
     override fun equals(other: Any?): Boolean {

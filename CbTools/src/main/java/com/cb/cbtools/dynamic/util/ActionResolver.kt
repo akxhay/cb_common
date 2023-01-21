@@ -1,4 +1,4 @@
-package com.cb.cbtools.customise.util
+package com.cb.cbtools.dynamic.util
 
 import android.app.Activity
 import android.content.Context

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.route.Screen
 import java.util.*
 
@@ -24,6 +25,7 @@ fun HomeScreen(
     navController: NavController,
     darkTheme: MutableState<Boolean>,
 ) {
+    BaseApplication.getInstance().dynamicConfig.getDynamicAppStyle().appbarTitleColor
     Scaffold(
         topBar = {
             TopAppBar(
