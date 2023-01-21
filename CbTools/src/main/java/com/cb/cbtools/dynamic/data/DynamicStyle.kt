@@ -50,5 +50,9 @@ data class DynamicStyle(
     @SerializedName("alertDismissTextColor") @Expose var alertDismissTextColor: DynamicColor? = null,
     @SerializedName("alertDividerColor") @Expose var alertDividerColor: DynamicColor? = null,
 
-    )
+    @SerializedName("searchBarBackgroundColor") @Expose var searchBarBackgroundColor: DynamicColor? = null,
+    @SerializedName("alertContentColor") @Expose var searchBarContentColor: DynamicColor? = null,
+    @SerializedName("searchBarPlaceholderColor") @Expose var searchBarPlaceholderColor: DynamicColor? = null,
+    @SerializedName("searchBarCursorColor") @Expose var searchBarCursorColor: DynamicColor? = null,
+)
 

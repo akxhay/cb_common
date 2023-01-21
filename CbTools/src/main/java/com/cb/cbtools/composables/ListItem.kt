@@ -6,8 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -33,7 +32,7 @@ fun CbListItem(
     primaryIconSize: Dp = 30.dp,
     dynamicConfig: DynamicConfig,
     actionType: ActionType = ActionType.DEFAULT,
-    checked: Boolean = false,
+    checked: MutableState<Boolean>?,
     onChange: (Boolean) -> Unit,
     onClick: () -> Unit = {},
     actionImageVector: @Composable () -> Unit = {}
@@ -122,7 +121,7 @@ fun CbListItem(
             if (actionType != ActionType.DEFAULT) {
                 Action(
                     actionType,
-                    checked,
+                    checked!!,
                     onChange
                 )
             } else {
@@ -136,7 +135,7 @@ fun CbListItem(
 @Composable
 fun Action(
     actionType: ActionType,
-    checked: Boolean,
+    checkedState: MutableState<Boolean>,
     onChange: (Boolean) -> Unit,
 ) {
     Box(
@@ -144,9 +143,7 @@ fun Action(
             .size(30.dp),
         contentAlignment = Alignment.Center
     ) {
-        val checkedState = remember {
-            mutableStateOf(checked)
-        }
+
         if (actionType == ActionType.SWITCH) {
 
             Switch(
