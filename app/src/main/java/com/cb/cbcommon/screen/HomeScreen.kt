@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
@@ -13,9 +14,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.route.Screen
+import com.cb.cbtools.composables.TextInputWithError
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,7 +36,69 @@ fun HomeScreen(
             )
         },
     ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {}
+        Column(modifier = Modifier.padding(padding)) {
+            val text: MutableState<String> = remember { mutableStateOf("") }
+            val error: MutableState<String?> = remember {
+                mutableStateOf(
+                    if (text.value.isEmpty()) {
+                        "Cannot be empty"
+                    } else {
+                        null
+                    }
+                )
+            }
+            val onValueChange: (String) -> Unit = {
+                text.value = it
+                error.value = if (it.isEmpty()) {
+                    "Cannot be empty"
+                } else if (it.contains("x")) {
+                    "Rule name already exists"
+                } else {
+                    null
+                }
+            }
+            Text(text = text.value)
+
+            TextInputWithError(
+                modifier = Modifier,
+                label = "input",
+                input = text,
+                error = error,
+                horizontalPadding = 10.dp,
+                onValueChange = onValueChange
+            )
+            ListItem(
+                headlineText = {
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        TextInputWithError(
+                            modifier = Modifier,
+                            label = "input",
+                            input = text,
+                            error = error,
+                            onValueChange = onValueChange
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        TextInputWithError(
+                            modifier = Modifier,
+                            label = "input",
+                            input = text,
+                            error = error,
+                            onValueChange = onValueChange
+                        )
+                    }
+                },
+                trailingContent = {
+                    IconButton(onClick = {
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "delete"
+                        )
+                    }
+                }
+            )
+
+        }
     }
 
 }
