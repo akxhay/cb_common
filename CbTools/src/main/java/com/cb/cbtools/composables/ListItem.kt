@@ -25,9 +25,9 @@ import com.google.accompanist.drawablepainter.rememberDrawablePainter
 @Composable
 fun CbListItem(
     title: String,
-    summary: String?,
-    primaryBitmap: ImageBitmap?,
-    primaryImageVector: ImageVector?,
+    summary: String? = null,
+    primaryBitmap: ImageBitmap? = null,
+    primaryImageVector: ImageVector? = null,
     primaryDrawable: Drawable? = null,
     secondaryDrawable: Drawable? = null,
     primaryIconSize: Dp = 30.dp,
