@@ -1,5 +1,5 @@
 package com.cb.cbtools.dynamic.constants
 
-enum class PreferenceType {
+enum class ActionType {
     DEFAULT, SWITCH, CHECKBOX
 }

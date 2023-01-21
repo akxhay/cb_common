@@ -13,62 +13,36 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.cb.cbtools.dynamic.data.DynamicApp
+import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.composables.CbListItem
 import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ActionResolver
-import com.cb.cbtools.dynamic.util.ColorResolver
 import com.cb.cbtools.dynamic.util.IconResolver
+import com.cb.cbtools.preference.SharedPreference
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PreferenceScreenComposable(
     navController: NavController,
-    preferencesScreen: DynamicApp,
-    activity: Activity
+    activity: Activity,
+    dynamicConfig: DynamicConfig
 ) {
-    var style = preferencesScreen.style
     Scaffold(
         topBar = {
             TopAppBar(
                 title = "Settings",
-                titleColor = ColorResolver.getColor(
-                    color = style.appbarTitleColor,
-                    MaterialTheme.colorScheme.onPrimary
-                ),
-                backgroundColor = ColorResolver.getColor(
-                    color = style.appbarBackgroundColor, MaterialTheme.colorScheme.primary
-                ),
+                titleColor = dynamicConfig.getAppBarTitleColor(),
+                backgroundColor = dynamicConfig.getAppBarBackGroundColor(),
                 navController = navController,
             )
         },
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
             Settings(
-                titleColor = ColorResolver.getColor(
-                    color = style.primaryTextOnCardColor,
-                    MaterialTheme.colorScheme.onSurface
-                ),
-                headerColor = ColorResolver.getColor(
-                    color = style.primaryTextOnBackgroundColor,
-                    MaterialTheme.colorScheme.onSurface
-                ),
-                summaryColor = ColorResolver.getColor(
-                    color = style.secondaryTextOnCardColor,
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                ),
-                dividerColor = ColorResolver.getColor(
-                    color = style.dividerColor, MaterialTheme.colorScheme.primary
-                ),
-                iconColor = ColorResolver.getColor(
-                    color = style.iconOnCardColor,
-                    MaterialTheme.colorScheme.primary
-                ),
-                backgroundColor = ColorResolver.getColor(
-                    color = style.backgroundColor, MaterialTheme.colorScheme.surface
-                ),
-                preferencesScreen = preferencesScreen,
+                dynamicConfig = dynamicConfig,
                 activity = activity
             )
         }
@@ -107,17 +81,10 @@ fun TopAppBar(
 
 @Composable
 fun Settings(
-    titleColor: Color,
-    headerColor: Color,
-    summaryColor: Color,
-    dividerColor: Color,
-    iconColor: Color,
-    backgroundColor: Color,
-    preferencesScreen: DynamicApp,
-    activity: Activity
+    activity: Activity,
+    dynamicConfig: DynamicConfig
 ) {
-    val preferenceCategories: List<PreferenceCategory>? = preferencesScreen.preferences
-    preferenceCategories?.let {
+    dynamicConfig.getPreferenceCategories()?.let {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -125,15 +92,8 @@ fun Settings(
             items(it) { preferenceCategory ->
                 PreferenceCategoryComposable(
                     preferenceCategory = preferenceCategory,
-                    titleColor = titleColor,
-                    headerColor = headerColor,
-                    summaryColor = summaryColor,
-                    dividerColor = dividerColor,
-                    iconColor = iconColor,
-                    backgroundColor = backgroundColor,
-                    preferencesScreen = preferencesScreen,
+                    dynamicConfig = dynamicConfig,
                     activity = activity
-
                 )
             }
         }
@@ -142,23 +102,19 @@ fun Settings(
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PreferenceCategoryComposable(
     preferenceCategory: PreferenceCategory,
-    titleColor: Color,
-    headerColor: Color,
-    summaryColor: Color,
-    dividerColor: Color,
-    iconColor: Color,
-    backgroundColor: Color,
-    preferencesScreen: DynamicApp,
-    activity: Activity
+    activity: Activity,
+    dynamicConfig: DynamicConfig
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = backgroundColor
+                color = dynamicConfig.getBackgroundColor()
             ),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -171,7 +127,7 @@ fun PreferenceCategoryComposable(
             modifier = Modifier
                 .fillMaxWidth(),
             title = preferenceCategory.title!!,
-            color = headerColor
+            color = dynamicConfig.getPrimaryTextOnBackGroundColor()
         )
         Spacer(
             modifier = Modifier
@@ -179,29 +135,36 @@ fun PreferenceCategoryComposable(
         )
         preferenceCategory.preferences?.let {
             for (preference in it) {
-                PreferenceComposable(
-                    preference = preference,
-                    modifier = Modifier.fillMaxWidth(),
-                    titleColor = titleColor,
-                    icon = IconResolver.getImageVector(
+                CbListItem(
+                    title = preference.title!!.replace("#APP_NAME#", dynamicConfig.getAppName()),
+                    summary = preference.summary?.replace("#APP_NAME#", dynamicConfig.getAppName()),
+                    primaryBitmap = if (preference.icon != null && preference.icon!!.imageVector == null) IconResolver.getBitmap(
+                        icon = preference.icon!!
+                    ) else null,
+                    primaryImageVector = if (preference.icon != null && preference.icon!!.imageVector == null) null else IconResolver.getImageVector(
                         preference.icon,
                         Icons.Filled.Settings
                     ),
-                    summaryColor = summaryColor,
-                    iconColor = iconColor,
-                    preferenceType = preference.type,
-                    preferencesScreen = preferencesScreen
-                ) {
-                    ActionResolver.getAction(
-                        preferencesScreen.appName,
-                        activity,
-                        preference.action
-                    )()
-                }
+                    dynamicConfig = dynamicConfig,
+                    actionType = preference.type,
+                    checked = SharedPreference.getBooleanPref(preference.pref, true, context),
+                    onChange = { value ->
+                        SharedPreference.setBooleanPref(preference.pref, value, context)
+                    },
+                    onClick = {
+                        ActionResolver.getAction(
+                            dynamicConfig.getAppName(),
+                            activity,
+                            preference.action
+                        )()
+                    }
+                )
+
                 Divider(
-                    color = dividerColor
+                    color = dynamicConfig.getDividerColor()
                 )
             }
         }
     }
+
 }

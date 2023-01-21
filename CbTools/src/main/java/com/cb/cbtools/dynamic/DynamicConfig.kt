@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.cb.cbtools.dynamic.data.DynamicApp
+import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ColorResolver
 import com.cb.cbtools.dynamic.util.buildDynamicApp
 
@@ -24,6 +25,19 @@ class DynamicConfig(private val context: Context) {
 
     fun getDynamicApp(): DynamicApp {
         return dynamicApp
+    }
+
+    fun getAppName(): String {
+        return dynamicApp.appName
+    }
+
+    fun getSharedPrefName(): String {
+        return dynamicApp.sharedPrefName
+    }
+
+
+    fun getPreferenceCategories(): List<PreferenceCategory>? {
+        return dynamicApp.preferences
     }
 
     @Composable
@@ -127,7 +141,7 @@ class DynamicConfig(private val context: Context) {
     fun getBackgroundColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.backgroundColor,
-            MaterialTheme.colorScheme.onPrimary
+            MaterialTheme.colorScheme.background
         )
     }
 
@@ -135,7 +149,7 @@ class DynamicConfig(private val context: Context) {
     fun getPrimaryTextOnBackGroundColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.primaryTextOnBackgroundColor,
-            MaterialTheme.colorScheme.onPrimary
+            MaterialTheme.colorScheme.onBackground
         )
     }
 
@@ -143,7 +157,7 @@ class DynamicConfig(private val context: Context) {
     fun getSecondaryTextOnBackgroundColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.secondaryTextOnBackgroundColor,
-            MaterialTheme.colorScheme.onPrimary
+            MaterialTheme.colorScheme.onBackground
         )
     }
 

@@ -7,10 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.cb.cbcommon.BaseApplication
 import com.cb.cbtools.preference.CbPreference
-import com.cb.cbtools.dynamic.util.buildDynamicApp
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalAnimationApi
@@ -20,12 +19,10 @@ fun SettingsScreen(
     activity: Activity
 ) {
 
-    val preferencesScreen = buildDynamicApp(LocalContext.current)
-
     Column(modifier = Modifier.fillMaxSize()) {
         CbPreference.SettingsScreen(
             navController = navController,
-            preferencesScreen = preferencesScreen,
+            dynamicConfig = BaseApplication.getInstance().dynamicConfig,
             activity = activity
         )
     }

@@ -1,7 +1,6 @@
 {
-  "sharedPrefName": "CB_SETTINGS",
+  "appName": "Application",
   "dynamicStyle": {
-    "appName": "Application",
     "titleColor": {
       "type": "default",
       "value": "Black"

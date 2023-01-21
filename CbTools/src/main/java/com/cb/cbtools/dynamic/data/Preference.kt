@@ -1,11 +1,11 @@
 package com.cb.cbtools.dynamic.data
 
-import com.cb.cbtools.dynamic.constants.PreferenceType
+import com.cb.cbtools.dynamic.constants.ActionType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Preference(
-    @SerializedName("type") @Expose var type: PreferenceType = PreferenceType.DEFAULT,
+    @SerializedName("type") @Expose var type: ActionType = ActionType.DEFAULT,
     @SerializedName("title") @Expose var title: String? = null,
     @SerializedName("summary") @Expose var summary: String? = null,
     @SerializedName("action") @Expose var action: Array<String>? = null,
