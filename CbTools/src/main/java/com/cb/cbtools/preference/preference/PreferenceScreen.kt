@@ -132,6 +132,12 @@ fun PreferenceCategoryComposable(
         )
         preferenceCategory.preferences?.let {
             for (preference in it) {
+                val isChecked = remember {
+                    mutableStateOf(
+                        dynamicConfig.getSharedPreferences()
+                            .getBoolean(preference.pref, true)
+                    )
+                }
                 CbListItem(
                     title = preference.title!!.replace("#APP_NAME#", dynamicConfig.getAppName()),
                     summary = preference.summary?.replace("#APP_NAME#", dynamicConfig.getAppName()),
@@ -144,8 +150,7 @@ fun PreferenceCategoryComposable(
                     ),
                     dynamicConfig = dynamicConfig,
                     actionType = preference.type,
-                    checked = dynamicConfig.getSharedPreferences()
-                        .getBoolean(preference.pref, true),
+                    checked = isChecked,
                     onChange = { value ->
                         dynamicConfig.getSharedPreferences().edit()
                             .putBoolean(preference.pref, value).apply()

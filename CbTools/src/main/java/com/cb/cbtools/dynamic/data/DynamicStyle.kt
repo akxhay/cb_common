@@ -50,9 +50,13 @@ data class DynamicStyle(
     @SerializedName("alertDismissTextColor") @Expose var alertDismissTextColor: DynamicColor? = null,
     @SerializedName("alertDividerColor") @Expose var alertDividerColor: DynamicColor? = null,
 
-    @SerializedName("searchBarBackgroundColor") @Expose var searchBarBackgroundColor: DynamicColor? = null,
-    @SerializedName("alertContentColor") @Expose var searchBarContentColor: DynamicColor? = null,
-    @SerializedName("searchBarPlaceholderColor") @Expose var searchBarPlaceholderColor: DynamicColor? = null,
-    @SerializedName("searchBarCursorColor") @Expose var searchBarCursorColor: DynamicColor? = null,
-)
+    @SerializedName("inputTextBackgroundColor") @Expose var inputTextBackgroundColor: DynamicColor? = null,
+    @SerializedName("inputTextContentColor") @Expose var inputTextContentColor: DynamicColor? = null,
+    @SerializedName("inputTextPlaceholderColor") @Expose var inputTextPlaceholderColor: DynamicColor? = null,
+    @SerializedName("inputTextCursorColor") @Expose var inputTextCursorColor: DynamicColor? = null,
+    @SerializedName("inputTextFocusedColor") @Expose var inputTextFocusedColor: DynamicColor? = null,
+    @SerializedName("inputTextUnFocusedColor") @Expose var inputTextUnFocusedColor: DynamicColor? = null,
+    @SerializedName("inputTextErrorColor") @Expose var inputTextErrorColor: DynamicColor? = null,
+
+    )
 

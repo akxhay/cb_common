@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.route.Screen
 import com.cb.cbtools.composables.CBTextInputWithError
 import java.util.*
@@ -60,30 +61,31 @@ fun HomeScreen(
             Text(text = text.value)
 
             CBTextInputWithError(
-                modifier = Modifier,
                 label = "input",
                 input = text,
                 error = error,
-                horizontalPadding = 10.dp,
-                onValueChange = onValueChange
+                onValueChange = onValueChange,
+                dynamicConfig = BaseApplication.getInstance().dynamicConfig,
+                horizontalPadding = 10.dp
             )
             ListItem(
                 headlineText = {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         CBTextInputWithError(
-                            modifier = Modifier,
                             label = "input",
                             input = text,
                             error = error,
-                            onValueChange = onValueChange
+                            onValueChange = onValueChange,
+                            dynamicConfig = BaseApplication.getInstance().dynamicConfig
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         CBTextInputWithError(
-                            modifier = Modifier,
                             label = "input",
                             input = text,
                             error = error,
-                            onValueChange = onValueChange
+                            onValueChange = onValueChange,
+                            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+
                         )
                     }
                 },

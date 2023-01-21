@@ -50,7 +50,7 @@ fun CBSearchBarUI(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    color = dynamicConfig.getSearchBarBackgroundColor()
+                    color = dynamicConfig.getInputTextBackgroundColor()
                 )
         ) {
 

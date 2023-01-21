@@ -7,12 +7,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.cb.cbtools.dynamic.data.DynamicApp
-import com.cb.cbtools.dynamic.data.DynamicColor
 import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ColorResolver
 import com.cb.cbtools.dynamic.util.buildDynamicApp
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 
 class DynamicConfig(private val context: Context) {
     private lateinit var dynamicApp: DynamicApp
@@ -294,35 +291,57 @@ class DynamicConfig(private val context: Context) {
     }
 
     @Composable
-    fun getSearchBarBackgroundColor(): Color {
+    fun getInputTextBackgroundColor(): Color {
         return ColorResolver.getColor(
-            color = dynamicApp.style.searchBarBackgroundColor,
+            color = dynamicApp.style.inputTextBackgroundColor,
             MaterialTheme.colorScheme.surface
         )
     }
 
     @Composable
-    fun getSearchBarContentColor(): Color {
+    fun getInputTextContentColor(): Color {
         return ColorResolver.getColor(
-            color = dynamicApp.style.searchBarContentColor,
-            MaterialTheme.colorScheme.onPrimary
+            color = dynamicApp.style.inputTextContentColor,
+            MaterialTheme.colorScheme.onSurface
         )
     }
 
     @Composable
-    fun getSearchBarPlaceholderColor(): Color {
+    fun getInputTextPlaceholderColor(): Color {
         return ColorResolver.getColor(
-            color = dynamicApp.style.searchBarPlaceholderColor,
+            color = dynamicApp.style.inputTextPlaceholderColor,
+            MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+
+    @Composable
+    fun getInputTextCursorColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.inputTextCursorColor,
+            MaterialTheme.colorScheme.onSurface
+        )
+    }
+
+    @Composable
+    fun getInputTextFocusedColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.inputTextFocusedColor,
             MaterialTheme.colorScheme.primary
         )
     }
 
     @Composable
-    fun getSearchBarCursorColor(): Color {
+    fun getInputTextUnFocusedColor(): Color {
         return ColorResolver.getColor(
-            color = dynamicApp.style.searchBarCursorColor,
-            MaterialTheme.colorScheme.primary
+            color = dynamicApp.style.inputTextUnFocusedColor,
+            MaterialTheme.colorScheme.secondary
         )
     }
-
+    @Composable
+    fun getInputTextErrorColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.inputTextErrorColor,
+            MaterialTheme.colorScheme.error
+        )
+    }
 }
