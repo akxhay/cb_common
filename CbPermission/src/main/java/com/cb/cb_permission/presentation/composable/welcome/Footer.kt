@@ -20,8 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cb.cb_permission.constants.ConstantSetUp
-import com.cb.cb_permission.presentation.utils.PermissionUtil
+import com.cb.cbtools.permission.constants.ConstantSetUp
+import com.cb.cbtools.permission.presentation.utils.PermissionUtil
 import com.cb.cbtools.composables.CbAlertDialog
 
 @Composable

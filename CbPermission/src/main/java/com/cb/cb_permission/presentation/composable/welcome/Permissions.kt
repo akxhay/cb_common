@@ -18,10 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
-import com.cb.cb_permission.constants.ConstantSetUp
+import com.cb.cbtools.permission.constants.ConstantSetUp
 import com.cb.cb_permission.constants.Constants
-import com.cb.cb_permission.presentation.utils.CustomToast
-import com.cb.cb_permission.presentation.utils.PermissionUtil
+import com.cb.cbtools.permission.presentation.utils.CustomToast
+import com.cb.cbtools.permission.presentation.utils.PermissionUtil
 import com.cb.cbtools.composables.CbAlertDialog
 import com.google.accompanist.permissions.*
 

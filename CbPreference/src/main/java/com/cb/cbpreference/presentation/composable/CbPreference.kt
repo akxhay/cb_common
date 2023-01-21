@@ -3,9 +3,8 @@ package com.cb.cbpreference.presentation.composable
 import android.app.Activity
 import androidx.compose.runtime.*
 import androidx.navigation.NavController
-import com.cb.cbpreference.data.PreferenceScreen
-import com.cb.cbpreference.presentation.composable.preference.PreferenceScreenComposable
-import kotlinx.coroutines.delay
+import com.cb.cbtools.customise.data.PreferenceScreen
+import com.cb.cbtools.preference.preference.PreferenceScreenComposable
 
 object CbPreference {
     @Composable

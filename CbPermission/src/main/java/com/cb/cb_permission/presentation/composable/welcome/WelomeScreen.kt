@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.cb.cb_permission.presentation.composable.common.*
-import com.cb.cb_permission.presentation.utils.PermissionButton
+import com.cb.cbtools.permission.presentation.utils.PermissionButton
 
 @RequiresApi(Build.VERSION_CODES.M)
 @Composable

@@ -23,11 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cb.cbpreference.constants.PreferenceType
-import com.cb.cbpreference.data.Preference
-import com.cb.cbpreference.data.PreferenceIcon
-import com.cb.cbpreference.data.PreferenceScreen
-import com.cb.cbpreference.util.IconResolver
+import com.cb.cbtools.customise.constants.PreferenceType
+import com.cb.cbtools.customise.data.Preference
+import com.cb.cbtools.customise.data.PreferenceIcon
+import com.cb.cbtools.customise.data.PreferenceScreen
+import com.cb.cbtools.customise.util.IconResolver
 
 
 @Composable

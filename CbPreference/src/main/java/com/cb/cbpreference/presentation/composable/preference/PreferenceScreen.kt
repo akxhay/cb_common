@@ -15,12 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.cb.cbpreference.data.PreferenceCategory
-import com.cb.cbpreference.data.PreferenceScreen
-import com.cb.cbpreference.data.PreferenceStyle
-import com.cb.cbpreference.util.ActionResolver
-import com.cb.cbpreference.util.ColorResolver
-import com.cb.cbpreference.util.IconResolver
+import com.cb.cbtools.customise.data.PreferenceCategory
+import com.cb.cbtools.customise.data.PreferenceScreen
+import com.cb.cbtools.customise.data.PreferenceStyle
+import com.cb.cbtools.customise.util.ActionResolver
+import com.cb.cbtools.customise.util.ColorResolver
+import com.cb.cbtools.customise.util.IconResolver
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

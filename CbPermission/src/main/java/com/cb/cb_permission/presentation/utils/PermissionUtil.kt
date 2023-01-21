@@ -11,11 +11,11 @@ import android.os.PowerManager
 import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import com.cb.cb_permission.constants.ConstantSetUp.canPermissionSkipped
-import com.cb.cb_permission.constants.ConstantSetUp.getPermissionAskMap
-import com.cb.cb_permission.constants.ConstantSetUp.getPermissionResolver
+import com.cb.cbtools.permission.constants.ConstantSetUp.canPermissionSkipped
+import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionAskMap
+import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionResolver
 import com.cb.cb_permission.constants.Constants
-import com.cb.cb_permission.presentation.utils.CustomToast.showToast
+import com.cb.cbtools.permission.presentation.utils.CustomToast.showToast
 
 object PermissionUtil {
     private const val CB_PERMISSIONS_SKIPPED = "CB_PERMISSIONS_SKIPPED"

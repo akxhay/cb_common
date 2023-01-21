@@ -30,7 +30,10 @@ import com.cb.cbcommon.route.Screen
 import com.cb.cbcommon.screen.HomeScreen
 import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
-import com.cb.cbcpp.presentation.component.*
+import com.cb.cbtools.ccp.component.CbCCC
+import com.cb.cbtools.ccp.component.getFullPhoneNumber
+import com.cb.cbtools.ccp.component.isPhoneNumber
+
 import com.cb.cbtools.composables.CbAlertDialog
 
 class MainActivity : ComponentActivity() {

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import com.cb.cb_permission.presentation.composable.welcome.PermissionScreen
+import com.cb.cbtools.permission.presentation.composable.welcome.PermissionScreen
 import kotlinx.coroutines.delay
 
 object CbPermission {
