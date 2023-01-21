@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.route.Screen
-import com.cb.cbtools.composables.TextInputWithError
+import com.cb.cbtools.composables.CBTextInputWithError
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +59,7 @@ fun HomeScreen(
             }
             Text(text = text.value)
 
-            TextInputWithError(
+            CBTextInputWithError(
                 modifier = Modifier,
                 label = "input",
                 input = text,
@@ -70,7 +70,7 @@ fun HomeScreen(
             ListItem(
                 headlineText = {
                     Column(modifier = Modifier.fillMaxWidth()) {
-                        TextInputWithError(
+                        CBTextInputWithError(
                             modifier = Modifier,
                             label = "input",
                             input = text,
@@ -78,7 +78,7 @@ fun HomeScreen(
                             onValueChange = onValueChange
                         )
                         Spacer(modifier = Modifier.height(2.dp))
-                        TextInputWithError(
+                        CBTextInputWithError(
                             modifier = Modifier,
                             label = "input",
                             input = text,

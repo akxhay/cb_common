@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextInputWithError(
+fun CBTextInputWithError(
     label: String,
     input: MutableState<String>,
     error: MutableState<String?>,

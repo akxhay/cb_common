@@ -66,7 +66,10 @@ fun PermissionDialog(
 
     CbDecisionDialog(
         showAlert = showPermissionAlert,
-        onConfirmClick = action,
+        onConfirmClick = {
+            showPermissionAlert.value = false
+            action()
+        },
         title = title,
         text = text,
         confirmText = confirmButtonText.value,
