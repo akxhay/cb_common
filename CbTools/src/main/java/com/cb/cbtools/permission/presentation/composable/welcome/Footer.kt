@@ -4,23 +4,18 @@ import android.app.Activity
 import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.cb.cbtools.composables.CbAlertDialog
+import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.composables.CbDecisionDialog
 import com.cb.cbtools.permission.constants.ConstantSetUp
 import com.cb.cbtools.permission.presentation.utils.PermissionUtil
 
@@ -29,8 +24,7 @@ fun Footer(
     context: Activity,
     currentPermission: String,
     onclickSkip: () -> Unit,
-    skipButtonColor: Color,
-    skipButtonTextColor: Color
+    dynamicConfig: DynamicConfig
 ) {
     val density = LocalDensity.current
 
@@ -80,69 +74,27 @@ fun Footer(
                         text = "Skip >>",
 
                         style = TextStyle(
-                            color = skipButtonTextColor,
+                            color = dynamicConfig.getWelcomeScreenSkipTextColor(),
                             textDecoration = TextDecoration.Underline,
                         ),
                     )
                 }
             }
-
-
-            if (showSkipAlert.value) {
-                CbAlertDialog(
-                    showAlert = showSkipAlert,
-                    onPositiveClick = {
-                        showSkipAlert.value = false
-                        PermissionUtil.skipPermission(
-                            currentPermission = currentPermission,
-                            context = context
-                        )
-                        onclickSkip()
-                    },
-                    title = "Skip Optional permission",
-                    body = {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Some feature might not work as expected",
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    },
-                    positiveText = "Proceed anyway"
-                )
-            }
         }
-    }
-}
-
-@Composable
-fun SmallButton(
-    modifier: Modifier = Modifier,
-    text: String,
-    onClick: () -> Unit,
-    skipButtonBackground: Color,
-    skipButtonTextColor: Color
-) {
-
-    Box(
-        modifier
-            .size(100.dp, 50.dp),
-        Alignment.Center
-    ) {
-        Button(
-            onClick = onClick,
-            shape = RoundedCornerShape(10.dp),
-        ) {
-            Text(
-                text = text,
-                style = TextStyle(
-                    textAlign = TextAlign.Justify,
-                    color = skipButtonTextColor,
-                    fontSize = 20.sp
-                ),
+        if (showSkipAlert.value) {
+            CbDecisionDialog(
+                showAlert = showSkipAlert,
+                onPositiveClick = {
+                    PermissionUtil.skipPermission(
+                        currentPermission = currentPermission,
+                        context = context
+                    )
+                    onclickSkip()
+                },
+                title = "Skip Optional permission",
+                text = "Some feature might not work as expected",
+                confirmText = "Proceed anyway",
+                dynamicConfig = dynamicConfig
             )
         }
     }

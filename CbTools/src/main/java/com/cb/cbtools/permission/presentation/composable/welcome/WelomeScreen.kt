@@ -6,11 +6,11 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import com.cb.cbcommon.DynamicConfig
 import com.cb.cbtools.permission.presentation.utils.PermissionButton
 
 @RequiresApi(Build.VERSION_CODES.M)
@@ -23,25 +23,18 @@ fun PermissionScreen(
     appName: String,
     appDesc: String,
     onclickSkip: () -> Unit,
-    appNameColor: Color,
-    appDescColor: Color,
-    permissionCardBackground: Color,
-    permissionTextColor: Color,
-    skipButtonColor: Color,
-    skipButtonTextColor: Color,
-    backgroundColor: Color
+    dynamicConfig: DynamicConfig
 ) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = backgroundColor)
+            .background(color = dynamicConfig.getWelcomeScreenBackgroundColor())
     ) {
         AppInfo(
             appIcon = appIcon,
             appName = appName,
-            appNameColor = appNameColor,
             appDesc = appDesc,
-            appDescColor = appDescColor
+            dynamicConfig = dynamicConfig
         )
         PermissionButton(
             appName = appName,
@@ -50,15 +43,14 @@ fun PermissionScreen(
             currentPermission = currentPermission,
             modifier = Modifier
                 .weight(10f),
-            permissionCardBackground = permissionCardBackground,
-            permissionTextColor = permissionTextColor
+            dynamicConfig = dynamicConfig
+
         )
         Footer(
             context = context,
             currentPermission = currentPermission,
             onclickSkip = onclickSkip,
-            skipButtonColor = skipButtonColor,
-            skipButtonTextColor = skipButtonTextColor
+            dynamicConfig = dynamicConfig
         )
     }
 }
@@ -67,28 +59,23 @@ fun PermissionScreen(
 fun AppInfo(
     @DrawableRes appIcon: Int,
     appName: String,
-    appNameColor: Color,
     appDesc: String,
-    appDescColor: Color
+    dynamicConfig: DynamicConfig
 ) {
     Column {
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
+        WelcomeInfoSpacer()
+        WelcomeInfoIcon(appIcon = appIcon)
+        WelcomeInfoSpacer()
+        WelcomeInfoText(
+            text = appName,
+            color = dynamicConfig.getWelcomeScreenTitleColor(),
+            style = MaterialTheme.typography.displaySmall
         )
-        AppIconBox(appIcon = appIcon)
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(20.dp)
+        WelcomeInfoSpacer()
+        WelcomeInfoText(
+            text = appDesc,
+            color = dynamicConfig.getWelcomeScreenSummaryColor(),
+            style = MaterialTheme.typography.bodyLarge
         )
-        AppNameBox(appName = appName, appNameColor = appNameColor)
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(20.dp)
-        )
-        AppDescBox(appDesc = appDesc, appDescColor = appDescColor)
     }
 }

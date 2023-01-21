@@ -1,5 +1,6 @@
 package com.cb.cbtools.permission.presentation.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,13 +10,13 @@ import android.os.Build
 import android.os.Environment
 import android.os.PowerManager
 import android.provider.Settings
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.cb.cb_permission.constants.Constants
 import com.cb.cbtools.permission.constants.ConstantSetUp.canPermissionSkipped
 import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionAskMap
 import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionResolver
-import com.cb.cbtools.permission.presentation.utils.CustomToast.showToast
 
 object PermissionUtil {
     private const val CB_PERMISSIONS_SKIPPED = "CB_PERMISSIONS_SKIPPED"
@@ -89,20 +90,25 @@ object PermissionUtil {
                 ))
             ) {
                 if (!navigateAnyways) {
-                    showToast(context, "Please Enable Notification access for $appName")
+                    Toast.makeText(
+                        context,
+                        "Please Enable Notification access for $appName",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 val intent = Intent(
                     "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"
                 )
                 context.startActivity(intent)
             } else {
-                showToast(context, "Already permitted")
+                Toast.makeText(context, "Already permitted", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             val linNumber = Thread.currentThread().stackTrace[2].lineNumber
         }
     }
 
+    @SuppressLint("BatteryLife")
     @RequiresApi(api = Build.VERSION_CODES.M)
     fun requestIgnoreBatteryOptimization(context: Activity) {
         try {
@@ -115,7 +121,7 @@ object PermissionUtil {
                     .setData(Uri.parse("package:" + context.packageName))
                 context.startActivity(intent)
             } else {
-                showToast(context, "Already permitted")
+                Toast.makeText(context, "Already permitted", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             val linNumber = Thread.currentThread().stackTrace[2].lineNumber

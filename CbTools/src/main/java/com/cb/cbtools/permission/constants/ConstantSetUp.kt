@@ -134,7 +134,7 @@ object ConstantSetUp {
         map[Constants.writeExternalStorage] = "Provide access to storage"
         map[Constants.manageExternalStoragePermission] = "Provide access to all files"
         map[Constants.batteryOptimization] = "Ignore Battery optimization"
-        map[Constants.notificationAccess] = "provide access to Notifications"
+        map[Constants.notificationAccess] = "Provide access to Notifications"
         map[Constants.postNotification] = "Allow us to notify you"
 
         return map

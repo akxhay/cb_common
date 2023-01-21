@@ -25,7 +25,6 @@ fun HomeScreen(
     navController: NavController,
     darkTheme: MutableState<Boolean>,
 ) {
-    BaseApplication.getInstance().dynamicConfig.getDynamicAppStyle().appbarTitleColor
     Scaffold(
         topBar = {
             TopAppBar(

@@ -7,35 +7,31 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.cb.cbcommon.DynamicConfig
 import com.cb.cbtools.permission.constants.ConstantSetUp
 import com.cb.cbtools.permission.presentation.composable.welcome.PermissionDialog
+import com.cb.cbtools.permission.presentation.composable.welcome.WelcomeInfoText
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.M)
 @Composable
 fun PermissionButton(
     context: Activity,
+    appName: String,
     visiblePermission: MutableState<Boolean>,
     currentPermission: String,
     modifier: Modifier,
-    permissionCardBackground: Color,
-    permissionTextColor: Color,
-    appName: String
+    dynamicConfig: DynamicConfig
 ) {
     val density = LocalDensity.current
     val showPermissionAlert = remember {
@@ -70,63 +66,39 @@ fun PermissionButton(
                         .clickable {
                             showPermissionAlert.value = true
                         },
-                    backgroundColor = permissionCardBackground,
-                    elevation = 20.dp,
+                    elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
                     shape = RoundedCornerShape(12.dp),
                 )
                 {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp, vertical = 6.dp)
-                                .fillMaxWidth()
-                                .height(42.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-
-//                            Image(
-//                                painterResource(ConstantSetUp.getPermissionDrawable()[currentPermission]!!),
-//                                contentDescription = "",
-//                                contentScale = ContentScale.Crop,
-//                                modifier = Modifier.size(30.dp)
-//                            )
-
+                    ListItem(
+                        colors = ListItemDefaults.colors(containerColor = dynamicConfig.getWelcomeScreenCardBackgroundColor()),
+                        headlineText = {
+                            WelcomeInfoText(
+                                text = ConstantSetUp.getPermissionButtonText()[currentPermission].toString(),
+                                color = dynamicConfig.getWelcomeScreenCardContentColor(),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        leadingContent = ({
                             Icon(
                                 imageVector = ConstantSetUp.getPermissionIcon()[currentPermission]!!,
                                 contentDescription = "icon",
-                                tint = permissionTextColor
+                                tint = dynamicConfig.getWelcomeScreenCardContentColor()
                             )
-                            Spacer(
-                                modifier = Modifier
-                                    .width(7.dp)
-                            )
-                            Text(
-                                modifier = Modifier
-                                    .padding(horizontal = 5.dp),
-                                text = ConstantSetUp.getPermissionButtonText()[currentPermission].toString(),
-                                style = TextStyle(
-                                    textAlign = TextAlign.Center,
-                                    color = permissionTextColor,
-                                    fontSize = 15.sp
-                                ),
-                            )
-                        }
-                    }
+                        })
+
+                    )
                 }
             }
-            if (showPermissionAlert.value) {
-                PermissionDialog(
-                    appName,
-                    context,
-                    currentPermission,
-                    showPermissionAlert,
-                )
-            }
+        }
+        if (showPermissionAlert.value) {
+            PermissionDialog(
+                appName,
+                context,
+                currentPermission,
+                showPermissionAlert,
+                dynamicConfig
+            )
         }
 
     }

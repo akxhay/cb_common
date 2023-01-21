@@ -5,9 +5,8 @@ import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
+import com.cb.cbcommon.DynamicConfig
 import com.cb.cbtools.permission.presentation.composable.welcome.PermissionScreen
 import kotlinx.coroutines.delay
 
@@ -22,13 +21,7 @@ object CbPermission {
         appName: String,
         appDesc: String,
         onclickSkip: () -> Unit,
-        appNameColor: Color = MaterialTheme.colorScheme.onSurface,
-        appDescColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
-        permissionCardBackground: Color = MaterialTheme.colorScheme.primary,
-        permissionTextColor: Color = MaterialTheme.colorScheme.onPrimary,
-        skipButtonColor: Color = MaterialTheme.colorScheme.secondary,
-        skipButtonTextColor: Color = MaterialTheme.colorScheme.primary,
-        backgroundColor: Color = MaterialTheme.colorScheme.surface
+        dynamicConfig: DynamicConfig
     ) {
         val visiblePermission = remember { mutableStateOf(false) }
         LaunchedEffect(visiblePermission) {
@@ -45,13 +38,7 @@ object CbPermission {
             appName = appName,
             appDesc = appDesc,
             onclickSkip = onclickSkip,
-            appNameColor = appNameColor,
-            appDescColor = appDescColor,
-            permissionCardBackground = permissionCardBackground,
-            permissionTextColor = permissionTextColor,
-            skipButtonColor = skipButtonColor,
-            skipButtonTextColor = skipButtonTextColor,
-            backgroundColor = backgroundColor
+            dynamicConfig = dynamicConfig
         )
     }
 }

@@ -4,8 +4,9 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,55 +16,39 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun AppNameBox(
-    appName: String,
-    appNameColor: Color
+fun WelcomeInfoText(
+    text: String,
+    style: TextStyle,
+    color: Color
 ) {
     Box(
         Modifier
-            .fillMaxWidth()
-            .height(30.dp),
+            .fillMaxWidth(),
         Alignment.Center
     ) {
         Text(
-            text = appName,
-            style = TextStyle(
-                textAlign = TextAlign.Center,
-                color = appNameColor,
-                fontSize = 20.sp
-            ),
+            textAlign = TextAlign.Center,
+            text = text,
+            style = style,
+            color = color
         )
     }
 }
 
 @Composable
-fun AppDescBox(
-    appDesc: String,
-    appDescColor: Color
-) {
-    Box(
-        Modifier
+fun WelcomeInfoSpacer() {
+    Spacer(
+        modifier = Modifier
             .fillMaxWidth()
-            .height(30.dp),
-        Alignment.Center
-    ) {
-        Text(
-            text = appDesc,
-            style = TextStyle(
-                textAlign = TextAlign.Center,
-                color = appDescColor,
-                fontSize = 20.sp
-            ),
-        )
-    }
+            .height(20.dp)
+    )
 }
 
 @Composable
-fun AppIconBox(
+fun WelcomeInfoIcon(
     @DrawableRes appIcon: Int
 ) {
     Box(
@@ -75,7 +60,7 @@ fun AppIconBox(
         Card(
             modifier = Modifier.size(100.dp),
             shape = CircleShape,
-            elevation = 2.dp
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
         ) {
             Image(
                 painterResource(appIcon),
