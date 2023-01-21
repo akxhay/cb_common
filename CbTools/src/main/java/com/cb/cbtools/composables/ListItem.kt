@@ -28,6 +28,7 @@ fun CbListItem(
     summary: String?,
     primaryBitmap: ImageBitmap?,
     primaryImageVector: ImageVector?,
+    primaryDrawable: Drawable? = null,
     secondaryDrawable: Drawable? = null,
     primaryIconSize: Dp = 30.dp,
     dynamicConfig: DynamicConfig,
@@ -80,13 +81,21 @@ fun CbListItem(
                             contentDescription = "dp",
                             tint = dynamicConfig.getIconTintOnBackgroundColor()
                         )
-                    } else {
+                    } else if (primaryBitmap != null) {
                         Image(
-                            painter = BitmapPainter(image = primaryBitmap!!),
+                            painter = BitmapPainter(image = primaryBitmap),
                             contentDescription = "dp",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.size(primaryIconSize)
-
+                        )
+                    } else {
+                        Image(
+                            painter = rememberDrawablePainter(
+                                drawable = primaryDrawable
+                            ),
+                            contentScale = ContentScale.Fit,
+                            contentDescription = "dp",
+                            modifier = Modifier.size(primaryIconSize)
                         )
                     }
                 }
