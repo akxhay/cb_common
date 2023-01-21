@@ -19,11 +19,12 @@ import com.cb.cbcommon.DynamicConfig
 @Composable
 fun CbGenericDialog(
     showAlert: MutableState<Boolean>,
-    onPositiveClick: () -> Unit,
+    onConfirmClick: () -> Unit,
     title: String,
     text: @Composable () -> Unit,
     confirmText: String = "Ok",
     dismissText: String = "Cancel",
+    showDivider: Boolean = true,
     dynamicConfig: DynamicConfig
 ) {
     AlertDialog(
@@ -45,8 +46,9 @@ fun CbGenericDialog(
             {
                 TextButton(
                     onClick = {
-                        showAlert.value = false
-                        onPositiveClick()
+                        //may not be required in case of validation
+//                        showAlert.value = false
+                        onConfirmClick()
                     }
                 )
                 {
@@ -74,7 +76,8 @@ fun CbGenericDialog(
             Column() {
                 AlertTitleText(text = title, color = dynamicConfig.getAlertTitleColor())
                 Spacer(modifier = Modifier.height(10.dp))
-                Divider(color = dynamicConfig.getAlertDividerColor(), thickness = 1.dp)
+                if (showDivider)
+                    Divider(color = dynamicConfig.getAlertDividerColor(), thickness = 1.dp)
             }
         },
         text = {
@@ -88,7 +91,7 @@ fun CbGenericDialog(
 @Composable
 fun CbDecisionDialog(
     showAlert: MutableState<Boolean>,
-    onPositiveClick: () -> Unit,
+    onConfirmClick: () -> Unit,
     title: String,
     text: String,
     confirmText: String = "Ok",
@@ -97,7 +100,7 @@ fun CbDecisionDialog(
 ) {
     CbGenericDialog(
         showAlert = showAlert,
-        onPositiveClick = onPositiveClick,
+        onConfirmClick = onConfirmClick,
         title = title,
         confirmText = confirmText,
         dismissText = dismissText,

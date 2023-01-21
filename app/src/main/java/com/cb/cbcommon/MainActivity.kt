@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
         val phoneNumber = rememberSaveable { mutableStateOf("") }
         CbGenericDialog(
             showAlert = showAlert,
-            onPositiveClick = {
+            onConfirmClick = {
                 if (!isPhoneNumber()) {
                     Toast.makeText(context, getFullPhoneNumber(), Toast.LENGTH_SHORT).show()
                 } else {

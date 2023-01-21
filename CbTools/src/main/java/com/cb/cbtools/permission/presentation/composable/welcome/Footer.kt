@@ -84,7 +84,7 @@ fun Footer(
         if (showSkipAlert.value) {
             CbDecisionDialog(
                 showAlert = showSkipAlert,
-                onPositiveClick = {
+                onConfirmClick = {
                     PermissionUtil.skipPermission(
                         currentPermission = currentPermission,
                         context = context
