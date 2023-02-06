@@ -6,7 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
-import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.permission.presentation.composable.welcome.PermissionScreen
 import kotlinx.coroutines.delay
 

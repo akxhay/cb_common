@@ -8,33 +8,28 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.cb.cbtools.R
+import androidx.compose.ui.window.DialogProperties
+import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.ccp.data.CountryData
 import com.cb.cbtools.ccp.data.utils.getCountryName
 import com.cb.cbtools.ccp.data.utils.getFlags
 import com.cb.cbtools.ccp.data.utils.getLibCountries
 import com.cb.cbtools.ccp.utils.searchCountry
+import com.cb.cbtools.composables.CbTextInputBasic
 import java.util.*
 
 
@@ -47,7 +42,7 @@ fun CountryCodeDialog(
     pickedCountry: (CountryData) -> Unit,
     showFlag: Boolean = true,
     showCountryName: Boolean = true,
-
+    dynamicConfig: DynamicConfig
     ) {
     val context = LocalContext.current
 
@@ -84,22 +79,21 @@ fun CountryCodeDialog(
             }
             if (showCountryName) {
                 Text(
-                    text = isPickCountry.countryCode.uppercase(Locale.ENGLISH),
-                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(start = 6.dp)
                         .padding(horizontal = 5.dp),
-                    fontSize = 18.sp,
-                    color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface,
+                    text = isPickCountry.countryCode.uppercase(Locale.ENGLISH),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = dynamicConfig.getAlertContentColor(),
                 )
             }
             if (showCountryCode) {
                 Text(
-                    text = isPickCountry.countryPhoneCode,
-                    fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 6.dp),
-                    fontSize = 18.sp,
-                    color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface,
+
+                    text = isPickCountry.countryPhoneCode,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = dynamicConfig.getAlertContentColor(),
                 )
                 Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
             }
@@ -117,13 +111,14 @@ fun CountryCodeDialog(
                     pickedCountry(countryItem)
                     isPickCountry = countryItem
                     isOpenDialog = false
-                }
+                },
+                dynamicConfig = dynamicConfig
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun CountryDialog(
     modifier: Modifier = Modifier,
@@ -132,17 +127,20 @@ fun CountryDialog(
     onSelected: (item: CountryData) -> Unit,
     context: Context,
     dialogStatus: Boolean,
+    dynamicConfig: DynamicConfig
 ) {
     var searchValue by remember { mutableStateOf("") }
     if (!dialogStatus) searchValue = ""
 
     Dialog(
+        properties = DialogProperties(usePlatformDefaultWidth = false),
         onDismissRequest = onDismissRequest,
         content = {
             Surface(
-                color = MaterialTheme.colorScheme.onSurface,
+                color = dynamicConfig.getAlertBackgroundColor(),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(20.dp)
                     .clip(RoundedCornerShape(25.dp))
             ) {
                 Scaffold { scaffold ->
@@ -152,24 +150,12 @@ fun CountryDialog(
                             .fillMaxSize()
                             .padding(vertical = 10.dp)
                     ) {
-                        SearchTextField(
+                        CbTextInputBasic(
                             value = searchValue, onValueChange = { searchValue = it },
-                            textColor = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 16.sp,
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Search,
-                                    contentDescription = "Search",
-                                    tint = MaterialTheme.colorScheme.onSurface,
-                                    modifier = Modifier.padding(horizontal = 3.dp)
-                                )
-                            },
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(50))
-                                .height(40.dp),
+                            dynamicConfig = dynamicConfig,
+                            isSearchbar = true
                         )
                         Spacer(modifier = Modifier.height(10.dp))
-
                         LazyColumn {
                             items(
                                 if (searchValue.isEmpty()) countryList else countryList.searchCountry(
@@ -194,66 +180,20 @@ fun CountryDialog(
                                         ), contentDescription = null
                                     )
                                     Text(
+                                        modifier = Modifier.padding(horizontal = 18.dp),
+
                                         text = countryItem.countryPhoneCode + " " +
                                                 stringResource(id = getCountryName(countryItem.countryCode.lowercase())),
-                                        Modifier.padding(horizontal = 18.dp),
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily.Serif,
+                                        color = dynamicConfig.getAlertContentColor(),
+                                        style = MaterialTheme.typography.bodyMedium
                                     )
                                 }
                             }
                         }
                     }
-
                 }
-
             }
         },
     )
 }
 
-
-@Composable
-private fun SearchTextField(
-    modifier: Modifier = Modifier,
-    leadingIcon: (@Composable () -> Unit)? = null,
-    trailingIcon: (@Composable () -> Unit)? = null,
-    value: String,
-    textColor: Color = Color.Black,
-    onValueChange: (String) -> Unit,
-    hint: String = stringResource(id = R.string.search),
-    fontSize: TextUnit = MaterialTheme.typography.bodyMedium.fontSize
-) {
-    BasicTextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 18.dp),
-        value = value,
-        onValueChange = onValueChange,
-        singleLine = true,
-        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-        textStyle = LocalTextStyle.current.copy(
-            color = textColor,
-            fontSize = fontSize
-        ),
-        decorationBox = { innerTextField ->
-            Row(
-                modifier,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (leadingIcon != null) leadingIcon()
-                Box(Modifier.weight(1f)) {
-                    if (value.isEmpty()) Text(
-                        hint,
-                        style = LocalTextStyle.current.copy(
-                            color = textColor,
-                            fontSize = fontSize
-                        )
-                    )
-                    innerTextField()
-                }
-                if (trailingIcon != null) trailingIcon()
-            }
-        }
-    )
-}

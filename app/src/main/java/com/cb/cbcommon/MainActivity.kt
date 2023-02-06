@@ -31,9 +31,14 @@ import com.cb.cbcommon.screen.HomeScreen
 import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
 import com.cb.cbtools.ccp.component.CbCCC
-import com.cb.cbtools.ccp.component.getFullPhoneNumber
-import com.cb.cbtools.ccp.component.isPhoneNumber
+import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
+import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
+import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
+
 import com.cb.cbtools.composables.CbGenericDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -77,14 +82,54 @@ class MainActivity : ComponentActivity() {
     ) {
         val context = LocalContext.current
         val phoneNumber = rememberSaveable { mutableStateOf("") }
+
+        val phoneCode = rememberSaveable {
+            mutableStateOf(
+                getDefaultPhoneCode(
+                    context
+                )
+            )
+        }
+        val defaultLang = rememberSaveable {
+            mutableStateOf(
+                getDefaultLangCode(context)
+            )
+        }
+        val error: MutableState<String?> = remember {
+            mutableStateOf(
+                if (phoneNumber.value.isEmpty()) {
+                    "Cannot be empty"
+                } else {
+                    null
+                }
+            )
+        }
+        val onValueChange: (String) -> Unit = {
+            phoneNumber.value = it
+            error.value = if (checkPhoneNumber(
+                    phone = phoneNumber.value,
+                    fullPhoneNumber = phoneCode.value + phoneNumber.value,
+                    countryCode = defaultLang.value
+                )
+            ) {
+                "Please enter valid number"
+            } else {
+                null
+            }
+        }
+        val onClearClick: () -> Unit = {
+            onValueChange("")
+        }
+
         CbGenericDialog(
             showAlert = showAlert,
             onConfirmClick = {
-                if (!isPhoneNumber()) {
-                    Toast.makeText(context, getFullPhoneNumber(), Toast.LENGTH_SHORT).show()
+                if (error.value.isNullOrBlank()) {
+                    CoroutineScope(Dispatchers.Default).launch {
+                        Toast.makeText(context, phoneCode.value + phoneNumber.value, Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(context, "Please enter valid number", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(context, error.value, Toast.LENGTH_SHORT).show()
                 }
             },
             title = "Send message without saving number",
@@ -97,12 +142,17 @@ class MainActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     CbCCC(
-                        text = phoneNumber.value,
-                        onValueChange = { phoneNumber.value = it },
+                        phoneCode = phoneCode,
+                        phoneNumber = phoneNumber,
+                        defaultLang = defaultLang,
+                        error = error,
+                        onValueChange = onValueChange,
+                        onClearClick = onClearClick,
+                        dynamicConfig = BaseApplication.getInstance().dynamicConfig
                     )
-
                 }
             },
+            confirmText = "Proceed",
             dynamicConfig = BaseApplication.getInstance().dynamicConfig
         )
     }

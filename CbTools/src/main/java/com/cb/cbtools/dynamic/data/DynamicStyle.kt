@@ -27,7 +27,7 @@ data class DynamicStyle(
     @SerializedName("secondaryTextOnBackgroundColor") @Expose var secondaryTextOnBackgroundColor: DynamicColor? = null,
     @SerializedName("iconTintOnBackgroundColor") @Expose var iconTintOnBackgroundColor: DynamicColor? = null,
 
-    @SerializedName("cardColor") @Expose var cardColor: DynamicColor? = null,
+    @SerializedName("cardBackgroundColor") @Expose var cardBackgroundColor: DynamicColor? = null,
     @SerializedName("cardBorderColor") @Expose var cardBorderColor: DynamicColor? = null,
     @SerializedName("cardShadowColor") @Expose var cardShadowColor: DynamicColor? = null,
     @SerializedName("primaryTextOnCardColor") @Expose var primaryTextOnCardColor: DynamicColor? = null,
@@ -57,6 +57,26 @@ data class DynamicStyle(
     @SerializedName("inputTextFocusedColor") @Expose var inputTextFocusedColor: DynamicColor? = null,
     @SerializedName("inputTextUnFocusedColor") @Expose var inputTextUnFocusedColor: DynamicColor? = null,
     @SerializedName("inputTextErrorColor") @Expose var inputTextErrorColor: DynamicColor? = null,
+    @SerializedName("inputErrorContainerColor") @Expose var inputErrorContainerColor: DynamicColor? = null,
+    @SerializedName("inputTextOnErrorContainerColor") @Expose var inputTextOnErrorContainerColor: DynamicColor? = null,
+
+
+    @SerializedName("sentBubbleColor") @Expose var sentBubbleColor: DynamicColor? = null,
+    @SerializedName("receivedBubbleColor") @Expose var receivedBubbleColor: DynamicColor? = null,
+    @SerializedName("primaryTextOnSentBubbleColor") @Expose var primaryTextOnSentBubbleColor: DynamicColor? = null,
+    @SerializedName("primaryTextOnReceivedBubbleColor") @Expose var primaryTextOnReceivedBubbleColor: DynamicColor? = null,
+    @SerializedName("secondaryTextOnSentBubbleColor") @Expose var secondaryTextOnSentBubbleColor: DynamicColor? = null,
+    @SerializedName("secondaryTextOnReceivedBubbleColor") @Expose var secondaryTextOnReceivedBubbleColor: DynamicColor? = null,
+    @SerializedName("dateBubbleColor") @Expose var dateBubbleColor: DynamicColor? = null,
+    @SerializedName("primaryTextOnDateBubbleColor") @Expose var primaryTextOnDateBubbleColor: DynamicColor? = null,
+    @SerializedName("chatScreenInputBackgroundColor") @Expose var chatScreenInputBackgroundColor: DynamicColor? = null,
+    @SerializedName("chatScreenInputContentColor") @Expose var chatScreenInputContentColor: DynamicColor? = null,
+
+
+    @SerializedName("checkedIconColor") @Expose var checkedIconColor: DynamicColor? = null,
+    @SerializedName("unCheckedIconColor") @Expose var unCheckedIconColor: DynamicColor? = null,
+
+    @SerializedName("urlTextColor") @Expose var urlTextColor: DynamicColor? = null,
 
     )
 

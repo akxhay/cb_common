@@ -1,6 +1,7 @@
 package com.cb.cbcommon
 
 import android.app.Application
+import com.cb.cbtools.dynamic.DynamicConfig
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

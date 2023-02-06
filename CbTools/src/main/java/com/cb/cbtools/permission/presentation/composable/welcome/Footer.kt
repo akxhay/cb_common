@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.composables.CbDecisionDialog
 import com.cb.cbtools.permission.constants.ConstantSetUp
 import com.cb.cbtools.permission.presentation.utils.PermissionUtil

@@ -1,4 +1,4 @@
-package com.cb.cbcommon
+package com.cb.cbtools.dynamic
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.cb.cbtools.dynamic.data.DynamicApp
+import com.cb.cbtools.dynamic.data.DynamicStyle
 import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ColorResolver
 import com.cb.cbtools.dynamic.util.buildDynamicApp
@@ -26,6 +27,10 @@ class DynamicConfig(private val context: Context) {
 
     fun getDynamicApp(): DynamicApp {
         return dynamicApp
+    }
+
+    fun getStyle(): DynamicStyle {
+        return dynamicApp.style
     }
 
     fun getAppName(): String {
@@ -171,10 +176,10 @@ class DynamicConfig(private val context: Context) {
     }
 
     @Composable
-    fun getCardColor(): Color {
+    fun getCardBackgroundColor(): Color {
         return ColorResolver.getColor(
-            color = dynamicApp.style.cardColor,
-            MaterialTheme.colorScheme.onPrimary
+            color = dynamicApp.style.cardBackgroundColor,
+            MaterialTheme.colorScheme.primary
         )
     }
 
@@ -182,7 +187,7 @@ class DynamicConfig(private val context: Context) {
     fun getCardBorderColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.cardBorderColor,
-            MaterialTheme.colorScheme.onPrimary
+            MaterialTheme.colorScheme.primary
         )
     }
 
@@ -190,7 +195,7 @@ class DynamicConfig(private val context: Context) {
     fun getCardShadowColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.cardShadowColor,
-            MaterialTheme.colorScheme.onPrimary
+            MaterialTheme.colorScheme.primary
         )
     }
 
@@ -214,7 +219,7 @@ class DynamicConfig(private val context: Context) {
     fun getRadioCheckedColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.radioCheckedColor,
-            MaterialTheme.colorScheme.onPrimary
+            MaterialTheme.colorScheme.primary
         )
     }
 
@@ -222,7 +227,7 @@ class DynamicConfig(private val context: Context) {
     fun getRadioUnCheckedColor(): Color {
         return ColorResolver.getColor(
             color = dynamicApp.style.radioUnCheckedColor,
-            MaterialTheme.colorScheme.onPrimary
+            MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 
@@ -337,6 +342,25 @@ class DynamicConfig(private val context: Context) {
             MaterialTheme.colorScheme.secondary
         )
     }
+
+    @Composable
+    fun getInputErrorContainerColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.inputErrorContainerColor,
+            MaterialTheme.colorScheme.errorContainer
+        )
+    }
+
+    @Composable
+    fun getTextOnErrorContainerColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.inputTextOnErrorContainerColor,
+            MaterialTheme.colorScheme.onErrorContainer
+        )
+    }
+
+
+
     @Composable
     fun getInputTextErrorColor(): Color {
         return ColorResolver.getColor(
@@ -344,4 +368,104 @@ class DynamicConfig(private val context: Context) {
             MaterialTheme.colorScheme.error
         )
     }
+
+
+    @Composable
+    fun getSentBubbleColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.sentBubbleColor,
+            MaterialTheme.colorScheme.secondaryContainer
+        )
+    }
+
+    @Composable
+    fun getReceivedBubbleColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.receivedBubbleColor,
+            MaterialTheme.colorScheme.tertiaryContainer
+        )
+    }
+
+    @Composable
+    fun getPrimaryTextOnSentBubbleColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.primaryTextOnSentBubbleColor,
+            MaterialTheme.colorScheme.onSecondaryContainer
+        )
+    }
+
+    @Composable
+    fun getPrimaryTextOnReceivedBubbleColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.primaryTextOnReceivedBubbleColor,
+            MaterialTheme.colorScheme.onTertiaryContainer
+        )
+    }
+
+    @Composable
+    fun getSecondaryTextOnSentBubbleColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.secondaryTextOnSentBubbleColor,
+            MaterialTheme.colorScheme.scrim
+        )
+    }
+
+    @Composable
+    fun getSecondaryTextOnReceivedBubbleColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.secondaryTextOnReceivedBubbleColor,
+            MaterialTheme.colorScheme.scrim
+        )
+    }
+
+    @Composable
+    fun getChatScreenInputBackgroundColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.chatScreenInputBackgroundColor,
+            MaterialTheme.colorScheme.primaryContainer
+        )
+    }
+
+    @Composable
+    fun getChatScreenInputContentColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.chatScreenInputContentColor,
+            MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    }
+
+    @Composable
+    fun getDateBubbleColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.dateBubbleColor,
+            MaterialTheme.colorScheme.primaryContainer
+        )
+    }
+
+    @Composable
+    fun getPrimaryTextOnDateBubbleColor() = ColorResolver.getColor(
+        color = getStyle().primaryTextOnDateBubbleColor,
+        defaultColor = MaterialTheme.colorScheme.onPrimaryContainer
+    )
+
+    @Composable
+    fun getCheckedIconColor() = ColorResolver.getColor(
+        color = getStyle().checkedIconColor,
+        defaultColor = MaterialTheme.colorScheme.primary
+    )
+
+    @Composable
+    fun getUnCheckedIconColor() = ColorResolver.getColor(
+        color = getStyle().unCheckedIconColor,
+        defaultColor = MaterialTheme.colorScheme.error
+    )
+
+    @Composable
+    fun getUrlTextColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.urlTextColor,
+            MaterialTheme.colorScheme.outline
+        )
+    }
+
 }

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.route.Screen
-import com.cb.cbtools.composables.CBTextInputWithError
+import com.cb.cbtools.composables.CbTextInputWithError
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,31 +60,36 @@ fun HomeScreen(
             }
             Text(text = text.value)
 
-            CBTextInputWithError(
+            CbTextInputWithError(
                 label = "input",
                 input = text,
                 error = error,
                 onValueChange = onValueChange,
                 dynamicConfig = BaseApplication.getInstance().dynamicConfig,
-                horizontalPadding = 10.dp
+                horizontalPadding = 10.dp,
+                onClearClick = {}
             )
             ListItem(
                 headlineText = {
                     Column(modifier = Modifier.fillMaxWidth()) {
-                        CBTextInputWithError(
+                        CbTextInputWithError(
                             label = "input",
                             input = text,
                             error = error,
                             onValueChange = onValueChange,
-                            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+                            dynamicConfig = BaseApplication.getInstance().dynamicConfig,
+                            onClearClick = {}
+
                         )
                         Spacer(modifier = Modifier.height(2.dp))
-                        CBTextInputWithError(
+                        CbTextInputWithError(
                             label = "input",
                             input = text,
                             error = error,
                             onValueChange = onValueChange,
-                            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+                            dynamicConfig = BaseApplication.getInstance().dynamicConfig,
+                            onClearClick = {}
+
 
                         )
                     }

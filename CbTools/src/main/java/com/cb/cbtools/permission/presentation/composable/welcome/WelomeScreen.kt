@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.permission.presentation.utils.PermissionButton
 
 @RequiresApi(Build.VERSION_CODES.M)

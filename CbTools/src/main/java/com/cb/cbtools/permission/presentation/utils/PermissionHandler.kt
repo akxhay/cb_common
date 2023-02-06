@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.permission.constants.ConstantSetUp
 import com.cb.cbtools.permission.presentation.composable.welcome.PermissionDialog
 import com.cb.cbtools.permission.presentation.composable.welcome.WelcomeInfoText

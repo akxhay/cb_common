@@ -1,7 +1,7 @@
 package com.cb.cbcommon.di
 
 import android.content.Context
-import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.dynamic.DynamicConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

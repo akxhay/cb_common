@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.cb.cbcommon.DynamicConfig
+import com.cb.cbtools.dynamic.DynamicConfig
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -20,6 +20,7 @@ import com.cb.cbcommon.DynamicConfig
 fun CbGenericDialog(
     showAlert: MutableState<Boolean>,
     onConfirmClick: () -> Unit,
+    onDismissClick: (() -> Unit)? = null,
     title: String,
     text: @Composable () -> Unit,
     confirmText: String = "Ok",
@@ -61,7 +62,10 @@ fun CbGenericDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = { showAlert.value = false })
+            TextButton(onClick = {
+                showAlert.value = false
+                onDismissClick?.let { it() }
+            })
             {
                 Text(
                     text = dismissText,
@@ -87,7 +91,6 @@ fun CbGenericDialog(
 }
 
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CbDecisionDialog(
     showAlert: MutableState<Boolean>,
@@ -101,6 +104,41 @@ fun CbDecisionDialog(
     CbGenericDialog(
         showAlert = showAlert,
         onConfirmClick = onConfirmClick,
+        title = title,
+        confirmText = confirmText,
+        dismissText = dismissText,
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = text,
+                    color = dynamicConfig.getAlertContentColor(),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        },
+        dynamicConfig = dynamicConfig
+    )
+
+}
+
+@Composable
+fun CbDoubleDecisionDialog(
+    showAlert: MutableState<Boolean>,
+    onConfirmClick: () -> Unit,
+    onDismissClick: () -> Unit,
+    title: String,
+    text: String,
+    confirmText: String = "Ok",
+    dismissText: String = "Cancel",
+    dynamicConfig: DynamicConfig
+) {
+    CbGenericDialog(
+        showAlert = showAlert,
+        onConfirmClick = onConfirmClick,
+        onDismissClick = onDismissClick,
         title = title,
         confirmText = confirmText,
         dismissText = dismissText,
