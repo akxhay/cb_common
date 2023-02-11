@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import com.cb.cb_permission.constants.Constants.batteryOptimization
 import com.cb.cb_permission.constants.Constants.notificationAccess
 import com.cb.cb_permission.constants.Constants.postNotification
+import com.cb.cbcommon.notification.NotificationReceiver
 import com.cb.cbcommon.ui.theme.CbCommonTheme
 import com.cb.cbtools.permission.presentation.composable.CbPermission.WelcomeScreen
 import com.cb.cbtools.permission.presentation.utils.PermissionUtil.getPermission
@@ -21,6 +22,9 @@ private val requiredPermissionOnStartup = arrayListOf(
     notificationAccess,
     postNotification,
     batteryOptimization
+)
+private val permissionData : Map<String, Any?> = mapOf(
+    notificationAccess to NotificationReceiver::class.qualifiedName
 )
 //private val requiredPermissionOnStartup = arrayListOf(
 //    postNotification,
@@ -53,7 +57,7 @@ class WelcomeActivity : ComponentActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun getScreen() {
-        val currentPermission = getPermission(requiredPermissionOnStartup, this)
+        val currentPermission = getPermission(requiredPermissionOnStartup, this, permissionData)
         if (currentPermission != "") {
             setContent {
                 CbCommonTheme() {

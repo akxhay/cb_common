@@ -38,6 +38,7 @@ object PermissionUtil {
     fun isPermittedByType(
         context: Activity,
         permission: String,
+        permissionData: Map<String, Any?> = HashMap(),
     ): Boolean {
 
         val resolver = getPermissionResolver()[permission]
@@ -56,8 +57,14 @@ object PermissionUtil {
             val notificationListenerString = Settings.Secure.getString(
                 context.contentResolver,
                 "enabled_notification_listeners"
-            )
-            notificationListenerString != null && notificationListenerString.contains(context.packageName)
+            ) ?: return false
+            if (!notificationListenerString.contains(":")) return false
+
+            val services = notificationListenerString.split(":")
+            services.filter { e -> e.contains("/") }.filter { e ->
+                e.split("/")[0] == context.packageName
+                        && e.split("/")[1] == permissionData[Constants.notificationAccess]
+            }.isNotEmpty()
         } else if (Constants.batteryOptimization == resolver) {
             (context.application
                 .getSystemService(Context.POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(
@@ -74,21 +81,15 @@ object PermissionUtil {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun requestNotificationAccess(
         context: Activity,
         appName: String?,
         navigateAnyways: Boolean
     ) {
         try {
-            val notificationListenerString = Settings.Secure.getString(
-                context.contentResolver,
-                "enabled_notification_listeners"
-            )
-            //Check notifications access permission
-            if (navigateAnyways || (notificationListenerString == null || !notificationListenerString.contains(
-                    context.packageName
-                ))
-            ) {
+
+            if (navigateAnyways || !isPermitted(context, Constants.notificationAccess)) {
                 if (!navigateAnyways) {
                     Toast.makeText(
                         context,
@@ -129,14 +130,19 @@ object PermissionUtil {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun getPermission(requiredPermissionOnStartup: ArrayList<String>, context: Activity): String {
+    fun getPermission(
+        requiredPermissionOnStartup: ArrayList<String>,
+        context: Activity,
+        permissionData: Map<String, Any?>
+    ): String {
 
         val iterator = requiredPermissionOnStartup.iterator()
         while (iterator.hasNext()) {
             val permission = iterator.next()
             if (isPermittedByType(
                     context,
-                    permission
+                    permission,
+                    permissionData
                 )
             ) {
                 iterator.remove()

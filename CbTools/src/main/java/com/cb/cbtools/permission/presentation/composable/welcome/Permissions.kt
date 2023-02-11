@@ -82,7 +82,8 @@ fun getDialogAction(
     appName: String,
     context: Activity,
     currentPermission: String,
-    navigateAnyways: Boolean = false
+    navigateAnyways: Boolean = false,
+
 ): () -> Unit {
     return {
         when (ConstantSetUp.getPermissionResolver()[currentPermission]) {
