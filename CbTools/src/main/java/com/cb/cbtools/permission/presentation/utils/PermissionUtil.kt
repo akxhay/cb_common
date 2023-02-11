@@ -61,10 +61,10 @@ object PermissionUtil {
             if (!notificationListenerString.contains(":")) return false
 
             val services = notificationListenerString.split(":")
-            services.filter { e -> e.contains("/") }.filter { e ->
+            services.filter { e -> e.contains("/") }.any { e ->
                 e.split("/")[0] == context.packageName
                         && e.split("/")[1] == permissionData[Constants.notificationAccess]
-            }.isNotEmpty()
+            }
         } else if (Constants.batteryOptimization == resolver) {
             (context.application
                 .getSystemService(Context.POWER_SERVICE) as PowerManager).isIgnoringBatteryOptimizations(
