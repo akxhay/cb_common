@@ -5,10 +5,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.LightMode
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -144,9 +141,19 @@ fun TopAppBar(
                 expanded = showMenu,
                 onDismissRequest = { showMenu = false },
             ) {
-                DropdownMenuItem(onClick = {
-                    navController.navigate(Screen.SettingsScreen.route)
-                },
+                DropdownMenuItem(
+                    onClick = {
+                        navController.navigate(Screen.ExceptionScreen.route)
+                    },
+                    text =
+                    {
+                        Text(text = "Exception")
+                    }
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        navController.navigate(Screen.SettingsScreen.route)
+                    },
                     text =
                     {
                         Text(text = "Settings")

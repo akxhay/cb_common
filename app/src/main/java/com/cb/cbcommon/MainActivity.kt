@@ -28,19 +28,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cb.cbcommon.route.Screen
 import com.cb.cbcommon.screen.HomeScreen
-import com.cb.cbcommon.screen.SettingsScreen
 import com.cb.cbcommon.ui.theme.CbCommonTheme
 import com.cb.cbtools.ccp.component.CbCCC
 import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
 import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
 import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
-
 import com.cb.cbtools.composables.CbGenericDialog
+import com.cb.cbtools.presentation.composable.screen.ExceptionScreen
+import com.cb.cbtools.presentation.composable.screen.SettingsScreen
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +68,11 @@ class MainActivity : ComponentActivity() {
                             route = Screen.SettingsScreen.route
                         ) {
                             OpenSettingsScreen(navController)
+                        }
+                        composable(
+                            route = Screen.ExceptionScreen.route
+                        ) {
+                            OpenExceptionScreen(navController)
                         }
                     }
 
@@ -210,7 +216,21 @@ class MainActivity : ComponentActivity() {
     fun OpenSettingsScreen(
         navController: NavHostController,
     ) {
-        SettingsScreen(navController = navController, activity = this)
+        SettingsScreen(
+            navController = navController,
+            activity = this,
+            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+        )
+    }
+
+    @Composable
+    fun OpenExceptionScreen(
+        navController: NavHostController,
+    ) {
+        ExceptionScreen(
+            navController = navController,
+            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+        )
     }
 
 }
