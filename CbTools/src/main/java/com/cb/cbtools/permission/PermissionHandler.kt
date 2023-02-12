@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.cb.cbtools.composables.permission.welcome.PermissionDialog
 import com.cb.cbtools.composables.permission.welcome.WelcomeInfoText
@@ -22,6 +21,7 @@ import com.cb.cbtools.dto.CbPermission
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.permission.permission_handler.factory.PermissionHandlerFactory
 
+const val animationDuration = 2000
 
 @OptIn(ExperimentalAnimationApi::class)
 @RequiresApi(Build.VERSION_CODES.M)
@@ -38,7 +38,6 @@ fun PermissionButton(
         mutableStateOf(false)
     }
 
-    val animationDuration = 2000
         Column(modifier = modifier.fillMaxWidth()) {
             Box(
                 modifier,

@@ -39,25 +39,17 @@ private val requiredPermissionOnStartup = arrayListOf(
         canBeSkipped = true
     )
 )
-
+private const val appNameRes: Int = R.string.app_name
+private const val appDescRes: Int = R.string.app_desc
+private const val appIconRes: Int = R.drawable.play_store_512
 
 @AndroidEntryPoint
 class WelcomeActivity : ComponentActivity() {
 
     private val viewModel: PermissionViewModel by viewModels()
 
-    private val appNameRes: Int = R.string.app_name
-    private val appDescRes: Int = R.string.app_desc
-    private val appIconRes: Int = R.drawable.play_store_512
-
-    private fun goToHome() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPermissions()
         setContent {
             CbCommonTheme() {
                 Surface(
@@ -95,6 +87,11 @@ class WelcomeActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) goToHome()
         else getPermission(requiredPermissionOnStartup, this)?.let { viewModel.changeType(it) }
             ?: goToHome()
+    }
+
+    private fun goToHome() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
 
