@@ -1,4 +1,4 @@
-package com.cb.cbcommon.screen
+package com.cb.cbcommon.presentation.screen
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
-import com.cb.cbcommon.route.Screen
+import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.composables.CbTextInputWithError
 import java.util.*
 

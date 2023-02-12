@@ -1,4 +1,4 @@
-package com.cb.cbcommon.ui.theme
+package com.cb.cbcommon.presentation.theme
 
 import android.app.Activity
 import android.os.Build

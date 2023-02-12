@@ -1,4 +1,4 @@
-package com.cb.cbcommon.ui.theme
+package com.cb.cbcommon.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

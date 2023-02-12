@@ -17,7 +17,7 @@
         android:theme="@style/Theme.CbCommon"
         tools:targetApi="31">
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".presentation.WelcomeActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -26,11 +26,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.CbCommon">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

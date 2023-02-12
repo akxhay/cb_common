@@ -1,4 +1,4 @@
-package com.cb.cbcommon
+package com.cb.cbcommon.presentation
 
 import android.content.Intent
 import android.os.Build
@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import com.cb.cb_permission.constants.Constants.batteryOptimization
 import com.cb.cb_permission.constants.Constants.notificationAccess
 import com.cb.cb_permission.constants.Constants.postNotification
+import com.cb.cbcommon.BaseApplication
+import com.cb.cbcommon.R
 import com.cb.cbcommon.notification.NotificationReceiver
-import com.cb.cbcommon.ui.theme.CbCommonTheme
+import com.cb.cbcommon.presentation.theme.CbCommonTheme
 import com.cb.cbtools.permission.presentation.composable.CbPermission.WelcomeScreen
 import com.cb.cbtools.permission.presentation.utils.PermissionUtil.getPermission
 

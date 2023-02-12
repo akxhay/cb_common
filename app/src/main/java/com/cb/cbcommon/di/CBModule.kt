@@ -20,6 +20,8 @@ class CBModule {
     ): ExceptionHelper =
         ExceptionHelper(exceptionRepository)
 
+
+    @Provides
     fun providesDynamicConfig(
         @ApplicationContext context: Context,
     ): DynamicConfig =

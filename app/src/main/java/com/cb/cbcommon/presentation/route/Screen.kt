@@ -1,4 +1,4 @@
-package com.cb.cbcommon.route
+package com.cb.cbcommon.presentation.route
 
 sealed class Screen(val route: String) {
     object HomeScreen : Screen(

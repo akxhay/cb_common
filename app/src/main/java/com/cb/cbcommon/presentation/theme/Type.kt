@@ -1,4 +1,4 @@
-package com.cb.cbcommon.ui.theme
+package com.cb.cbcommon.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

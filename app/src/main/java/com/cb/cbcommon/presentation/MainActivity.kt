@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalAnimationApi::class)
 
-package com.cb.cbcommon
+package com.cb.cbcommon.presentation
 
 import android.os.Bundle
 import android.widget.Toast
@@ -26,9 +26,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.cb.cbcommon.route.Screen
-import com.cb.cbcommon.screen.HomeScreen
-import com.cb.cbcommon.ui.theme.CbCommonTheme
+import com.cb.cbcommon.BaseApplication
+import com.cb.cbcommon.presentation.route.Screen
+import com.cb.cbcommon.presentation.screen.HomeScreen
+import com.cb.cbcommon.presentation.theme.CbCommonTheme
 import com.cb.cbtools.ccp.component.CbCCC
 import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
 import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
