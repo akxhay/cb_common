@@ -1,4 +1,4 @@
-package com.cb.cbtools.permission.presentation.composable.welcome
+package com.cb.cbtools.composables.permission.welcome
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

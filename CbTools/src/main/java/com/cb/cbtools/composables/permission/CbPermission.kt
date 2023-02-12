@@ -1,4 +1,4 @@
-package com.cb.cbtools.permission.presentation.composable
+package com.cb.cbtools.composables.permission
 
 import android.app.Activity
 import android.os.Build
@@ -7,7 +7,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import com.cb.cbtools.dynamic.DynamicConfig
-import com.cb.cbtools.permission.presentation.composable.welcome.PermissionScreen
+import com.cb.cbtools.composables.permission.welcome.PermissionScreen
+import com.cb.cbtools.dto.CbPermission
 import kotlinx.coroutines.delay
 
 object CbPermission {
@@ -16,23 +17,15 @@ object CbPermission {
     @Composable
     fun WelcomeScreen(
         context: Activity?,
-        currentPermission: String,
         @DrawableRes appIcon: Int,
         appName: String,
         appDesc: String,
         onclickSkip: () -> Unit,
-        dynamicConfig: DynamicConfig
+        dynamicConfig: DynamicConfig,
+        currentPermission: CbPermission
     ) {
-        val visiblePermission = remember { mutableStateOf(false) }
-        LaunchedEffect(visiblePermission) {
-            visiblePermission.value = false
-            delay(200) // to avoid repeated delays
-            visiblePermission.value = true
-        }
-
         PermissionScreen(
             context = context!!,
-            visiblePermission = visiblePermission,
             currentPermission = currentPermission,
             appIcon = appIcon,
             appName = appName,

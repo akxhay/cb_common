@@ -1,4 +1,4 @@
-package com.cb.cbtools.permission.presentation.utils
+package com.cb.cbtools.permission
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -10,16 +10,38 @@ import android.os.Build
 import android.os.Environment
 import android.os.PowerManager
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import com.cb.cbtools.permission.constants.Constants
-import com.cb.cbtools.permission.constants.ConstantSetUp.canPermissionSkipped
+import com.cb.cbtools.dto.CbPermission
 import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionAskMap
 import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionResolver
+import com.cb.cbtools.permission.constants.Constants
+import com.cb.cbtools.permission.permission_handler.factory.PermissionHandlerFactory
 
 object PermissionUtil {
+    private const val TAG = "PermissionUtil"
     private const val CB_PERMISSIONS_SKIPPED = "CB_PERMISSIONS_SKIPPED"
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun getPermission(
+        permissions: ArrayList<CbPermission>,
+        context: Activity,
+    ): CbPermission? {
+        for (permission in permissions) {
+            Log.d(TAG, "getPermission : $permission")
+            PermissionHandlerFactory.getHandlerForPermission(permission.permissionType)?.let {
+                if (it.isPermitted(context, permission.data)) return@let
+                Log.d(TAG, "isPermitted : false")
+                if (permission.canBeSkipped && it.isSkipped(context)) return@let
+                Log.d(TAG, "returning : $permission")
+                return permission
+            }
+        }
+        Log.d(TAG, "returning : null")
+        return null
+    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun requestManageAllStorageAccess(
@@ -158,8 +180,8 @@ object PermissionUtil {
         }
     }
 
-    private fun isPermissionSkipped(currentPermission: String, context: Activity): Boolean {
-        return canPermissionSkipped()[currentPermission]!! && context.getSharedPreferences(
+    fun isPermissionSkipped(currentPermission: String, context: Activity): Boolean {
+        return context.getSharedPreferences(
             CB_PERMISSIONS_SKIPPED,
             Context.MODE_PRIVATE
         )

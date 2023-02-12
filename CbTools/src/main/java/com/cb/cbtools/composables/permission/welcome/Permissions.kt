@@ -1,4 +1,4 @@
-package com.cb.cbtools.permission.presentation.composable.welcome
+package com.cb.cbtools.composables.permission.welcome
 
 import android.app.Activity
 import android.content.Intent
@@ -11,11 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.cb.cbtools.permission.constants.Constants
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.composables.CbDecisionDialog
+import com.cb.cbtools.dto.CbPermission
+import com.cb.cbtools.dynamic.DynamicConfig
+import com.cb.cbtools.permission.PermissionUtil
 import com.cb.cbtools.permission.constants.ConstantSetUp
-import com.cb.cbtools.permission.presentation.utils.PermissionUtil
+import com.cb.cbtools.permission.constants.Constants
+import com.cb.cbtools.permission.permission_handler.factory.PermissionHandlerFactory
 import com.google.accompanist.permissions.*
 
 private const val PACKAGE = "package"
@@ -25,21 +27,21 @@ private const val PACKAGE = "package"
 fun PermissionDialog(
     appName: String,
     context: Activity,
-    currentPermission: String,
+    currentPermission: CbPermission,
     showPermissionAlert: MutableState<Boolean>,
     dynamicConfig: DynamicConfig,
 ) {
-    val text = getDialogText(currentPermission)
-    val title = getDialogTitle(currentPermission)
-    var action: () -> Unit = getDialogAction(appName, context, currentPermission)
+    val permissionHandler =
+        PermissionHandlerFactory.getHandlerForPermission(currentPermission.permissionType)
+    var action: () -> Unit? = { permissionHandler!!.askPermission(context) }
     val confirmButtonText = remember {
         mutableStateOf("Confirm")
     }
 
-    val permissionType = ConstantSetUp.getPermissionResolver()[currentPermission]
-    if (permissionType == Constants.simplePermission || (permissionType == Constants.manageExternalStoragePermission && Build.VERSION.SDK_INT < Build.VERSION_CODES.R)) {
+    if (permissionHandler!!.isSimplePermission() &&
+        permissionHandler.getPermissionToCheck() != null) {
         val permissionState = rememberPermissionState(
-            ConstantSetUp.getPermissionAskMap()[currentPermission]!![0]
+            permissionHandler.getPermissionToCheck()!!
         )
         if (!permissionState.status.isGranted) {
             if (permissionState.status.shouldShowRationale) {
@@ -47,7 +49,7 @@ fun PermissionDialog(
                 action = {
                     Toast.makeText(
                         context,
-                        "Please Enable " + ConstantSetUp.getPermissionType()[currentPermission] + " permission for " + appName,
+                        "Please Enable " + currentPermission.permissionType.name + " permission for " + appName,
                         Toast.LENGTH_SHORT
                     ).show()
                     val intent = Intent(
@@ -70,8 +72,8 @@ fun PermissionDialog(
             showPermissionAlert.value = false
             action()
         },
-        title = title,
-        text = text,
+        title = permissionHandler.getPermissionPopUpTitle(),
+        text = permissionHandler.getPermissionPopUpText(),
         confirmText = confirmButtonText.value,
         dynamicConfig = dynamicConfig
     )

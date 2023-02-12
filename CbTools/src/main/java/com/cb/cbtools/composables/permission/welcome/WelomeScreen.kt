@@ -1,4 +1,4 @@
-package com.cb.cbtools.permission.presentation.composable.welcome
+package com.cb.cbtools.composables.permission.welcome
 
 import android.app.Activity
 import android.os.Build
@@ -8,22 +8,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import com.cb.cbtools.dto.CbPermission
 import com.cb.cbtools.dynamic.DynamicConfig
-import com.cb.cbtools.permission.presentation.utils.PermissionButton
+import com.cb.cbtools.permission.PermissionButton
 
 @RequiresApi(Build.VERSION_CODES.M)
 @Composable
 fun PermissionScreen(
     context: Activity,
-    visiblePermission: MutableState<Boolean>,
-    currentPermission: String,
     @DrawableRes appIcon: Int,
     appName: String,
     appDesc: String,
     onclickSkip: () -> Unit,
-    dynamicConfig: DynamicConfig
+    dynamicConfig: DynamicConfig,
+    currentPermission: CbPermission
 ) {
     Column(
         Modifier
@@ -39,7 +38,6 @@ fun PermissionScreen(
         PermissionButton(
             appName = appName,
             context = context,
-            visiblePermission = visiblePermission,
             currentPermission = currentPermission,
             modifier = Modifier
                 .weight(10f),
@@ -48,9 +46,9 @@ fun PermissionScreen(
         )
         Footer(
             context = context,
-            currentPermission = currentPermission,
             onclickSkip = onclickSkip,
-            dynamicConfig = dynamicConfig
+            dynamicConfig = dynamicConfig,
+            currentPermission = currentPermission
         )
     }
 }

@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import com.cb.cbtools.permission.presentation.composable.welcome.getDialogAction
+import com.cb.cbtools.composables.permission.welcome.getDialogAction
 
 object ActionResolver {
     val TAG = "ActionResolver"

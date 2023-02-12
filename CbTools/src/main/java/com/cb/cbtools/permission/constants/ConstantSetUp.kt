@@ -139,19 +139,6 @@ object ConstantSetUp {
         return map
     }
 
-    fun getPermissionDrawable(): Map<String, Int> {
-        val map: MutableMap<String, Int> = HashMap()
-        map[Constants.readWriteContacts] = R.drawable.ic_permission_contact
-        map[Constants.readCallLog] = R.drawable.ic_permission_call
-        map[Constants.readWriteCallLog] = R.drawable.ic_permission_call
-        map[Constants.writeExternalStorage] = R.drawable.ic_permission_storage
-        map[Constants.manageExternalStoragePermission] = R.drawable.ic_permission_storage
-        map[Constants.batteryOptimization] = R.drawable.ic_permission_battery
-        map[Constants.notificationAccess] = R.drawable.ic_permission_notification
-        map[Constants.postNotification] = R.drawable.ic_permission_notification
-
-        return map
-    }
 
     fun getPermissionIcon(): Map<String, ImageVector> {
         val map: MutableMap<String, ImageVector> = HashMap()

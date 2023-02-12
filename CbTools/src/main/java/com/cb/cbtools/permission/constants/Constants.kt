@@ -1,6 +1,8 @@
 package com.cb.cbtools.permission.constants
 
 object Constants {
+    const val KEY_NOTIFICATION_RECEIVER = "notificationReceiver"
+
     const val simplePermission = "simplePermission"
     const val notificationAccess = "notificationAccess"
     const val batteryOptimization = "batteryOptimization"
