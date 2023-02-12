@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import com.cb.cbtools.composables.permission.welcome.getDialogAction
 
 object ActionResolver {
     val TAG = "ActionResolver"
@@ -73,7 +72,7 @@ object ActionResolver {
         currentPermission: String
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getDialogAction(appName, context, currentPermission, false)()
+//            getDialogAction(appName, context, currentPermission, false)()
         }
 
     }
