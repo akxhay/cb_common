@@ -38,17 +38,17 @@ fun PermissionButton(
         mutableStateOf(false)
     }
 
-        Column(modifier = modifier.fillMaxWidth()) {
-            Box(
-                modifier,
-                Alignment.Center
-            ) {
-                AnimatedContent(
-                    targetState = currentPermission,
-                    transitionSpec = {
-                        fadeIn(animationSpec = tween(durationMillis = animationDuration)) with
-                                fadeOut(animationSpec = tween(durationMillis = animationDuration))
-                    }
+    Column(modifier = modifier.fillMaxWidth()) {
+        Box(
+            modifier,
+            Alignment.Center
+        ) {
+            AnimatedContent(
+                targetState = currentPermission,
+                transitionSpec = {
+                    fadeIn(animationSpec = tween(durationMillis = animationDuration)) with
+                            fadeOut(animationSpec = tween(durationMillis = animationDuration))
+                }
                 ) {
                     Card(
                         modifier = Modifier
@@ -84,7 +84,6 @@ fun PermissionButton(
                                     tint = dynamicConfig.getWelcomeScreenCardContentColor()
                                 )
                             })
-
                         )
                     }
                 }

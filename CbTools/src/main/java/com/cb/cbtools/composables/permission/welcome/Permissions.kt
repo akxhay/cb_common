@@ -49,7 +49,7 @@ fun PermissionDialog(
                 action = {
                     Toast.makeText(
                         context,
-                        "Please Enable " + currentPermission.permissionType.name + " permission for " + appName,
+                        "Please Enable " + currentPermission.permissionType.type + " permission for " + appName,
                         Toast.LENGTH_SHORT
                     ).show()
                     val intent = Intent(
