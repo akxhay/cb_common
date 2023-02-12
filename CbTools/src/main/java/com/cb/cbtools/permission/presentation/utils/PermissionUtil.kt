@@ -13,7 +13,7 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import com.cb.cb_permission.constants.Constants
+import com.cb.cbtools.permission.constants.Constants
 import com.cb.cbtools.permission.constants.ConstantSetUp.canPermissionSkipped
 import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionAskMap
 import com.cb.cbtools.permission.constants.ConstantSetUp.getPermissionResolver

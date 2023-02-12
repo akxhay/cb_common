@@ -1,4 +1,4 @@
-package com.cb.cb_permission.constants
+package com.cb.cbtools.permission.constants
 
 object Constants {
     const val simplePermission = "simplePermission"

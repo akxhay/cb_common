@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.cb.cb_permission.constants.Constants
+import com.cb.cbtools.permission.constants.Constants
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.composables.CbDecisionDialog
 import com.cb.cbtools.permission.constants.ConstantSetUp

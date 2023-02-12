@@ -10,9 +10,9 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.cb.cb_permission.constants.Constants.batteryOptimization
-import com.cb.cb_permission.constants.Constants.notificationAccess
-import com.cb.cb_permission.constants.Constants.postNotification
+import com.cb.cbtools.permission.constants.Constants.batteryOptimization
+import com.cb.cbtools.permission.constants.Constants.notificationAccess
+import com.cb.cbtools.permission.constants.Constants.postNotification
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.R
 import com.cb.cbcommon.notification.NotificationReceiver
