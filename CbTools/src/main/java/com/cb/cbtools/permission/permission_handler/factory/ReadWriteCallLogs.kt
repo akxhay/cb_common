@@ -1,11 +1,8 @@
 package com.cb.cbtools.permission.permission_handler.factory
 
 import android.Manifest
-import android.app.Activity
-import android.content.pm.PackageManager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CallMissed
-import androidx.core.app.ActivityCompat
 import com.cb.cbtools.permission.constants.PermissionType
 import com.cb.cbtools.permission.permission_handler.PermissionHandler
 
@@ -27,9 +24,4 @@ class ReadWriteCallLogs : PermissionHandler {
 
     override fun getPermissionIcon() = Icons.Default.CallMissed
 
-
-    override fun isPermitted(context: Activity, data: Map<String, Any>): Boolean = ActivityCompat.checkSelfPermission(
-        context,
-        Manifest.permission.WRITE_CALL_LOG
-    ) == PackageManager.PERMISSION_GRANTED
 }

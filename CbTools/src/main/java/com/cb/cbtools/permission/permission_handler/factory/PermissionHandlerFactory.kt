@@ -5,6 +5,7 @@ import com.cb.cbtools.permission.permission_handler.PermissionHandler
 
 object PermissionHandlerFactory {
     private val handlerMap = mapOf(
+        PermissionType.PERMISSION_READ_CONTACTS to ReadContacts(),
         PermissionType.PERMISSION_READ_WRITE_CONTACTS to ReadWriteContacts(),
         PermissionType.PERMISSION_READ_CALL_LOGS to ReadCallLogs(),
         PermissionType.PERMISSION_READ_WRITE_CALL_LOGS to ReadWriteCallLogs(),

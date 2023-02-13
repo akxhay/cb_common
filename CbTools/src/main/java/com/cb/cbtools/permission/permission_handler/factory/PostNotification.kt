@@ -28,10 +28,4 @@ class PostNotification : PermissionHandler {
 
     override fun getPermissionIcon() = Icons.Default.NotificationsActive
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun isPermitted(context: Activity, data: Map<String, Any>): Boolean =
-        ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED
 }

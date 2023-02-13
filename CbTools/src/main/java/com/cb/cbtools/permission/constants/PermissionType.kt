@@ -1,6 +1,7 @@
 package com.cb.cbtools.permission.constants
 
 enum class PermissionType(val type: String) {
+    PERMISSION_READ_CONTACTS("Contacts"),
     PERMISSION_READ_WRITE_CONTACTS("Contacts"),
     PERMISSION_READ_CALL_LOGS("Call logs"),
     PERMISSION_READ_WRITE_CALL_LOGS("Call logs"),

@@ -26,9 +26,4 @@ class ReadCallLogs : PermissionHandler {
 
     override fun getPermissionIcon() = Icons.Default.CallMissed
 
-    override fun isPermitted(context: Activity, data: Map<String, Any>): Boolean = ActivityCompat.checkSelfPermission(
-        context,
-        Manifest.permission.READ_CALL_LOG
-    ) == PackageManager.PERMISSION_GRANTED
-
 }

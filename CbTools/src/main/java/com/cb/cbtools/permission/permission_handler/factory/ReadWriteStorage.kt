@@ -27,9 +27,4 @@ class ReadWriteStorage : PermissionHandler {
     override fun getPermissionIcon() = Icons.Default.Storage
 
 
-    override fun isPermitted(context: Activity, data: Map<String, Any>): Boolean = ActivityCompat.checkSelfPermission(
-        context,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    ) == PackageManager.PERMISSION_GRANTED
-
 }

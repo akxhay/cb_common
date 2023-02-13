@@ -6,39 +6,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import com.cb.cbcommon.AppConstants.appDescRes
+import com.cb.cbcommon.AppConstants.appIconRes
+import com.cb.cbcommon.AppConstants.appNameRes
+import com.cb.cbcommon.AppConstants.home
+import com.cb.cbcommon.AppConstants.requiredPermissionOnStartup
 import com.cb.cbcommon.BaseApplication
-import com.cb.cbcommon.R
-import com.cb.cbcommon.notification.NotificationReceiver
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
-import com.cb.cbtools.dto.CbPermission
 import com.cb.cbtools.permission.PermissionUtil.getPermission
-import com.cb.cbtools.permission.constants.Constants.KEY_NOTIFICATION_RECEIVER
-import com.cb.cbtools.permission.constants.PermissionType
 import com.cb.cbtools.presentation.composable.WelcomeScreen
 import com.cb.cbtools.presentation.viewModel.PermissionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-private val requiredPermissionOnStartup = arrayListOf(
-    CbPermission(
-        permissionType = PermissionType.PERMISSION_ACCESS_NOTIFICATION,
-        data = mapOf(
-            KEY_NOTIFICATION_RECEIVER to NotificationReceiver::class.qualifiedName!!
-        )
-    ),
-    CbPermission(
-        permissionType = PermissionType.PERMISSION_POST_NOTIFICATION,
-        canBeSkipped = true
-    ),
-    CbPermission(
-        permissionType = PermissionType.PERMISSION_BATTERY_OPTIMIZE,
-        canBeSkipped = true
-    )
-)
-private const val appNameRes: Int = R.string.app_name
-private const val appDescRes: Int = R.string.app_desc
-private const val appIconRes: Int = R.drawable.play_store_512
-
-val home = MainActivity::class.java
 
 @AndroidEntryPoint
 class WelcomeActivity : ComponentActivity() {

@@ -1,21 +1,17 @@
 package com.cb.cbtools.permission.permission_handler.factory
 
 import android.Manifest
-import android.app.Activity
-import android.content.pm.PackageManager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Contacts
-import androidx.core.app.ActivityCompat
 import com.cb.cbtools.permission.constants.PermissionType
 import com.cb.cbtools.permission.permission_handler.PermissionHandler
 
-class ReadWriteContacts : PermissionHandler {
+class ReadContacts : PermissionHandler {
     override fun getArrayOfPermissionAsk() = arrayOf(
-        Manifest.permission.WRITE_CONTACTS,
         Manifest.permission.READ_CONTACTS
     )
 
-    override fun getPermissionType() = PermissionType.PERMISSION_READ_WRITE_CONTACTS
+    override fun getPermissionType() = PermissionType.PERMISSION_READ_CONTACTS
 
     override fun getPermissionPopUpTitle() = "Provide permissions for accessing contacts"
 

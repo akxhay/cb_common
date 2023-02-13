@@ -151,34 +151,7 @@ object PermissionUtil {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun getPermission(
-        requiredPermissionOnStartup: ArrayList<String>,
-        context: Activity,
-        permissionData: Map<String, Any?>
-    ): String {
 
-        val iterator = requiredPermissionOnStartup.iterator()
-        while (iterator.hasNext()) {
-            val permission = iterator.next()
-            if (isPermittedByType(
-                    context,
-                    permission,
-                    permissionData
-                )
-            ) {
-                iterator.remove()
-            }
-        }
-        return if (requiredPermissionOnStartup.isEmpty() || isPermissionSkipped(
-                requiredPermissionOnStartup[0], context
-            )
-        ) {
-            ""
-        } else {
-            requiredPermissionOnStartup[0]
-        }
-    }
 
     fun isPermissionSkipped(currentPermission: String, context: Activity): Boolean {
         return context.getSharedPreferences(

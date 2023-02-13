@@ -2,8 +2,11 @@ package com.cb.cbtools.permission.permission_handler.factory
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.Settings
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Storage
 import com.cb.cbtools.permission.constants.PermissionType
@@ -13,11 +16,11 @@ class ManageExternalStorage : PermissionHandler {
     override fun isSimplePermission() = Build.VERSION.SDK_INT < Build.VERSION_CODES.R
 
     override fun getArrayOfPermissionAsk() = arrayOf(
-        Manifest.permission.WRITE_CONTACTS,
-        Manifest.permission.READ_CONTACTS
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
-    override fun getPermissionType() = PermissionType.PERMISSION_READ_WRITE_CONTACTS
+    override fun getPermissionType() = PermissionType.PERMISSION_MANAGE_STORAGE
 
     override fun getPermissionPopUpTitle() = "Provide permissions for accessing storage"
 
@@ -35,6 +38,16 @@ class ManageExternalStorage : PermissionHandler {
             super.isPermitted(context, data)
         }
     }
+
+    override fun askPermission(context: Activity): Unit? =
+        (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context.startActivity(Intent().also {
+                it.action = Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                it.data = Uri.fromParts("package", context.packageName, null)
+            })
+        } else {
+            super.askPermission(context)
+        })
 
 
 }
