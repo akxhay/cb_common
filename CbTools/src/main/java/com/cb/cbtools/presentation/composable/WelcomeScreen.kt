@@ -32,10 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.cb.cbtools.composables.CbDecisionDialog
 import com.cb.cbtools.dto.CbPermission
 import com.cb.cbtools.dynamic.DynamicConfig
-import com.cb.cbtools.permission.PermissionUtil
-import com.cb.cbtools.permission.constants.ConstantSetUp
-import com.cb.cbtools.permission.constants.Constants
-import com.cb.cbtools.permission.permission_handler.factory.PermissionHandlerFactory
+import com.cb.cbtools.permission.factory.PermissionHandlerFactory
 import com.cb.cbtools.presentation.viewModel.PermissionViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -258,30 +255,6 @@ fun PermissionDialog(
         confirmText = confirmButtonText.value,
         dynamicConfig = dynamicConfig
     )
-}
-
-@RequiresApi(Build.VERSION_CODES.M)
-fun getDialogAction(
-    appName: String,
-    context: Activity,
-    currentPermission: String,
-    navigateAnyways: Boolean = false,
-
-    ): () -> Unit {
-    return {
-        when (ConstantSetUp.getPermissionResolver()[currentPermission]) {
-            Constants.manageExternalStoragePermission -> {
-                PermissionUtil.requestManageAllStorageAccess(context)
-            }
-            Constants.notificationAccess -> {
-                PermissionUtil.requestNotificationAccess(context, appName, navigateAnyways)
-            }
-            Constants.batteryOptimization -> {
-                PermissionUtil.requestIgnoreBatteryOptimization(context)
-            }
-        }
-
-    }
 }
 
 

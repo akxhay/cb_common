@@ -13,7 +13,7 @@ import com.cb.cbcommon.AppConstants.home
 import com.cb.cbcommon.AppConstants.requiredPermissionOnStartup
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
-import com.cb.cbtools.permission.PermissionUtil.getPermission
+import com.cb.cbtools.util.PermissionUtil.getPermission
 import com.cb.cbtools.presentation.composable.WelcomeScreen
 import com.cb.cbtools.presentation.viewModel.PermissionViewModel
 import dagger.hilt.android.AndroidEntryPoint

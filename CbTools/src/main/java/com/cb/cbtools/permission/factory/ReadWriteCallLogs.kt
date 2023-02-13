@@ -1,10 +1,10 @@
-package com.cb.cbtools.permission.permission_handler.factory
+package com.cb.cbtools.permission.factory
 
 import android.Manifest
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CallMissed
-import com.cb.cbtools.permission.constants.PermissionType
-import com.cb.cbtools.permission.permission_handler.PermissionHandler
+import com.cb.cbtools.constants.enums.PermissionType
+import com.cb.cbtools.permission.PermissionHandler
 
 class ReadWriteCallLogs : PermissionHandler {
 

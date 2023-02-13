@@ -1,6 +1,6 @@
 package com.cb.cbtools.dynamic.data
 
-import com.cb.cbtools.dynamic.constants.ActionType
+import com.cb.cbtools.constants.ActionType
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

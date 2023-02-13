@@ -1,4 +1,4 @@
-package com.cb.cbtools.dynamic.constants
+package com.cb.cbtools.constants
 
 enum class ActionType {
     DEFAULT, SWITCH, CHECKBOX

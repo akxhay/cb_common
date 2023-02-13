@@ -1,4 +1,4 @@
-package com.cb.cbtools.permission.constants
+package com.cb.cbtools.constants.enums
 
 enum class PermissionType(val type: String) {
     PERMISSION_READ_CONTACTS("Contacts"),

@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import com.cb.cbtools.constants.enums.PermissionType
+import com.cb.cbtools.permission.factory.PermissionHandlerFactory
 
 object ActionResolver {
     val TAG = "ActionResolver"
@@ -71,8 +73,28 @@ object ActionResolver {
         context: Activity,
         currentPermission: String
     ) {
+        val type = PermissionType.valueOf(
+            currentPermission
+        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getDialogAction(appName, context, currentPermission, false)()
+            PermissionHandlerFactory.getHandlerForPermission(
+                type
+            )?.let {
+                if (it.isPermitted(context)) {
+                    Toast.makeText(
+                        context,
+                        "Already permitted",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Please Enable ${type.type} for $appName",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    it.askPermission(context)
+                }
+            }
         }
 
     }

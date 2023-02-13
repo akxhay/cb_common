@@ -1,15 +1,12 @@
-package com.cb.cbtools.permission.permission_handler.factory
+package com.cb.cbtools.permission.factory
 
 import android.Manifest
-import android.app.Activity
-import android.content.pm.PackageManager
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.NotificationsActive
-import androidx.core.app.ActivityCompat
-import com.cb.cbtools.permission.constants.PermissionType
-import com.cb.cbtools.permission.permission_handler.PermissionHandler
+import com.cb.cbtools.constants.enums.PermissionType
+import com.cb.cbtools.permission.PermissionHandler
 
 class PostNotification : PermissionHandler {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

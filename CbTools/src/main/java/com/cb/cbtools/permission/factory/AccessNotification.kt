@@ -1,13 +1,13 @@
-package com.cb.cbtools.permission.permission_handler.factory
+package com.cb.cbtools.permission.factory
 
 import android.app.Activity
 import android.content.Intent
 import android.provider.Settings
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
-import com.cb.cbtools.permission.constants.Constants.KEY_NOTIFICATION_RECEIVER
-import com.cb.cbtools.permission.constants.PermissionType
-import com.cb.cbtools.permission.permission_handler.PermissionHandler
+import com.cb.cbtools.constants.Constants.KEY_NOTIFICATION_RECEIVER
+import com.cb.cbtools.constants.enums.PermissionType
+import com.cb.cbtools.permission.PermissionHandler
 
 class AccessNotification : PermissionHandler {
     override fun isSimplePermission() = false

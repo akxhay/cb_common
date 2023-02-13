@@ -1,6 +1,6 @@
 package com.cb.cbtools.dto
 
-import com.cb.cbtools.permission.constants.PermissionType
+import com.cb.cbtools.constants.enums.PermissionType
 
 data class CbPermission(
     val permissionType: PermissionType,

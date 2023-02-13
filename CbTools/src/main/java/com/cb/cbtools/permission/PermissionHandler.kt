@@ -1,11 +1,11 @@
-package com.cb.cbtools.permission.permission_handler
+package com.cb.cbtools.permission
 
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.core.app.ActivityCompat
-import com.cb.cbtools.permission.PermissionUtil
-import com.cb.cbtools.permission.constants.PermissionType
+import com.cb.cbtools.util.PermissionUtil
+import com.cb.cbtools.constants.enums.PermissionType
 
 
 interface PermissionHandler {
