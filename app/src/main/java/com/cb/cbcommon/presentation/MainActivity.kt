@@ -34,9 +34,9 @@ import com.cb.cbtools.ccp.component.CbCCC
 import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
 import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
 import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
-import com.cb.cbtools.composables.CbGenericDialog
+import com.cb.cbtools.presentation.common.CbGenericDialog
+import com.cb.cbtools.presentation.composable.SettingsScreen
 import com.cb.cbtools.presentation.composable.screen.ExceptionScreen
-import com.cb.cbtools.presentation.composable.screen.SettingsScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

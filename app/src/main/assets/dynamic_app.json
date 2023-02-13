@@ -66,7 +66,7 @@
             },
             "action": [
               "PERMISSION",
-              "notificationAccess"
+              "PERMISSION_ACCESS_NOTIFICATION"
             ]
           },
           {
@@ -79,7 +79,7 @@
             },
             "action": [
               "PERMISSION",
-              "batteryOptimization"
+              "PERMISSION_BATTERY_OPTIMIZE"
             ]
           }
         ]

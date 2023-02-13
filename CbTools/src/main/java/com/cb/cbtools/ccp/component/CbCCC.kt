@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.input.KeyboardType
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.ccp.data.utils.getLibCountries
-import com.cb.cbtools.composables.CbTextInputWithError
+import com.cb.cbtools.dynamic.DynamicConfig
+import com.cb.cbtools.presentation.common.CbTextInputWithError
 
 @Composable
 fun CbCCC(
