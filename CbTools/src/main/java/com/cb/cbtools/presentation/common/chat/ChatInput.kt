@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables.common.components
+package com.cb.cbtools.common.common.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*

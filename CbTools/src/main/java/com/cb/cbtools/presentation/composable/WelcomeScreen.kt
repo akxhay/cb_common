@@ -29,10 +29,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import com.cb.cbtools.composables.CbDecisionDialog
 import com.cb.cbtools.dto.CbPermission
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.permission.factory.PermissionHandlerFactory
+import com.cb.cbtools.presentation.common.CbDecisionDialog
 import com.cb.cbtools.presentation.viewModel.PermissionViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted

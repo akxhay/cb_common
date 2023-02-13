@@ -16,12 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.cb.cbtools.composables.CbAppBar
-import com.cb.cbtools.composables.CbListItem
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ActionResolver
 import com.cb.cbtools.dynamic.util.IconResolver
+import com.cb.cbtools.presentation.common.CbAppBar
+import com.cb.cbtools.presentation.common.CbListItem
 
 
 @OptIn(ExperimentalMaterial3Api::class)

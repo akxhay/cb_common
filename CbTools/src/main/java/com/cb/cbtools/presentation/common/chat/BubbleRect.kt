@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables.chat
+package com.cb.cbtools.presentation.common.chat
 
 data class BubbleRect(
     var left: Float = 0f,

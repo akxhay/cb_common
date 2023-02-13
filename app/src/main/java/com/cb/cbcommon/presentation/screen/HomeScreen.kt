@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.presentation.route.Screen
-import com.cb.cbtools.composables.CbTextInputWithError
+import com.cb.cbtools.presentation.common.CbTextInputWithError
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables.common.components
+package com.cb.cbtools.common.common.components
 
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.clickable

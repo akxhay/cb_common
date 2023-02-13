@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables.chat
+package com.cb.cbtools.presentation.common.chat
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

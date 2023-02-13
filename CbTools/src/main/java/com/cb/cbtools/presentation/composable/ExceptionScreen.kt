@@ -30,11 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.cb.cbtools.composables.CbAppBar
-import com.cb.cbtools.composables.CbDecisionDialog
-import com.cb.cbtools.composables.CbNoResult
 import com.cb.cbtools.data.model.ExceptionRecord
 import com.cb.cbtools.dynamic.DynamicConfig
+import com.cb.cbtools.presentation.common.CbAppBar
+import com.cb.cbtools.presentation.common.CbDecisionDialog
+import com.cb.cbtools.presentation.common.CbNoResult
 import com.cb.cbtools.presentation.viewModel.ExceptionViewModel
 import com.cb.cbtools.util.DateUtil
 import java.util.*
@@ -271,13 +271,11 @@ fun ExpandableText(
                 modifier = Modifier
                     .padding(10.dp)
                     .then(
-                        if (seeMoreOffset != null)
-                            Modifier.offset(
-                                x = with(density) { seeMoreOffset.x.toDp() },
-                                y = with(density) { seeMoreOffset.y.toDp() },
-                            )
-                        else
-                            Modifier
+                        if (seeMoreOffset != null) Modifier.offset(
+                            x = with(density) { seeMoreOffset.x.toDp() },
+                            y = with(density) { seeMoreOffset.y.toDp() },
+                        )
+                        else Modifier
                     )
                     .clickable {
                         expanded = true

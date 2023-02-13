@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables
+package com.cb.cbtools.presentation.common
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.cb.cbtools.composables.chat.*
 import com.cb.cbtools.dynamic.DynamicConfig
+import com.cb.cbtools.presentation.common.chat.*
 
 
 @Composable

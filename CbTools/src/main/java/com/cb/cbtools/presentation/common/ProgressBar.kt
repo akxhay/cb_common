@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables
+package com.cb.cbtools.presentation.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

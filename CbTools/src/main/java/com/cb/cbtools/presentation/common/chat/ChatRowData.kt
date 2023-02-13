@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables.chat
+package com.cb.cbtools.presentation.common.chat
 
 /**
  * Class that contains info about chat message text, textWidth, if line count,

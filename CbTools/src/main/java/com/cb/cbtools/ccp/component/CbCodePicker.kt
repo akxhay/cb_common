@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.ccp.data.CountryData
 import com.cb.cbtools.ccp.data.utils.getCountryName
 import com.cb.cbtools.ccp.data.utils.getFlags
 import com.cb.cbtools.ccp.data.utils.getLibCountries
 import com.cb.cbtools.ccp.utils.searchCountry
-import com.cb.cbtools.composables.CbTextInputBasic
+import com.cb.cbtools.dynamic.DynamicConfig
+import com.cb.cbtools.presentation.common.CbTextInputBasic
 import java.util.*
 
 

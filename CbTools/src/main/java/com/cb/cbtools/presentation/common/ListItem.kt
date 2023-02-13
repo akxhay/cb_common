@@ -1,4 +1,4 @@
-package com.cb.cbtools.composables
+package com.cb.cbtools.presentation.common
 
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
