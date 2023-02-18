@@ -236,7 +236,7 @@ fun CbTextDropDown(
                 modifier = Modifier
                     .menuAnchor(),
                 readOnly = true,
-                value = "$selectedOptionText ▼",
+                value = selectedOptionText,
                 onValueChange = { },
                 label = { Text(label) },
                 trailingIcon = {
