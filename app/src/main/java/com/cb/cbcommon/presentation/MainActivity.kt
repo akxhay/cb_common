@@ -129,15 +129,21 @@ class MainActivity : ComponentActivity() {
         }
 
         CbGenericDialog(
-            showAlert = showAlert,
             onConfirmClick = {
                 if (error.value.isNullOrBlank()) {
                     CoroutineScope(Dispatchers.Default).launch {
-                        Toast.makeText(context, phoneCode.value + phoneNumber.value, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            phoneCode.value + phoneNumber.value,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } else {
                     Toast.makeText(context, error.value, Toast.LENGTH_SHORT).show()
                 }
+            },
+            onDismissClick = {
+                showAlert.value = false
             },
             title = "Send message without saving number",
             text = {

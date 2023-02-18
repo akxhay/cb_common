@@ -26,7 +26,6 @@ import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.constants.ActionType
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CbListItem(
     modifier: Modifier = Modifier,

@@ -15,12 +15,10 @@ import androidx.compose.ui.window.DialogProperties
 import com.cb.cbtools.dynamic.DynamicConfig
 
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CbGenericDialog(
-    showAlert: MutableState<Boolean>,
     onConfirmClick: () -> Unit,
-    onDismissClick: (() -> Unit)? = null,
+    onDismissClick: () -> Unit,
     title: String,
     text: @Composable () -> Unit,
     confirmText: String = "Ok",
@@ -34,7 +32,7 @@ fun CbGenericDialog(
             .fillMaxWidth()
             .padding(10.dp),
         containerColor = dynamicConfig.getAlertBackgroundColor(),
-        onDismissRequest = { showAlert.value = false },
+        onDismissRequest = { onDismissClick() },
         confirmButton = {
             Card(
                 modifier = Modifier
@@ -63,8 +61,7 @@ fun CbGenericDialog(
         },
         dismissButton = {
             TextButton(onClick = {
-                showAlert.value = false
-                onDismissClick?.let { it() }
+                onDismissClick()
             })
             {
                 Text(
@@ -93,8 +90,8 @@ fun CbGenericDialog(
 
 @Composable
 fun CbDecisionDialog(
-    showAlert: MutableState<Boolean>,
     onConfirmClick: () -> Unit,
+    onDismissClick: () -> Unit,
     title: String,
     text: String,
     confirmText: String = "Ok",
@@ -102,8 +99,8 @@ fun CbDecisionDialog(
     dynamicConfig: DynamicConfig
 ) {
     CbGenericDialog(
-        showAlert = showAlert,
         onConfirmClick = onConfirmClick,
+        onDismissClick = onDismissClick,
         title = title,
         confirmText = confirmText,
         dismissText = dismissText,
@@ -126,7 +123,6 @@ fun CbDecisionDialog(
 
 @Composable
 fun CbDoubleDecisionDialog(
-    showAlert: MutableState<Boolean>,
     onConfirmClick: () -> Unit,
     onDismissClick: () -> Unit,
     title: String,
@@ -136,7 +132,6 @@ fun CbDoubleDecisionDialog(
     dynamicConfig: DynamicConfig
 ) {
     CbGenericDialog(
-        showAlert = showAlert,
         onConfirmClick = onConfirmClick,
         onDismissClick = onDismissClick,
         title = title,

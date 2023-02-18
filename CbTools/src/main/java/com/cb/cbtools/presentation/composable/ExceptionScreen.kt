@@ -106,13 +106,15 @@ fun DeleteExceptionAlertDialog(
 
     ) {
     CbDecisionDialog(
-        showAlert = showAlert,
         onConfirmClick = {
             Toast.makeText(context, "Exceptions are being deleted", Toast.LENGTH_SHORT)
                 .show()
             viewModel.deleteRecord()
             showAlert.value = false
             navController.navigateUp()
+        },
+        onDismissClick = {
+            showAlert.value = false
         },
         title = "Please confirm",
         text = "Delete all exception?",

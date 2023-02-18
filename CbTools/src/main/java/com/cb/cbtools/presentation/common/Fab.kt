@@ -1,4 +1,4 @@
-package com.cb.cb_test.application.presentation.composable.common.components
+package com.cb.cbtools.presentation.common
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.FloatingActionButton

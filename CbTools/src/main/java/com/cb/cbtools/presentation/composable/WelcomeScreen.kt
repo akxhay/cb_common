@@ -245,10 +245,12 @@ fun PermissionDialog(
 
 
     CbDecisionDialog(
-        showAlert = showPermissionAlert,
         onConfirmClick = {
             showPermissionAlert.value = false
             action()
+        },
+        onDismissClick = {
+            showPermissionAlert.value = false
         },
         title = permissionHandler.getPermissionPopUpTitle(),
         text = permissionHandler.getPermissionPopUpText(),
@@ -317,12 +319,14 @@ fun Footer(
     }
     if (showSkipAlert.value) {
         CbDecisionDialog(
-            showAlert = showSkipAlert,
             onConfirmClick = {
                 PermissionHandlerFactory.getHandlerForPermission(currentPermission.permissionType)!!
                     .skipPermission(context)
                 showSkipAlert.value = false
                 onclickSkip()
+            },
+            onDismissClick = {
+                showSkipAlert.value = false
             },
             title = "Skip Optional permission",
             text = "Some feature might not work as expected",

@@ -41,10 +41,13 @@ fun ErrorInfoCard(message: String?, dynamicConfig: DynamicConfig) {
         )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ErrorCard(message: MutableState<String?>, dynamicConfig: DynamicConfig) {
-    if (message.value != null)
+fun ErrorCard(
+    message: String?,
+    dynamicConfig: DynamicConfig,
+    onIconClick: () -> Unit,
+) {
+    if (message != null)
         ListItem(
             colors = ListItemDefaults.colors(containerColor = dynamicConfig.getInputErrorContainerColor()),
             headlineText = {
@@ -56,7 +59,7 @@ fun ErrorCard(message: MutableState<String?>, dynamicConfig: DynamicConfig) {
                     Text(
                         color = dynamicConfig.getTextOnErrorContainerColor(),
                         textAlign = TextAlign.Center,
-                        text = message.value!! + "!",
+                        text = "$message!",
                         style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -65,7 +68,7 @@ fun ErrorCard(message: MutableState<String?>, dynamicConfig: DynamicConfig) {
                 }
             },
             trailingContent = {
-                IconButton(onClick = { message.value = null }) {
+                IconButton(onClick = { onIconClick() }) {
                     Icon(
                         imageVector = Icons.Default.VisibilityOff,
                         contentDescription = "VisibilityOff",
@@ -78,7 +81,6 @@ fun ErrorCard(message: MutableState<String?>, dynamicConfig: DynamicConfig) {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InfoCard(message: String?, dynamicConfig: DynamicConfig) {
     if (message != null)
