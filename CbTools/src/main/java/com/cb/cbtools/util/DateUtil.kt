@@ -58,7 +58,7 @@ object DateUtil {
         return areDatesSame(calendar, Calendar.getInstance())
     }
 
-    private fun areDatesSame(calender1: Calendar?, calender2: Calendar?): Boolean {
+    fun areDatesSame(calender1: Calendar?, calender2: Calendar?): Boolean {
         return calender1 != null && calender2 != null && calender1[Calendar.DATE] == calender2[Calendar.DATE]
     }
 
