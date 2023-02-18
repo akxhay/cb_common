@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.presentation.route.Screen
+import com.cb.cbtools.presentation.common.CbTextDropDown
 import com.cb.cbtools.presentation.common.CbTextInputWithError
 import java.util.*
 
@@ -35,72 +36,16 @@ fun HomeScreen(
         },
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
-            val text: MutableState<String> = remember { mutableStateOf("") }
-            val error: MutableState<String?> = remember {
-                mutableStateOf(
-                    if (text.value.isEmpty()) {
-                        "Cannot be empty"
-                    } else {
-                        null
-                    }
-                )
-            }
-            val onValueChange: (String) -> Unit = {
-                text.value = it
-                error.value = if (it.isEmpty()) {
-                    "Cannot be empty"
-                } else if (it.contains("x")) {
-                    "Rule name already exists"
-                } else {
-                    null
-                }
-            }
-            Text(text = text.value)
-
-            CbTextInputWithError(
-                label = "input",
-                input = text,
-                error = error,
-                onValueChange = onValueChange,
+            CbTextDropDown(
+                label = "Type",
                 dynamicConfig = BaseApplication.getInstance().dynamicConfig,
-                horizontalPadding = 10.dp,
-                onClearClick = {}
-            )
-            ListItem(
-                headlineText = {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        CbTextInputWithError(
-                            label = "input",
-                            input = text,
-                            error = error,
-                            onValueChange = onValueChange,
-                            dynamicConfig = BaseApplication.getInstance().dynamicConfig,
-                            onClearClick = {}
+                options = arrayOf(
+                    "okay", "ji",
+                ),
+                selectedOption = "okay"
+            ) {
 
-                        )
-                        Spacer(modifier = Modifier.height(2.dp))
-                        CbTextInputWithError(
-                            label = "input",
-                            input = text,
-                            error = error,
-                            onValueChange = onValueChange,
-                            dynamicConfig = BaseApplication.getInstance().dynamicConfig,
-                            onClearClick = {}
-
-
-                        )
-                    }
-                },
-                trailingContent = {
-                    IconButton(onClick = {
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "delete"
-                        )
-                    }
-                }
-            )
+            }
 
         }
     }

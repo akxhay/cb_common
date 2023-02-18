@@ -62,7 +62,9 @@ fun CbTextInputWithError(
     val focusRequester = remember { FocusRequester() }
     if (requestFocus) {
         LaunchedEffect(Unit) {
-            if ((inputString != null && inputString.isEmpty()) || (input != null && input.value.isEmpty()))
+            if ((inputString != null && inputString.isEmpty()) ||
+                (input != null && input.value.isEmpty())
+            )
                 focusRequester.requestFocus()
         }
     }
@@ -205,7 +207,7 @@ fun CbTextInputBasic(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CbTextDropDown(
     label: String,
@@ -234,7 +236,7 @@ fun CbTextDropDown(
                 modifier = Modifier
                     .menuAnchor(),
                 readOnly = true,
-                value = selectedOptionText,
+                value = "$selectedOptionText ▼",
                 onValueChange = { },
                 label = { Text(label) },
                 trailingIcon = {
@@ -253,7 +255,7 @@ fun CbTextDropDown(
             Text(
                 modifier = modifierText
                     .menuAnchor(),
-                text = selectedOptionText,
+                text = "$selectedOptionText ▼",
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center
             )

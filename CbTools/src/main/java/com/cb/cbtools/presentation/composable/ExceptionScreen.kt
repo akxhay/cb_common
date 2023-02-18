@@ -162,9 +162,10 @@ fun ExceptionItem(
                 ) {
 
                     Text(
-                        text = exception.className!! + " : " + exception.lineNumber + " : " + DateUtil.convertLogDate(
-                            exception.time
-                        ),
+                        text = exception.className!! + " : " + exception.lineNumber + " : " +
+                                DateUtil.convertCompleteDateTime(
+                                    exception.time
+                                ),
                         style = TextStyle(
                             fontSize = 12.sp,
                             color = MaterialTheme.colorScheme.onSurface

@@ -1,7 +1,9 @@
 package com.cb.cbtools.permission.factory
 
 import android.Manifest
+import android.app.Activity
 import android.os.Build
+import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.NotificationsActive
@@ -24,5 +26,13 @@ class PostNotification : PermissionHandler {
     override fun getPermissionButtonText() = "Allow us to notify you"
 
     override fun getPermissionIcon() = Icons.Default.NotificationsActive
+
+    override fun isPermitted(context: Activity, data: Map<String, Any>): Boolean {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+           true
+        } else {
+            super.isPermitted(context, data)
+        }
+    }
 
 }
