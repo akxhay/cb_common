@@ -76,6 +76,9 @@ data class DynamicStyle(
     @SerializedName("checkedIconColor") @Expose var checkedIconColor: DynamicColor? = null,
     @SerializedName("unCheckedIconColor") @Expose var unCheckedIconColor: DynamicColor? = null,
 
+    @SerializedName("inverseBackgroundColor") @Expose var inverseBackgroundColor: DynamicColor? = null,
+
+
     @SerializedName("urlTextColor") @Expose var urlTextColor: DynamicColor? = null,
 
     )

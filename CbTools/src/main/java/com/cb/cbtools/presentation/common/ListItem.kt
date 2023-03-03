@@ -53,17 +53,19 @@ fun CbListItem(
     actionImageVector: @Composable () -> Unit = {},
     tonalElevation: Dp = ListItemDefaults.Elevation,
     shadowElevation: Dp = ListItemDefaults.Elevation,
-    maxSummaryLines: Int = 1
+    maxSummaryLines: Int = 1,
+    enabled: Boolean = true
 ) {
     ListItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                onClick()
+                if (enabled)
+                    onClick()
             },
         tonalElevation = tonalElevation,
         shadowElevation = shadowElevation,
-        colors = ListItemDefaults.colors(containerColor = dynamicConfig.getBackgroundColor()),
+        colors = ListItemDefaults.colors(containerColor = if (enabled) dynamicConfig.getBackgroundColor() else dynamicConfig.getInverseBackgroundColor()),
         headlineText = {
             if (titleUnit != null)
                 titleUnit()
@@ -193,14 +195,16 @@ fun CbListItem(
 
         }),
         trailingContent = ({
-            if (actionType != ActionType.DEFAULT) {
-                Action(
-                    actionType,
-                    checked!!,
-                    onChange
-                )
-            } else {
-                actionImageVector()
+            if (enabled) {
+                if (actionType != ActionType.DEFAULT) {
+                    Action(
+                        actionType,
+                        checked!!,
+                        onChange
+                    )
+                } else {
+                    actionImageVector()
+                }
             }
         })
     )

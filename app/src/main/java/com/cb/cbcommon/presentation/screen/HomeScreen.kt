@@ -14,7 +14,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
+import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
+import com.cb.cbtools.constants.ActionType
+import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbTextDropDown
 import com.cb.cbtools.presentation.common.CbTextInputWithError
 import java.util.*
@@ -26,6 +29,14 @@ fun HomeScreen(
     navController: NavController,
     darkTheme: MutableState<Boolean>,
 ) {
+    val context = LocalContext.current
+    val checkedMap: MutableState<Map<String, MutableState<Boolean>>> =
+        remember {
+            mutableStateOf(HashMap<String, MutableState<Boolean>>().also {
+                it["org.telegram.messenger.web"] = mutableStateOf(false)
+
+            })
+        }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -36,6 +47,23 @@ fun HomeScreen(
         },
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
+            CbListItem(
+                title = "Whatsapp",
+                primaryDrawable = context.getDrawable(R.drawable.play_store_512),
+                dynamicConfig = BaseApplication.getInstance().dynamicConfig,
+                actionType = ActionType.CHECKBOX,
+                checked = checkedMap.value["org.telegram.messenger.web"],
+                onChange = { value ->
+                    checkedMap.value["org.telegram.messenger.web"]?.value = value
+                },
+                onClick = {
+                    checkedMap.value["org.telegram.messenger.web"]?.value =
+                        checkedMap.value["org.telegram.messenger.web"]?.value?.not() ?: false
+
+                },
+                enabled = false
+            )
+
             CbTextDropDown(
                 label = "Type",
                 dynamicConfig = BaseApplication.getInstance().dynamicConfig,
