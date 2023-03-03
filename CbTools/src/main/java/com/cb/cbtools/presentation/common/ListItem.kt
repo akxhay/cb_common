@@ -2,6 +2,7 @@ package com.cb.cbtools.presentation.common
 
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -56,12 +58,17 @@ fun CbListItem(
     maxSummaryLines: Int = 1,
     enabled: Boolean = true
 ) {
+    val context = LocalContext.current
     ListItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
                 if (enabled)
                     onClick()
+                else
+                    Toast
+                        .makeText(context, "This field is disabled", Toast.LENGTH_SHORT)
+                        .show()
             },
         tonalElevation = tonalElevation,
         shadowElevation = shadowElevation,
