@@ -463,7 +463,7 @@ class DynamicConfig(private val context: Context) {
     @Composable
     fun getInverseBackgroundColor() = ColorResolver.getColor(
         color = getStyle().inverseBackgroundColor,
-        defaultColor = MaterialTheme.colorScheme.secondary
+        defaultColor = Color.Gray
     )
 
     @Composable
