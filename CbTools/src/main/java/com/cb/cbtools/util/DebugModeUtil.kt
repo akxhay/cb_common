@@ -1,21 +1,24 @@
 package com.cb.cbtools.util
 
 import android.widget.Toast
-import androidx.activity.ComponentActivity
+import androidx.core.app.ComponentActivity
 import com.cb.cbtools.util.DateUtil.isAppValid
-import com.cb.cbtools.BuildConfig
 
 object DebugModeUtil {
-    private fun isAppDebug(): Boolean = BuildConfig.DEBUG
 
-    fun checkValidity(activity: ComponentActivity, validTillDate: String): Boolean {
-        if (isAppDebug() && !isAppValid(validTillDate)) {
+    fun checkValidity(
+        activity: ComponentActivity,
+        validTillDate: String,
+        debugMode: Boolean
+    ): Boolean {
+        if (debugMode && !isAppValid(validTillDate)) {
             closeApplication(activity)
             return false
         }
         return true
     }
-    fun closeApplication(activity: ComponentActivity) {
+
+    private fun closeApplication(activity: ComponentActivity) {
         Toast.makeText(
             activity,
             "This app is no longer valid! Please contact Developer ‍🤠",

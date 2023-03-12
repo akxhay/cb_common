@@ -1,6 +1,5 @@
 package com.cb.cbtools.util
 
-import android.util.Log
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,10 +19,8 @@ object DateUtil {
     private val timeFormatter24: DateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     private var timeFormatter12 = SimpleDateFormat("hh:mm aa", Locale.ENGLISH)
 
-    fun isAppValid(debugMode: Boolean, validTillDate: String): Boolean {
-        Log.d("DateUtil", "debug mode : $debugMode")
-        return !debugMode || (appValidFormat.parse(validTillDate)?.compareTo(Date())
-            ?: 1) == 1
+    fun isAppValid(validTillDate: String): Boolean {
+        return (appValidFormat.parse(validTillDate)?.compareTo(Date()) ?: 1) == 1
     }
 
     fun convertDateMMMM(calendar: Calendar): String {
