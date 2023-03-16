@@ -1,6 +1,7 @@
 package com.cb.cbtools.presentation.common
 
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cb.cbtools.dynamic.DynamicConfig
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,6 +27,7 @@ fun CbAppBar(
     title: String,
     icon: ImageVector? = null,
     byteArray: ByteArray? = null,
+    drawable: Drawable? = null,
     backAction: (() -> Unit)? = null,
     dynamicConfig: DynamicConfig,
     primaryIconSize: Dp = 40.dp,
@@ -37,7 +40,7 @@ fun CbAppBar(
                     .background(dynamicConfig.getAppBarBackGroundColor())
             )
             {
-                if (byteArray != null || icon != null) {
+                if (byteArray != null || icon != null || drawable != null) {
                     Box(
                         modifier = Modifier.padding(end = 5.dp),
                         contentAlignment = Alignment.Center
@@ -56,11 +59,25 @@ fun CbAppBar(
                             )
                         } else if (icon != null) {
                             Icon(
-                                modifier = Modifier.size(primaryIconSize).padding(bottom = 3.dp, end = 3.dp),
+                                modifier = Modifier
+                                    .size(primaryIconSize)
+                                    .padding(bottom = 3.dp, end = 3.dp),
                                 imageVector = icon,
                                 contentDescription = "icon",
                                 tint = dynamicConfig.getAppBarMenuIconColor()
                             )
+                        } else if (drawable != null) {
+                            Image(
+                                modifier = Modifier
+                                    .size(primaryIconSize)
+                                    .padding(bottom = 3.dp, end = 3.dp),
+
+                                painter = rememberDrawablePainter(
+                                    drawable = drawable
+                                ),
+                                contentDescription = "icon",
+                            )
+
                         }
                     }
                 }

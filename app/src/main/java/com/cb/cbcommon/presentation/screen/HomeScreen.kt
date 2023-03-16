@@ -1,5 +1,6 @@
 package com.cb.cbcommon.presentation.screen
 
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -11,15 +12,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.constants.ActionType
+import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbTextDropDown
-import com.cb.cbtools.presentation.common.CbTextInputWithError
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,13 +90,13 @@ fun TopAppBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
     val context = LocalContext.current
-
-    TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
-        title =
-        {
-            Text(title, color = MaterialTheme.colorScheme.onPrimary)
-        },
+    CbAppBar(
+        title = title,
+        drawable = AppCompatResources.getDrawable(
+            context,
+            R.drawable.ic_bot
+        ),
+        dynamicConfig = BaseApplication.getInstance().dynamicConfig,
         actions = {
             IconButton(onClick = {
                 darkTheme.value = !darkTheme.value
@@ -133,8 +133,9 @@ fun TopAppBar(
                     }
                 )
             }
-        }
+        },
     )
+
 
 }
 
