@@ -35,6 +35,7 @@ import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
 import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
 import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
 import com.cb.cbtools.presentation.common.CbGenericDialog
+import com.cb.cbtools.presentation.common.RatePopUp
 import com.cb.cbtools.presentation.composable.SettingsScreen
 import com.cb.cbtools.presentation.composable.screen.ExceptionScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -212,6 +213,12 @@ class MainActivity : ComponentActivity() {
         FloatingActionButtons(icon = Icons.Default.Chat) {
             dialog.value = true
         }
+//        RatePopUp(
+//            showRatePopUp = dialog,
+//            activity = this,
+//            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+//        )
+
         if (dialog.value) {
             ShowDialog(
                 showAlert = dialog
@@ -230,6 +237,7 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     fun OpenExceptionScreen(
         navController: NavHostController,
