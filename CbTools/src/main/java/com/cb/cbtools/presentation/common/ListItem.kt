@@ -45,7 +45,7 @@ fun CbListItem(
     secondaryImageVector: ImageVector? = null,
     primaryIconSize: Dp = 30.dp,
     secondaryIconSize: Dp = 20.dp,
-
+    secondaryIconTint: Color? = null,
     iconClick: (() -> Unit)? = null,
     dynamicConfig: DynamicConfig,
     actionType: ActionType = ActionType.DEFAULT,
@@ -191,7 +191,7 @@ fun CbListItem(
                                 modifier = Modifier.size(secondaryIconSize),
                                 imageVector = it,
                                 contentDescription = "secondaryImageVector",
-                                tint = dynamicConfig.getIconTintOnBackgroundColor()
+                                tint = secondaryIconTint ?: dynamicConfig.getIconTintOnBackgroundColor()
                             )
                         }
                     }
