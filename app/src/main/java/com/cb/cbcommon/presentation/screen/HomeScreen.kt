@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.R
@@ -48,7 +49,24 @@ fun HomeScreen(
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
             CbListItem(
-                title = "Whatsapp",
+                titleUnit = {
+                    Text(
+                        text = "AKshay",
+                        style = MaterialTheme.typography.titleMedium,
+                        color =  BaseApplication.getInstance().dynamicConfig.getPrimaryTextOnBackGroundColor(),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                },
+                summaryUnit = {
+                    Text(
+                        text = "sharma",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = BaseApplication.getInstance().dynamicConfig.getSecondaryTextOnBackgroundColor(),
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1,
+                    )
+                },
                 primaryDrawable = context.getDrawable(R.drawable.play_store_512),
                 dynamicConfig = BaseApplication.getInstance().dynamicConfig,
                 actionType = ActionType.CHECKBOX,
@@ -74,7 +92,6 @@ fun HomeScreen(
             ) {
 
             }
-
         }
     }
 

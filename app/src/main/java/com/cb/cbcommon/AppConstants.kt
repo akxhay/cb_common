@@ -2,9 +2,9 @@ package com.cb.cbcommon
 
 import com.cb.cbcommon.notification.NotificationReceiver
 import com.cb.cbcommon.presentation.MainActivity
-import com.cb.cbtools.dto.CbPermission
 import com.cb.cbtools.constants.Constants
 import com.cb.cbtools.constants.enums.PermissionType
+import com.cb.cbtools.dto.CbPermission
 
 object AppConstants {
     val requiredPermissionOnStartup = arrayListOf(

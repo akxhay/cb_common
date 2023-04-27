@@ -7,14 +7,12 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.cb.cbtools.dynamic.DynamicConfig
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ErrorInfoCard(message: String?, dynamicConfig: DynamicConfig) {
     if (message != null)
@@ -26,7 +24,7 @@ fun ErrorInfoCard(message: String?, dynamicConfig: DynamicConfig) {
                     tint = dynamicConfig.getInputTextErrorColor()
                 )
             },
-            headlineText = {
+            headlineContent = {
 
                 Text(
                     color = dynamicConfig.getInputTextErrorColor(),
@@ -50,7 +48,7 @@ fun ErrorCard(
     if (message != null)
         ListItem(
             colors = ListItemDefaults.colors(containerColor = dynamicConfig.getInputErrorContainerColor()),
-            headlineText = {
+            headlineContent = {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -92,8 +90,7 @@ fun InfoCard(message: String?, dynamicConfig: DynamicConfig) {
                     tint = dynamicConfig.getPrimaryTextOnBackGroundColor()
                 )
             },
-            headlineText = {
-
+            headlineContent = {
                 Text(
                     color = dynamicConfig.getPrimaryTextOnBackGroundColor(),
                     textAlign = TextAlign.Center,

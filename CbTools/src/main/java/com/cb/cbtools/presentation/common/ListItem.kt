@@ -24,8 +24,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.constants.ActionType
+import com.cb.cbtools.dynamic.DynamicConfig
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 @Composable
@@ -73,38 +73,36 @@ fun CbListItem(
         tonalElevation = tonalElevation,
         shadowElevation = shadowElevation,
         colors = ListItemDefaults.colors(containerColor = if (enabled) dynamicConfig.getBackgroundColor() else dynamicConfig.getInverseBackgroundColor()),
-        headlineText = {
-            if (titleUnit != null)
-                titleUnit()
-            else
-                Column(modifier = Modifier) {
+        headlineContent = {
+            Column(modifier = Modifier) {
+                if (titleUnit != null)
+                    titleUnit()
+                else
                     title?.let { it ->
-                        Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = it,
                             style = MaterialTheme.typography.titleMedium,
-                            color = titleColor ?: dynamicConfig.getPrimaryTextOnBackGroundColor(),
+                            color = titleColor
+                                ?: dynamicConfig.getPrimaryTextOnBackGroundColor(),
                             overflow = TextOverflow.Ellipsis,
                             maxLines = 1
                         )
                     }
+                Spacer(modifier = Modifier.height(2.dp))
 
-
-                    if (summaryUnit != null) {
-                        Spacer(modifier = Modifier.height(2.dp))
-                        summaryUnit()
-                    } else
-                        summary?.let { it ->
-                            Spacer(modifier = Modifier.height(2.dp))
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = dynamicConfig.getSecondaryTextOnBackgroundColor(),
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = maxSummaryLines,
-                            )
-                        }
-                }
+                if (summaryUnit != null) {
+                    summaryUnit()
+                } else
+                    summary?.let { it ->
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = dynamicConfig.getSecondaryTextOnBackgroundColor(),
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = maxSummaryLines,
+                        )
+                    }
+            }
 
         },
         leadingContent = ({

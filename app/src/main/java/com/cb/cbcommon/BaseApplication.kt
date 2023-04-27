@@ -2,7 +2,6 @@ package com.cb.cbcommon
 
 import android.app.Application
 import com.cb.cbtools.data.model.ExceptionRecord
-import com.cb.cbtools.data.repository.ExceptionRepositoryImpl
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.service.ExceptionHelper
 import dagger.hilt.android.HiltAndroidApp

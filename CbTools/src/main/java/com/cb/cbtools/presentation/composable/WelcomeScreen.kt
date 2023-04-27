@@ -377,7 +377,7 @@ fun PermissionButton(
                 {
                     ListItem(
                         colors = ListItemDefaults.colors(containerColor = dynamicConfig.getWelcomeScreenCardBackgroundColor()),
-                        headlineText = {
+                        headlineContent = {
                             WelcomeInfoText(
                                 text = PermissionHandlerFactory.getHandlerForPermission(
                                     it.permissionType

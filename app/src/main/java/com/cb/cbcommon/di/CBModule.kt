@@ -2,7 +2,6 @@ package com.cb.cbcommon.di
 
 import android.content.Context
 import com.cb.cbtools.data.repository.ExceptionRepository
-import com.cb.cbtools.data.repository.ExceptionRepositoryImpl
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.service.ExceptionHelper
 import dagger.Module

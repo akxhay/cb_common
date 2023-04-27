@@ -35,7 +35,6 @@ import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
 import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
 import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
 import com.cb.cbtools.presentation.common.CbGenericDialog
-import com.cb.cbtools.presentation.common.RatePopUp
 import com.cb.cbtools.presentation.composable.SettingsScreen
 import com.cb.cbtools.presentation.composable.screen.ExceptionScreen
 import dagger.hilt.android.AndroidEntryPoint

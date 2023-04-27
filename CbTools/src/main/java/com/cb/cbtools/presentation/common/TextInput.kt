@@ -102,11 +102,11 @@ fun CbTextInputWithError(
                 onValueChange(newText)
             },
             singleLine = false,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = if (!error?.value.isNullOrBlank()) dynamicConfig.getInputTextErrorColor() else focusedBorderColor,
                 unfocusedBorderColor = if (!error?.value.isNullOrBlank()) dynamicConfig.getInputTextErrorColor() else unfocusedBorderColor,
                 cursorColor = cursorColor,
-                textColor = dynamicConfig.getInputTextContentColor(),
+                focusedTextColor = dynamicConfig.getInputTextContentColor(),
             ),
             label = {
                 Text(
@@ -245,8 +245,8 @@ fun CbTextDropDown(
                     )
                 },
                 textStyle = MaterialTheme.typography.bodySmall,
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = dynamicConfig.getInputTextContentColor(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = dynamicConfig.getInputTextContentColor(),
                     focusedBorderColor = Color.Transparent,
                     unfocusedBorderColor = Color.Transparent
                 ),
