@@ -474,4 +474,12 @@ class DynamicConfig(private val context: Context) {
         )
     }
 
+    @Composable
+    fun getOnlineIconColor(): Color {
+        return ColorResolver.getColor(
+            color = dynamicApp.style.onlineIconColor,
+            Color.Green
+        )
+    }
+
 }

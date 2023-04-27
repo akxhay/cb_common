@@ -81,5 +81,8 @@ data class DynamicStyle(
 
     @SerializedName("urlTextColor") @Expose var urlTextColor: DynamicColor? = null,
 
+    @SerializedName("onlineIconColor") @Expose var onlineIconColor: DynamicColor? = null,
+
+
     )
 
