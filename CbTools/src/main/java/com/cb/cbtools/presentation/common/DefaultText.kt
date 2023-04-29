@@ -17,7 +17,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 
 @Composable
-fun ErrorInfoCard(message: String?, errorColor: Color = MaterialTheme.colorScheme.error) {
+fun ErrorInfoCard(
+    message: String?,
+    errorColor: Color = MaterialTheme.colorScheme.error,
+    containerColor: Color = MaterialTheme.colorScheme.onErrorContainer,
+) {
     if (message != null)
         CbListItem(
             titleUnit = {
@@ -38,6 +42,8 @@ fun ErrorInfoCard(message: String?, errorColor: Color = MaterialTheme.colorSchem
                     tint = errorColor
                 )
             },
+            containerColor = containerColor
+
         )
 }
 
@@ -81,7 +87,11 @@ fun ErrorCard(
 
 
 @Composable
-fun InfoCard(message: String?, textColor: Color = MaterialTheme.colorScheme.onBackground) {
+fun InfoCard(
+    message: String?,
+    textColor: Color = MaterialTheme.colorScheme.onBackground,
+    containerColor: Color = MaterialTheme.colorScheme.background,
+) {
     if (message != null)
         CbListItem(
             titleUnit = {
@@ -102,6 +112,7 @@ fun InfoCard(message: String?, textColor: Color = MaterialTheme.colorScheme.onBa
                     tint = textColor
                 )
             },
+            containerColor = containerColor
         )
 }
 
@@ -109,6 +120,7 @@ fun InfoCard(message: String?, textColor: Color = MaterialTheme.colorScheme.onBa
 fun CbNoResult(
     text: String = "No matches found",
     textColor: Color = MaterialTheme.colorScheme.onBackground,
+    containerColor: Color = MaterialTheme.colorScheme.background,
     wholePage: Boolean = true
 ) {
     Column(
@@ -122,7 +134,9 @@ fun CbNoResult(
                     color = textColor,
                     overflow = TextOverflow.Ellipsis
                 )
-            })
+            },
+            containerColor = containerColor
+        )
     }
 
 }
