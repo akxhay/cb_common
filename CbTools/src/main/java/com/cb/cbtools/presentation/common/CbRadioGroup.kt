@@ -11,13 +11,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun CbRadioGroup(
     selectedOption: Int,
     radioOptions: List<String>,
+    selectedColor: Color = MaterialTheme.colorScheme.primary,
+    unselectedColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    textColor: Color = MaterialTheme.colorScheme.onBackground,
     onOptionSelected: (String) -> Unit,
-) {
+
+    ) {
     CbListItem(
         titleUnit = {
             Row(
@@ -41,14 +46,14 @@ fun CbRadioGroup(
                             selected = (text == radioOptions[selectedOption]),
                             onClick = { onOptionSelected(text) },
                             colors = RadioButtonDefaults.colors(
-                                selectedColor = MaterialTheme.colorScheme.primary,
-                                unselectedColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                selectedColor = selectedColor,
+                                unselectedColor = unselectedColor
                             )
                         )
                         Text(
                             text = text,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onBackground
+                            color = textColor
                         )
                     }
                 }

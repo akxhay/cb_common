@@ -1,12 +1,13 @@
 package com.cb.cbcommon.presentation.screen
 
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.animation.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -19,7 +20,7 @@ import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.constants.ActionType
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
-import java.util.*
+import com.cb.cbtools.presentation.common.CbRadioGroup
 
 @ExperimentalAnimationApi
 @Composable
@@ -77,6 +78,17 @@ fun HomeScreen(
                 },
                 enabled = false
             )
+            val selectedOption = remember {
+                mutableStateOf(1)
+            }
+            val assistantRadioOptions = listOf("Disable", "Enable", "Test")
+
+            CbRadioGroup(
+                selectedOption.value,
+                assistantRadioOptions,
+            ) {
+
+            }
 
         }
     }
