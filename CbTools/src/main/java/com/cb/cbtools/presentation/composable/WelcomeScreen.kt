@@ -68,18 +68,17 @@ fun WelcomeScreen(
             currentPermission?.let {
                 PermissionScreen(
                     context = context,
-                    currentPermission = it,
                     appIcon = appIcon,
                     appName = appName,
                     appDesc = appDesc,
                     onclickSkip = onclickSkip,
+                    currentPermission = it,
                     backgroundColor = backgroundColor,
                     primaryTextColor = primaryTextColor,
                     secondaryTextColor = secondaryTextColor,
                     tertiaryTextColor = tertiaryTextColor,
                     cardColor = cardColor,
-                    cardTextColor = cardTextColor,
-                    dividerColor = dividerColor
+                    cardTextColor = cardTextColor
                 )
             }
         }
@@ -100,8 +99,7 @@ fun PermissionScreen(
     secondaryTextColor: Color,
     tertiaryTextColor: Color,
     cardColor: Color,
-    cardTextColor: Color,
-    dividerColor: Color
+    cardTextColor: Color
 ) {
     Column(
         Modifier
@@ -374,13 +372,8 @@ fun PermissionButton(
             modifier,
             Alignment.Center
         ) {
-            AnimatedContent(
-                targetState = currentPermission,
-                transitionSpec = {
-                    fadeIn(animationSpec = tween(durationMillis = animationDuration)) with
-                            fadeOut(animationSpec = tween(durationMillis = animationDuration))
-                }
-            ) {
+            Crossfade(targetState = currentPermission,
+                animationSpec = tween(animationDuration)) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
