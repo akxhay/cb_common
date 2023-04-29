@@ -30,7 +30,7 @@ fun SentMessageRow(
 ) {
     Column(
         modifier = Modifier
-            .padding(start = 60.dp, end = 8.dp, top = if (drawArrow) 2.dp else 0.dp, bottom = 2.dp)
+            .padding(start = 60.dp, end = 8.dp, top = if (drawArrow) 5.dp else 0.dp, bottom = 2.dp)
             .fillMaxWidth()
             .wrapContentHeight(),
         horizontalAlignment = Alignment.End
