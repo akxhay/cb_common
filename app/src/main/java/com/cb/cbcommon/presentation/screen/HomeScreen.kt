@@ -18,9 +18,7 @@ import androidx.navigation.NavController
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.constants.ActionType
-import com.cb.cbtools.presentation.common.CbAppBar
-import com.cb.cbtools.presentation.common.CbListItem
-import com.cb.cbtools.presentation.common.CbRadioGroup
+import com.cb.cbtools.presentation.common.*
 
 @ExperimentalAnimationApi
 @Composable
@@ -89,6 +87,12 @@ fun HomeScreen(
             ) {
 
             }
+            ErrorInfoCard(
+                message = "*Assistant is disabled"
+            )
+            InfoCard(
+                message = "*Assistant is enabled",
+            )
 
         }
     }

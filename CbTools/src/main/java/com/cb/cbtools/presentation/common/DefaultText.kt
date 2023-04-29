@@ -5,7 +5,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,16 +19,8 @@ import androidx.compose.ui.text.style.TextOverflow
 @Composable
 fun ErrorInfoCard(message: String?, errorColor: Color = MaterialTheme.colorScheme.error) {
     if (message != null)
-        ListItem(
-            leadingContent = {
-                Icon(
-                    imageVector = Icons.Default.Error,
-                    contentDescription = "Error",
-                    tint = errorColor
-                )
-            },
-            headlineContent = {
-
+        CbListItem(
+            titleUnit = {
                 Text(
                     color = errorColor,
                     textAlign = TextAlign.Center,
@@ -35,7 +30,14 @@ fun ErrorInfoCard(message: String?, errorColor: Color = MaterialTheme.colorSchem
                     overflow = TextOverflow.Ellipsis
                 )
 
-            }
+            },
+            iconUnit = {
+                Icon(
+                    imageVector = Icons.Default.Error,
+                    contentDescription = "Error",
+                    tint = errorColor
+                )
+            },
         )
 }
 
@@ -46,9 +48,8 @@ fun ErrorCard(
     onIconClick: () -> Unit,
 ) {
     if (message != null)
-        ListItem(
-            colors = ListItemDefaults.colors(containerColor = containerColor),
-            headlineContent = {
+        CbListItem(
+            titleUnit = {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -65,7 +66,7 @@ fun ErrorCard(
 
                 }
             },
-            trailingContent = {
+            actionImageVector = {
                 IconButton(onClick = { onIconClick() }) {
                     Icon(
                         imageVector = Icons.Default.VisibilityOff,
@@ -73,8 +74,8 @@ fun ErrorCard(
                         tint = containerColor
                     )
                 }
-            }
-
+            },
+            containerColor = containerColor
         )
 }
 
@@ -82,15 +83,8 @@ fun ErrorCard(
 @Composable
 fun InfoCard(message: String?, textColor: Color = MaterialTheme.colorScheme.onBackground) {
     if (message != null)
-        ListItem(
-            leadingContent = {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "Error",
-                    tint = textColor
-                )
-            },
-            headlineContent = {
+        CbListItem(
+            titleUnit = {
                 Text(
                     color = textColor,
                     textAlign = TextAlign.Center,
@@ -100,7 +94,14 @@ fun InfoCard(message: String?, textColor: Color = MaterialTheme.colorScheme.onBa
                     overflow = TextOverflow.Ellipsis
                 )
 
-            }
+            },
+            iconUnit = {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Error",
+                    tint = textColor
+                )
+            },
         )
 }
 
