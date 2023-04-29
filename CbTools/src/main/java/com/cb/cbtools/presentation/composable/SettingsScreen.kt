@@ -5,12 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,7 +47,7 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .background(backgroundColor)
+                .background(MaterialTheme.colorScheme.primary)
         ) {
             Settings(
                 dynamicConfig = dynamicConfig,
@@ -72,24 +70,33 @@ fun Settings(
     secondaryTextColor: Color,
     dividerColor: Color
 ) {
-    dynamicConfig.getPreferenceCategories()?.let {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            items(it) { preferenceCategory ->
-                PreferenceCategoryComposable(
-                    preferenceCategory = preferenceCategory,
-                    dynamicConfig = dynamicConfig,
-                    activity = activity,
-                    backgroundColor = backgroundColor,
-                    primaryTextColor = primaryTextColor,
-                    secondaryTextColor = secondaryTextColor,
-                    dividerColor = dividerColor
-                )
+    Card(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+        shape = RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp),
+    )
+    {
+        dynamicConfig.getPreferenceCategories()?.let {
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                items(it) { preferenceCategory ->
+                    PreferenceCategoryComposable(
+                        preferenceCategory = preferenceCategory,
+                        dynamicConfig = dynamicConfig,
+                        activity = activity,
+                        backgroundColor = backgroundColor,
+                        primaryTextColor = primaryTextColor,
+                        secondaryTextColor = secondaryTextColor,
+                        dividerColor = dividerColor
+                    )
+                }
             }
         }
-
     }
 
 }
@@ -189,10 +196,11 @@ fun PreferenceHeader(modifier: Modifier, title: String) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier.width(70.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.Gray,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
