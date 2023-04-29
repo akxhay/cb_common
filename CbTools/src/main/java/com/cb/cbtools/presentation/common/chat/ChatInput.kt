@@ -35,7 +35,9 @@ fun ChatInput(
     message: String = "Message",
     onMessageChange: (String) -> Unit,
     fabContainerColor: Color = MaterialTheme.colorScheme.primary,
-    fabContentColor: Color = MaterialTheme.colorScheme.onPrimary
+    fabContentColor: Color = MaterialTheme.colorScheme.onPrimary,
+    containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer
 ) {
 
     var input by remember { mutableStateOf(TextFieldValue("")) }
@@ -57,6 +59,9 @@ fun ChatInput(
             onValueChange = {
                 input = it
             },
+            containerColor = containerColor,
+            contentColor = contentColor
+
         )
 
         Spacer(modifier = Modifier.width(6.dp))
