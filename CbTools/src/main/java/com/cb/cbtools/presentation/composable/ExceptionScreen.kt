@@ -68,7 +68,6 @@ fun ExceptionScreen(
                         )
                     }
                 },
-                dynamicConfig = dynamicConfig
             )
         },
     ) { padding ->
@@ -77,7 +76,6 @@ fun ExceptionScreen(
                 ExceptionLoaded(exceptions)
             } else {
                 CbNoResult(
-                    dynamicConfig = dynamicConfig,
                     text = "No exceptions"
                 )
             }
@@ -118,7 +116,6 @@ fun DeleteExceptionAlertDialog(
         },
         title = "Please confirm",
         text = "Delete all exception?",
-        dynamicConfig = dynamicConfig
     )
 
 }

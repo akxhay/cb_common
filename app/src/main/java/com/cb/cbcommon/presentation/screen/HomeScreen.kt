@@ -14,16 +14,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
-import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.constants.ActionType
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
-import com.cb.cbtools.presentation.common.CbTextDropDown
 import java.util.*
 
-@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalAnimationApi
 @Composable
 fun HomeScreen(
@@ -53,7 +50,7 @@ fun HomeScreen(
                     Text(
                         text = "AKshay",
                         style = MaterialTheme.typography.titleMedium,
-                        color =  BaseApplication.getInstance().dynamicConfig.getPrimaryTextOnBackGroundColor(),
+                        color = MaterialTheme.colorScheme.onBackground,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
@@ -62,13 +59,12 @@ fun HomeScreen(
                     Text(
                         text = "sharma",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = BaseApplication.getInstance().dynamicConfig.getSecondaryTextOnBackgroundColor(),
+                        color = MaterialTheme.colorScheme.onBackground,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                     )
                 },
                 primaryDrawable = context.getDrawable(R.drawable.play_store_512),
-                dynamicConfig = BaseApplication.getInstance().dynamicConfig,
                 actionType = ActionType.CHECKBOX,
                 checked = checkedMap.value["org.telegram.messenger.web"],
                 onChange = { value ->
@@ -82,23 +78,12 @@ fun HomeScreen(
                 enabled = false
             )
 
-            CbTextDropDown(
-                label = "Type",
-                dynamicConfig = BaseApplication.getInstance().dynamicConfig,
-                options = arrayOf(
-                    "okay", "ji",
-                ),
-                selectedOption = "okay"
-            ) {
-
-            }
         }
     }
 
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
     title: String,
@@ -113,7 +98,6 @@ fun TopAppBar(
             context,
             R.drawable.ic_bot
         ),
-        dynamicConfig = BaseApplication.getInstance().dynamicConfig,
         actions = {
             IconButton(onClick = {
                 darkTheme.value = !darkTheme.value

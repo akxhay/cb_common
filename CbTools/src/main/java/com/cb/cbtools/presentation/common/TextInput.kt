@@ -32,10 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cb.cbtools.R
-import com.cb.cbtools.dynamic.DynamicConfig
 
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CbTextInputWithError(
     modifier: Modifier = Modifier,
@@ -47,17 +45,21 @@ fun CbTextInputWithError(
     onValueChange: (String) -> Unit,
     onClearClick: () -> Unit,
     maxLines: Int = 6,
-    dynamicConfig: DynamicConfig,
     keyboardType: KeyboardType = KeyboardType.Text,
     isSearchBar: Boolean = false,
     usingMutableState: Boolean = true,
-    requestFocus: Boolean = false
-) {
+    requestFocus: Boolean = false,
+    inputTextFocusedColor: Color = MaterialTheme.colorScheme.primary,
+    inputTextUnFocusedColor: Color = MaterialTheme.colorScheme.secondary,
+    inputTextCursorColor: Color = MaterialTheme.colorScheme.onSurface,
+    inputTextErrorColor: Color = MaterialTheme.colorScheme.error,
+    inputTextContentColor: Color = MaterialTheme.colorScheme.onSurface,
+    inputTextPlaceholderColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    drawColor: Color = Color.Transparent,
+
+    ) {
     var showClearButton by remember { mutableStateOf(false) }
 
-    val focusedBorderColor = dynamicConfig.getInputTextFocusedColor()
-    val unfocusedBorderColor = dynamicConfig.getInputTextUnFocusedColor()
-    val cursorColor = dynamicConfig.getInputTextCursorColor()
     val softwareKeyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     if (requestFocus) {
@@ -68,8 +70,6 @@ fun CbTextInputWithError(
                 focusRequester.requestFocus()
         }
     }
-    val drawColor = dynamicConfig.getDividerColor()
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -103,15 +103,15 @@ fun CbTextInputWithError(
             },
             singleLine = false,
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = if (!error?.value.isNullOrBlank()) dynamicConfig.getInputTextErrorColor() else focusedBorderColor,
-                unfocusedBorderColor = if (!error?.value.isNullOrBlank()) dynamicConfig.getInputTextErrorColor() else unfocusedBorderColor,
-                cursorColor = cursorColor,
-                focusedTextColor = dynamicConfig.getInputTextContentColor(),
+                focusedBorderColor = if (!error?.value.isNullOrBlank()) inputTextErrorColor else inputTextFocusedColor,
+                unfocusedBorderColor = if (!error?.value.isNullOrBlank()) inputTextErrorColor else inputTextUnFocusedColor,
+                cursorColor = inputTextCursorColor,
+                focusedTextColor = inputTextContentColor,
             ),
             label = {
                 Text(
                     text = label,
-                    color = dynamicConfig.getInputTextPlaceholderColor()
+                    color = inputTextPlaceholderColor
                 )
             },
             keyboardOptions = KeyboardOptions.Default.copy(
@@ -134,7 +134,7 @@ fun CbTextInputWithError(
                         Icon(
                             imageVector = Icons.Filled.Clear,
                             contentDescription = "Clear",
-                            tint = dynamicConfig.getInputTextContentColor()
+                            tint = inputTextContentColor
 
                         )
                     }
@@ -147,7 +147,7 @@ fun CbTextInputWithError(
                         Icon(
                             imageVector = Icons.Filled.Search,
                             contentDescription = "",
-                            tint = dynamicConfig.getInputTextContentColor()
+                            tint = inputTextContentColor
                         )
                     }
                 })
@@ -165,8 +165,10 @@ fun CbTextInputBasic(
     value: String,
     onValueChange: (String) -> Unit,
     hint: String = stringResource(id = R.string.search),
-    dynamicConfig: DynamicConfig,
-    isSearchbar: Boolean
+    isSearchbar: Boolean,
+    searchIconTint: Color = MaterialTheme.colorScheme.surface,
+    inputTextPlaceholderColor: Color = MaterialTheme.colorScheme.onSurfaceVariant
+
 ) {
     BasicTextField(
         modifier = modifier
@@ -187,7 +189,7 @@ fun CbTextInputBasic(
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Search",
-                        tint = dynamicConfig.getAlertContentColor(),
+                        tint = searchIconTint,
                         modifier = Modifier.padding(horizontal = 5.dp)
                     )
                 Box(Modifier.weight(1f)) {
@@ -195,7 +197,7 @@ fun CbTextInputBasic(
                         Text(
                             hint,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = dynamicConfig.getInputTextPlaceholderColor()
+                            color = inputTextPlaceholderColor
 
                         )
                     innerTextField()
@@ -214,12 +216,14 @@ fun CbTextDropDown(
     modifierText: Modifier = Modifier.width(100.dp),
     modifierBox: Modifier = Modifier,
     selectedOption: String,
-    dynamicConfig: DynamicConfig,
     options: Array<String>,
     useTextFiled: Boolean = false,
     onValueChange: (String) -> Unit,
+    inputTextContentColor: Color = MaterialTheme.colorScheme.onSurface,
 
-    ) {
+    inputTextPlaceholderColor: Color = MaterialTheme.colorScheme.onSurfaceVariant
+
+) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(selectedOption) }
 
@@ -246,7 +250,7 @@ fun CbTextDropDown(
                 },
                 textStyle = MaterialTheme.typography.bodySmall,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedTextColor = dynamicConfig.getInputTextContentColor(),
+                    focusedTextColor = inputTextContentColor,
                     focusedBorderColor = Color.Transparent,
                     unfocusedBorderColor = Color.Transparent
                 ),
@@ -277,7 +281,7 @@ fun CbTextDropDown(
                         Text(
                             text = selectionOption,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = dynamicConfig.getInputTextPlaceholderColor()
+                            color = inputTextPlaceholderColor
                         )
                     }
                 )

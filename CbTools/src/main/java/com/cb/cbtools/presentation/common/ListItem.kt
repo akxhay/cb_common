@@ -21,21 +21,16 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cb.cbtools.constants.ActionType
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 @Composable
 fun CbListItem(
     modifier: Modifier = Modifier,
     iconUnit: (@Composable () -> Unit)? = null,
-    titleUnit: (@Composable () -> Unit)? = null,
-    title: String? = null,
-    titleColor: Color? = null,
-    summary: String? = null,
+    titleUnit: (@Composable () -> Unit),
     summaryUnit: (@Composable () -> Unit)? = null,
     primaryByteArray: ByteArray? = null,
     primaryBitmap: ImageBitmap? = null,
@@ -45,9 +40,9 @@ fun CbListItem(
     secondaryImageVector: ImageVector? = null,
     primaryIconSize: Dp = 30.dp,
     secondaryIconSize: Dp = 20.dp,
-    secondaryIconTint: Color? = null,
+    primaryIconTint: Color = MaterialTheme.colorScheme.primary,
+    secondaryIconTint: Color = MaterialTheme.colorScheme.primary,
     iconClick: (() -> Unit)? = null,
-    dynamicConfig: DynamicConfig,
     actionType: ActionType = ActionType.DEFAULT,
     checked: MutableState<Boolean>? = null,
     onChange: (Boolean) -> Unit = {},
@@ -55,8 +50,8 @@ fun CbListItem(
     actionImageVector: @Composable () -> Unit = {},
     tonalElevation: Dp = ListItemDefaults.Elevation,
     shadowElevation: Dp = ListItemDefaults.Elevation,
-    maxSummaryLines: Int = 1,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    containerColor: Color = MaterialTheme.colorScheme.background
 ) {
     val context = LocalContext.current
     ListItem(
@@ -72,36 +67,14 @@ fun CbListItem(
             },
         tonalElevation = tonalElevation,
         shadowElevation = shadowElevation,
-        colors = ListItemDefaults.colors(containerColor = if (enabled) dynamicConfig.getBackgroundColor() else dynamicConfig.getInverseBackgroundColor()),
+        colors = ListItemDefaults.colors(containerColor = containerColor),
         headlineContent = {
             Column(modifier = Modifier) {
-                if (titleUnit != null)
-                    titleUnit()
-                else
-                    title?.let { it ->
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = titleColor
-                                ?: dynamicConfig.getPrimaryTextOnBackGroundColor(),
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-                    }
+                titleUnit()
                 Spacer(modifier = Modifier.height(2.dp))
-
                 if (summaryUnit != null) {
                     summaryUnit()
-                } else
-                    summary?.let { it ->
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = dynamicConfig.getSecondaryTextOnBackgroundColor(),
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = maxSummaryLines,
-                        )
-                    }
+                }
             }
 
         },
@@ -129,7 +102,7 @@ fun CbListItem(
                                 modifier = Modifier.size(primaryIconSize),
                                 imageVector = primaryImageVector,
                                 contentDescription = "dp",
-                                tint = dynamicConfig.getIconTintOnBackgroundColor()
+                                tint = primaryIconTint
                             )
                         } else if (primaryByteArray != null) {
                             Image(
@@ -191,7 +164,7 @@ fun CbListItem(
                                 modifier = Modifier.size(secondaryIconSize),
                                 imageVector = it,
                                 contentDescription = "secondaryImageVector",
-                                tint = secondaryIconTint ?: dynamicConfig.getIconTintOnBackgroundColor()
+                                tint = secondaryIconTint
                             )
                         }
                     }

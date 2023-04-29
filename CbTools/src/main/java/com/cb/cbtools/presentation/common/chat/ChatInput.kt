@@ -1,4 +1,4 @@
-package com.cb.cbtools.common.common.components
+package com.cb.cbtools.presentation.common.chat
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -17,12 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cb.cbtools.dynamic.DynamicConfig
+import com.cb.cbtools.common.common.components.IndicatingIconButton
 
 val circleButtonSize = 44.dp
 
@@ -33,7 +34,8 @@ fun ChatInput(
     enabled: Boolean = true,
     message: String = "Message",
     onMessageChange: (String) -> Unit,
-    dynamicConfig: DynamicConfig
+    fabContainerColor: Color = MaterialTheme.colorScheme.primary,
+    fabContentColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
 
     var input by remember { mutableStateOf(TextFieldValue("")) }
@@ -55,14 +57,13 @@ fun ChatInput(
             onValueChange = {
                 input = it
             },
-            dynamicConfig = dynamicConfig
         )
 
         Spacer(modifier = Modifier.width(6.dp))
 
         FloatingActionButton(
             modifier = Modifier.size(48.dp),
-            backgroundColor = dynamicConfig.getFloatingBackgroundColor(),
+            backgroundColor = fabContainerColor,
             onClick = {
                 if (!textEmpty) {
                     onMessageChange(input.text)
@@ -71,7 +72,7 @@ fun ChatInput(
             }
         ) {
             Icon(
-                tint = dynamicConfig.getFloatingContentColor(),
+                tint = fabContentColor,
                 imageVector = Icons.Filled.Send,
                 contentDescription = null
             )
@@ -87,13 +88,14 @@ private fun ChatTextField(
     onValueChange: (TextFieldValue) -> Unit,
     enabled: Boolean,
     message: String,
-    dynamicConfig: DynamicConfig
+    containerColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimaryContainer
 ) {
 
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(24.dp),
-        color = dynamicConfig.getChatScreenInputBackgroundColor(),
+        color = containerColor,
     ) {
         Row(
             modifier = Modifier
@@ -110,7 +112,7 @@ private fun ChatTextField(
                     Icon(
                         imageVector = if (enabled) Icons.Default.Mood else Icons.Default.MoodBad,
                         contentDescription = "emoji",
-                        tint = dynamicConfig.getChatScreenInputContentColor()
+                        tint = contentColor
                     )
                 }
 
@@ -132,14 +134,14 @@ private fun ChatTextField(
                         enabled = enabled,
                         onValueChange = onValueChange,
                         cursorBrush = SolidColor(
-                            dynamicConfig.getChatScreenInputContentColor(),
+                            contentColor,
                         ),
                         decorationBox = { innerTextField ->
                             if (empty) {
                                 Text(
                                     message,
                                     style = MaterialTheme.typography.bodyLarge,
-                                    color = dynamicConfig.getChatScreenInputContentColor()
+                                    color = contentColor
                                 )
                             }
                             innerTextField()

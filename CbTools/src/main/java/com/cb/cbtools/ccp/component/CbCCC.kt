@@ -9,7 +9,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.input.KeyboardType
 import com.cb.cbtools.ccp.data.utils.getLibCountries
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.presentation.common.CbTextInputWithError
 
 @Composable
@@ -18,7 +17,6 @@ fun CbCCC(
     onValueChange: (String) -> Unit,
     showCountryCode: Boolean = true,
     showCountryFlag: Boolean = true,
-    dynamicConfig: DynamicConfig,
     onClearClick: () -> Unit,
     error: MutableState<String?>,
     phoneCode: MutableState<String>,
@@ -40,7 +38,6 @@ fun CbCCC(
                         defaultSelectedCountry = getLibCountries.single { it.countryCode == defaultLang.value },
                         showCountryCode = showCountryCode,
                         showFlag = showCountryFlag,
-                        dynamicConfig = dynamicConfig
                     )
                 }
             }
@@ -50,7 +47,6 @@ fun CbCCC(
                 onValueChange = onValueChange,
                 input = phoneNumber,
                 onClearClick = onClearClick,
-                dynamicConfig = dynamicConfig,
                 keyboardType = KeyboardType.Number,
             )
         }

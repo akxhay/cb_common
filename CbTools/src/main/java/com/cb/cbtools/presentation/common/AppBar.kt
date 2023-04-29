@@ -11,13 +11,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 
@@ -29,15 +29,18 @@ fun CbAppBar(
     byteArray: ByteArray? = null,
     drawable: Drawable? = null,
     backAction: (() -> Unit)? = null,
-    dynamicConfig: DynamicConfig,
     primaryIconSize: Dp = 40.dp,
     actions: @Composable RowScope.() -> Unit = {},
-) {
+    appbarBackgroundColor: Color = MaterialTheme.colorScheme.primary,
+    appbarTitleColor: Color = MaterialTheme.colorScheme.onPrimary,
+    appBarMenuIconColor: Color = MaterialTheme.colorScheme.onPrimary,
+
+    ) {
     TopAppBar(
         title = {
             Row(
                 modifier = Modifier
-                    .background(dynamicConfig.getAppBarBackGroundColor())
+                    .background(appbarBackgroundColor)
             )
             {
                 if (byteArray != null || icon != null || drawable != null) {
@@ -64,7 +67,7 @@ fun CbAppBar(
                                     .padding(bottom = 3.dp, end = 3.dp),
                                 imageVector = icon,
                                 contentDescription = "icon",
-                                tint = dynamicConfig.getAppBarMenuIconColor()
+                                tint = appBarMenuIconColor
                             )
                         } else if (drawable != null) {
                             Image(
@@ -83,7 +86,7 @@ fun CbAppBar(
                 }
                 Text(
                     title,
-                    color = dynamicConfig.getAppBarTitleColor(),
+                    color = appbarTitleColor,
                     modifier = Modifier.padding(top = 3.dp), maxLines = 1
                 )
             }
@@ -94,13 +97,13 @@ fun CbAppBar(
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
                         contentDescription = "ArrowBack",
-                        tint = dynamicConfig.getAppBarMenuIconColor()
+                        tint = appBarMenuIconColor
                     )
                 }
             }
         },
         colors =
-        TopAppBarDefaults.topAppBarColors(containerColor = dynamicConfig.getAppBarBackGroundColor()),
+        TopAppBarDefaults.topAppBarColors(containerColor = appbarBackgroundColor),
         actions = actions
     )
 }

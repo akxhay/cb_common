@@ -13,9 +13,9 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,7 +28,6 @@ import com.cb.cbtools.ccp.data.utils.getCountryName
 import com.cb.cbtools.ccp.data.utils.getFlags
 import com.cb.cbtools.ccp.data.utils.getLibCountries
 import com.cb.cbtools.ccp.utils.searchCountry
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.presentation.common.CbTextInputBasic
 import java.util.*
 
@@ -42,8 +41,10 @@ fun CountryCodeDialog(
     pickedCountry: (CountryData) -> Unit,
     showFlag: Boolean = true,
     showCountryName: Boolean = true,
-    dynamicConfig: DynamicConfig
-    ) {
+    alertContentColor: Color = MaterialTheme.colorScheme.onSurface,
+    alertBackgroundColor: Color = MaterialTheme.colorScheme.surface
+
+) {
     val context = LocalContext.current
 
     val countryList: List<CountryData> = getLibCountries
@@ -53,14 +54,15 @@ fun CountryCodeDialog(
     var isOpenDialog by remember { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
 
-    Column(modifier = modifier
-        .padding(padding)
-        .clickable(
-            interactionSource = interactionSource,
-            indication = null,
-        ) {
-            isOpenDialog = true
-        }) {
+    Column(
+        modifier = modifier
+            .padding(padding)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+            ) {
+                isOpenDialog = true
+            }) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -84,7 +86,7 @@ fun CountryCodeDialog(
                         .padding(horizontal = 5.dp),
                     text = isPickCountry.countryCode.uppercase(Locale.ENGLISH),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = dynamicConfig.getAlertContentColor(),
+                    color = alertContentColor,
                 )
             }
             if (showCountryCode) {
@@ -93,7 +95,7 @@ fun CountryCodeDialog(
 
                     text = isPickCountry.countryPhoneCode,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = dynamicConfig.getAlertContentColor(),
+                    color = alertContentColor,
                 )
                 Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
             }
@@ -112,13 +114,13 @@ fun CountryCodeDialog(
                     isPickCountry = countryItem
                     isOpenDialog = false
                 },
-                dynamicConfig = dynamicConfig
+                alertContentColor = alertContentColor,
+                alertBackgroundColor = alertBackgroundColor
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun CountryDialog(
     modifier: Modifier = Modifier,
@@ -127,7 +129,8 @@ fun CountryDialog(
     onSelected: (item: CountryData) -> Unit,
     context: Context,
     dialogStatus: Boolean,
-    dynamicConfig: DynamicConfig
+    alertContentColor: Color = MaterialTheme.colorScheme.onSurface,
+    alertBackgroundColor: Color = MaterialTheme.colorScheme.surface
 ) {
     var searchValue by remember { mutableStateOf("") }
     if (!dialogStatus) searchValue = ""
@@ -137,7 +140,7 @@ fun CountryDialog(
         onDismissRequest = onDismissRequest,
         content = {
             Surface(
-                color = dynamicConfig.getAlertBackgroundColor(),
+                color = alertBackgroundColor,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp)
@@ -152,7 +155,6 @@ fun CountryDialog(
                     ) {
                         CbTextInputBasic(
                             value = searchValue, onValueChange = { searchValue = it },
-                            dynamicConfig = dynamicConfig,
                             isSearchbar = true
                         )
                         Spacer(modifier = Modifier.height(10.dp))
@@ -184,7 +186,7 @@ fun CountryDialog(
 
                                         text = countryItem.countryPhoneCode + " " +
                                                 stringResource(id = getCountryName(countryItem.countryCode.lowercase())),
-                                        color = dynamicConfig.getAlertContentColor(),
+                                        color = alertContentColor,
                                         style = MaterialTheme.typography.bodyMedium
                                     )
                                 }

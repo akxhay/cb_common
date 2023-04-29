@@ -9,9 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.presentation.common.chat.*
 
 
@@ -22,7 +22,11 @@ fun SentMessageRow(
     messageTime: String,
     extraText: String = "",
     extra: Boolean = false,
-    dynamicConfig: DynamicConfig
+    backgroundColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    primaryTextColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
+    secondaryTextColor: Color = MaterialTheme.colorScheme.scrim,
+    urlColor: Color = MaterialTheme.colorScheme.outline,
+    messageColor: Color = MaterialTheme.colorScheme.onBackground
 ) {
     Column(
         modifier = Modifier
@@ -35,7 +39,7 @@ fun SentMessageRow(
         Column(
             Modifier.drawBubbleWithShape(
                 bubbleState = rememberBubbleState(
-                    backgroundColor = dynamicConfig.getSentBubbleColor(),
+                    backgroundColor = backgroundColor,
                     alignment = ArrowAlignment.RightTop,
                     cornerRadius = 12.dp,
                     drawArrow = drawArrow,
@@ -48,22 +52,22 @@ fun SentMessageRow(
                 modifier = Modifier
                     .padding(start = 2.dp, top = 2.dp, end = 4.dp, bottom = 2.dp),
                 text = text,
-                color = dynamicConfig.getPrimaryTextOnSentBubbleColor(),
+                color = primaryTextColor,
                 messageStat = {
                     MessageTimeText(
                         modifier = Modifier.wrapContentSize(),
                         messageTime = messageTime,
-                        color = dynamicConfig.getSecondaryTextOnSentBubbleColor()
+                        color = secondaryTextColor
                     )
                 },
-                urlColor = dynamicConfig.getUrlTextColor()
+                urlColor = urlColor
             )
         }
         if (extra) {
             Text(
                 text = extraText,
                 style = TextStyle(fontSize = MaterialTheme.typography.bodySmall.fontSize),
-                color = dynamicConfig.getPrimaryTextOnBackGroundColor()
+                color = messageColor
             )
         }
     }
@@ -74,7 +78,10 @@ fun ReceivedMessageRow(
     drawArrow: Boolean = true,
     text: String,
     messageTime: String,
-    dynamicConfig: DynamicConfig
+    backgroundColor: Color = MaterialTheme.colorScheme.tertiaryContainer,
+    primaryTextColor: Color = MaterialTheme.colorScheme.onTertiaryContainer,
+    secondaryTextColor: Color = MaterialTheme.colorScheme.scrim,
+    urlColor: Color = MaterialTheme.colorScheme.outline
 ) {
 
     Column(
@@ -87,7 +94,7 @@ fun ReceivedMessageRow(
         Column(
             Modifier.drawBubbleWithShape(
                 bubbleState = rememberBubbleState(
-                    backgroundColor =dynamicConfig.getReceivedBubbleColor(),
+                    backgroundColor = backgroundColor,
                     alignment = ArrowAlignment.LeftTop,
                     drawArrow = drawArrow,
                     cornerRadius = 12.dp,
@@ -100,13 +107,13 @@ fun ReceivedMessageRow(
                 modifier = Modifier
                     .padding(start = 2.dp, top = 2.dp, end = 4.dp, bottom = 2.dp),
                 text = text,
-                color = dynamicConfig.getPrimaryTextOnReceivedBubbleColor(),
-                urlColor = dynamicConfig.getUrlTextColor(),
+                color = primaryTextColor,
+                urlColor = urlColor,
                 messageStat = {
                     MessageTimeText(
                         modifier = Modifier.wrapContentSize(),
                         messageTime = messageTime,
-                        color = dynamicConfig.getSecondaryTextOnReceivedBubbleColor()
+                        color = secondaryTextColor
                     )
                 }
             )
@@ -116,7 +123,11 @@ fun ReceivedMessageRow(
 
 
 @Composable
-fun DayHeader(dayString: String, dynamicConfig: DynamicConfig) {
+fun DayHeader(
+    dayString: String,
+    dateBubbleColor: Color = MaterialTheme.colorScheme.primaryContainer,
+    primaryTextOnDateBubbleColor: Color = MaterialTheme.colorScheme.onPrimaryContainer
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -126,7 +137,7 @@ fun DayHeader(dayString: String, dynamicConfig: DynamicConfig) {
     ) {
         Card(
             colors = CardDefaults.cardColors(
-                containerColor = dynamicConfig.getDateBubbleColor(),
+                containerColor = dateBubbleColor,
             ),
             shape = RoundedCornerShape(10.dp),
         ) {
@@ -134,7 +145,7 @@ fun DayHeader(dayString: String, dynamicConfig: DynamicConfig) {
                 text = dayString,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 5.dp),
                 style = MaterialTheme.typography.labelLarge,
-                color = dynamicConfig.getPrimaryTextOnDateBubbleColor()
+                color = primaryTextOnDateBubbleColor
             )
         }
 

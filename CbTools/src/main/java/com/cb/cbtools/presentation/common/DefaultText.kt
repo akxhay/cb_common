@@ -9,25 +9,25 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import com.cb.cbtools.dynamic.DynamicConfig
 
 @Composable
-fun ErrorInfoCard(message: String?, dynamicConfig: DynamicConfig) {
+fun ErrorInfoCard(message: String?, errorColor: Color = MaterialTheme.colorScheme.error) {
     if (message != null)
         ListItem(
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.Error,
                     contentDescription = "Error",
-                    tint = dynamicConfig.getInputTextErrorColor()
+                    tint = errorColor
                 )
             },
             headlineContent = {
 
                 Text(
-                    color = dynamicConfig.getInputTextErrorColor(),
+                    color = errorColor,
                     textAlign = TextAlign.Center,
                     text = message,
                     style = MaterialTheme.typography.bodyMedium,
@@ -42,12 +42,12 @@ fun ErrorInfoCard(message: String?, dynamicConfig: DynamicConfig) {
 @Composable
 fun ErrorCard(
     message: String?,
-    dynamicConfig: DynamicConfig,
+    containerColor: Color = MaterialTheme.colorScheme.onErrorContainer,
     onIconClick: () -> Unit,
 ) {
     if (message != null)
         ListItem(
-            colors = ListItemDefaults.colors(containerColor = dynamicConfig.getInputErrorContainerColor()),
+            colors = ListItemDefaults.colors(containerColor = containerColor),
             headlineContent = {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -55,7 +55,7 @@ fun ErrorCard(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        color = dynamicConfig.getTextOnErrorContainerColor(),
+                        color = containerColor,
                         textAlign = TextAlign.Center,
                         text = "$message!",
                         style = MaterialTheme.typography.bodyLarge,
@@ -70,7 +70,7 @@ fun ErrorCard(
                     Icon(
                         imageVector = Icons.Default.VisibilityOff,
                         contentDescription = "VisibilityOff",
-                        tint = dynamicConfig.getTextOnErrorContainerColor()
+                        tint = containerColor
                     )
                 }
             }
@@ -80,19 +80,19 @@ fun ErrorCard(
 
 
 @Composable
-fun InfoCard(message: String?, dynamicConfig: DynamicConfig) {
+fun InfoCard(message: String?, textColor: Color = MaterialTheme.colorScheme.onBackground) {
     if (message != null)
         ListItem(
             leadingContent = {
                 Icon(
                     imageVector = Icons.Default.Info,
                     contentDescription = "Error",
-                    tint = dynamicConfig.getPrimaryTextOnBackGroundColor()
+                    tint = textColor
                 )
             },
             headlineContent = {
                 Text(
-                    color = dynamicConfig.getPrimaryTextOnBackGroundColor(),
+                    color = textColor,
                     textAlign = TextAlign.Center,
                     text = message,
                     style = MaterialTheme.typography.bodyMedium,
@@ -107,19 +107,18 @@ fun InfoCard(message: String?, dynamicConfig: DynamicConfig) {
 @Composable
 fun CbNoResult(
     text: String = "No matches found",
-    dynamicConfig: DynamicConfig,
+    textColor: Color = MaterialTheme.colorScheme.onBackground,
     wholePage: Boolean = true
 ) {
     Column(
         modifier = if (wholePage) Modifier.fillMaxSize() else Modifier,
     ) {
         CbListItem(
-            dynamicConfig = dynamicConfig,
             titleUnit = {
                 Text(
                     text = text,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = dynamicConfig.getPrimaryTextOnBackGroundColor(),
+                    color = textColor,
                     overflow = TextOverflow.Ellipsis
                 )
             })

@@ -22,7 +22,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.util.RateUtil
 import com.cb.cbtools.util.RateUtil.rate
 import kotlinx.coroutines.delay
@@ -31,7 +30,7 @@ import kotlinx.coroutines.delay
 fun RatePopUp(
     activity: Activity,
     showRatePopUp: MutableState<Boolean>,
-    dynamicConfig: DynamicConfig
+    startColor: Color = MaterialTheme.colorScheme.primary
 ) {
     CbGenericDialog(
         onDismissClick = {
@@ -59,12 +58,11 @@ fun RatePopUp(
                 )
                 RatingBar(
                     rating = 2.5,
-                    starsColor = dynamicConfig.getCardBackgroundColor()
+                    starsColor = startColor
                 )
             }
         },
         confirmText = "Proceed",
-        dynamicConfig = dynamicConfig,
         showDivider = false
     )
 }

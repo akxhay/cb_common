@@ -11,7 +11,6 @@ import com.cb.cbcommon.AppConstants.appIconRes
 import com.cb.cbcommon.AppConstants.appNameRes
 import com.cb.cbcommon.AppConstants.home
 import com.cb.cbcommon.AppConstants.requiredPermissionOnStartup
-import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
 import com.cb.cbtools.presentation.composable.WelcomeScreen
 import com.cb.cbtools.presentation.viewModel.PermissionViewModel
@@ -35,7 +34,6 @@ class WelcomeActivity : ComponentActivity() {
                     onclickSkip = {
                         getPermissions()
                     },
-                    dynamicConfig = BaseApplication.getInstance().dynamicConfig,
                     viewModel = viewModel
                 )
             }

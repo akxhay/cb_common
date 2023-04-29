@@ -161,12 +161,10 @@ class MainActivity : ComponentActivity() {
                         error = error,
                         onValueChange = onValueChange,
                         onClearClick = onClearClick,
-                        dynamicConfig = BaseApplication.getInstance().dynamicConfig
                     )
                 }
             },
             confirmText = "Proceed",
-            dynamicConfig = BaseApplication.getInstance().dynamicConfig
         )
     }
 

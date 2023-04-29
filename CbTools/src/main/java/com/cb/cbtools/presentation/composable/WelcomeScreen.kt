@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.cb.cbtools.dto.CbPermission
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.permission.factory.PermissionHandlerFactory
 import com.cb.cbtools.presentation.common.CbDecisionDialog
 import com.cb.cbtools.presentation.viewModel.PermissionViewModel
@@ -50,14 +49,20 @@ fun WelcomeScreen(
     appDesc: String,
     @DrawableRes appIcon: Int,
     onclickSkip: () -> Unit,
-    dynamicConfig: DynamicConfig,
     viewModel: PermissionViewModel,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
+    primaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
+    secondaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
+    tertiaryTextColor: Color = MaterialTheme.colorScheme.primary,
+    cardColor: Color = MaterialTheme.colorScheme.primary,
+    cardTextColor: Color = MaterialTheme.colorScheme.onPrimary,
+    dividerColor: Color = Color.Transparent
 
-    ) {
+) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = dynamicConfig.getBackgroundColor()
+            color = backgroundColor
         ) {
             val currentPermission by viewModel.currentPermission.observeAsState(initial = null as CbPermission?)
             currentPermission?.let {
@@ -68,7 +73,13 @@ fun WelcomeScreen(
                     appName = appName,
                     appDesc = appDesc,
                     onclickSkip = onclickSkip,
-                    dynamicConfig = dynamicConfig
+                    backgroundColor = backgroundColor,
+                    primaryTextColor = primaryTextColor,
+                    secondaryTextColor = secondaryTextColor,
+                    tertiaryTextColor = tertiaryTextColor,
+                    cardColor = cardColor,
+                    cardTextColor = cardTextColor,
+                    dividerColor = dividerColor
                 )
             }
         }
@@ -83,19 +94,26 @@ fun PermissionScreen(
     appName: String,
     appDesc: String,
     onclickSkip: () -> Unit,
-    dynamicConfig: DynamicConfig,
-    currentPermission: CbPermission
+    currentPermission: CbPermission,
+    backgroundColor: Color,
+    primaryTextColor: Color,
+    secondaryTextColor: Color,
+    tertiaryTextColor: Color,
+    cardColor: Color,
+    cardTextColor: Color,
+    dividerColor: Color
 ) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = dynamicConfig.getWelcomeScreenBackgroundColor())
+            .background(color = backgroundColor)
     ) {
         AppInfo(
             appIcon = appIcon,
             appName = appName,
             appDesc = appDesc,
-            dynamicConfig = dynamicConfig
+            primaryTextColor = primaryTextColor,
+            secondaryTextColor = secondaryTextColor
         )
         PermissionButton(
             appName = appName,
@@ -103,13 +121,14 @@ fun PermissionScreen(
             currentPermission = currentPermission,
             modifier = Modifier
                 .weight(10f),
-            dynamicConfig = dynamicConfig
+            cardColor = cardColor,
+            cardTextColor = cardTextColor
 
         )
         Footer(
             context = context,
             onclickSkip = onclickSkip,
-            dynamicConfig = dynamicConfig,
+            skipColor = tertiaryTextColor,
             currentPermission = currentPermission
         )
     }
@@ -120,7 +139,8 @@ fun AppInfo(
     @DrawableRes appIcon: Int,
     appName: String,
     appDesc: String,
-    dynamicConfig: DynamicConfig
+    primaryTextColor: Color = MaterialTheme.colorScheme.onSurface,
+    secondaryTextColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
 ) {
     Column {
         WelcomeInfoSpacer()
@@ -128,13 +148,13 @@ fun AppInfo(
         WelcomeInfoSpacer()
         WelcomeInfoText(
             text = appName,
-            color = dynamicConfig.getWelcomeScreenTitleColor(),
+            color = primaryTextColor,
             style = MaterialTheme.typography.displaySmall
         )
         WelcomeInfoSpacer()
         WelcomeInfoText(
             text = appDesc,
-            color = dynamicConfig.getWelcomeScreenSummaryColor(),
+            color = secondaryTextColor,
             style = MaterialTheme.typography.bodyLarge
         )
     }
@@ -206,7 +226,6 @@ fun PermissionDialog(
     context: Activity,
     currentPermission: CbPermission,
     showPermissionAlert: MutableState<Boolean>,
-    dynamicConfig: DynamicConfig,
 ) {
     val permissionHandler =
         PermissionHandlerFactory.getHandlerForPermission(currentPermission.permissionType)
@@ -255,7 +274,6 @@ fun PermissionDialog(
         title = permissionHandler.getPermissionPopUpTitle(),
         text = permissionHandler.getPermissionPopUpText(),
         confirmText = confirmButtonText.value,
-        dynamicConfig = dynamicConfig
     )
 }
 
@@ -264,7 +282,7 @@ fun PermissionDialog(
 fun Footer(
     context: Activity,
     onclickSkip: () -> Unit,
-    dynamicConfig: DynamicConfig,
+    skipColor: Color,
     currentPermission: CbPermission
 ) {
     val density = LocalDensity.current
@@ -310,7 +328,7 @@ fun Footer(
                     text = "Skip >>",
 
                     style = TextStyle(
-                        color = dynamicConfig.getWelcomeScreenSkipTextColor(),
+                        color = skipColor,
                         textDecoration = TextDecoration.Underline,
                     ),
                 )
@@ -331,7 +349,6 @@ fun Footer(
             title = "Skip Optional permission",
             text = "Some feature might not work as expected",
             confirmText = "Skip anyway",
-            dynamicConfig = dynamicConfig
         )
     }
 }
@@ -343,7 +360,8 @@ fun PermissionButton(
     context: Activity,
     appName: String,
     modifier: Modifier,
-    dynamicConfig: DynamicConfig,
+    cardColor: Color,
+    cardTextColor: Color,
     currentPermission: CbPermission
 ) {
 
@@ -376,14 +394,14 @@ fun PermissionButton(
                 )
                 {
                     ListItem(
-                        colors = ListItemDefaults.colors(containerColor = dynamicConfig.getWelcomeScreenCardBackgroundColor()),
+                        colors = ListItemDefaults.colors(containerColor = cardColor),
                         headlineContent = {
                             WelcomeInfoText(
                                 text = PermissionHandlerFactory.getHandlerForPermission(
                                     it.permissionType
                                 )
                                 !!.getPermissionButtonText(),
-                                color = dynamicConfig.getWelcomeScreenCardContentColor(),
+                                color = cardTextColor,
                                 style = MaterialTheme.typography.bodyLarge
                             )
                         },
@@ -394,7 +412,7 @@ fun PermissionButton(
                                 )
                                 !!.getPermissionIcon(),
                                 contentDescription = "icon",
-                                tint = dynamicConfig.getWelcomeScreenCardContentColor()
+                                tint = cardTextColor
                             )
                         })
                     )
@@ -409,7 +427,6 @@ fun PermissionButton(
             context,
             currentPermission,
             showPermissionAlert,
-            dynamicConfig
         )
     }
 }

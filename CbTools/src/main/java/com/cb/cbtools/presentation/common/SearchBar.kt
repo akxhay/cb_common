@@ -5,11 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.cb.cbtools.dynamic.DynamicConfig
 
 
 @ExperimentalAnimationApi
@@ -20,7 +21,7 @@ fun CbSearchBarUI(
     placeholderText: String,
     onSearchTextChanged: (String) -> Unit = {},
     onClearClick: () -> Unit = {},
-    dynamicConfig: DynamicConfig,
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
     requestFocus: Boolean = false
 ) {
 
@@ -29,7 +30,7 @@ fun CbSearchBarUI(
             modifier = Modifier
                 .padding(horizontal = 3.dp)
                 .background(
-                    color = dynamicConfig.getInputTextBackgroundColor()
+                    color = backgroundColor
                 )
         ) {
 
@@ -38,17 +39,13 @@ fun CbSearchBarUI(
                 label = placeholderText,
                 inputString = searchText,
                 onValueChange = onSearchTextChanged,
-                dynamicConfig = dynamicConfig,
                 onClearClick = onClearClick,
                 isSearchBar = true,
                 maxLines = 1,
                 usingMutableState = false,
                 requestFocus = requestFocus
             )
-
-
         }
-
     }
 }
 

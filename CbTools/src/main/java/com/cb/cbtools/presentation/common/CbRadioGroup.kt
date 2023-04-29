@@ -11,17 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.cb.cbtools.dynamic.DynamicConfig
 
 @Composable
 fun CbRadioGroup(
     selectedOption: Int,
     radioOptions: List<String>,
-    dynamicConfig: DynamicConfig,
     onOptionSelected: (String) -> Unit,
 ) {
     CbListItem(
-        dynamicConfig = dynamicConfig,
         titleUnit = {
             Row(
                 modifier = Modifier
@@ -44,14 +41,14 @@ fun CbRadioGroup(
                             selected = (text == radioOptions[selectedOption]),
                             onClick = { onOptionSelected(text) },
                             colors = RadioButtonDefaults.colors(
-                                selectedColor = dynamicConfig.getRadioCheckedColor(),
-                                unselectedColor = dynamicConfig.getRadioUnCheckedColor()
+                                selectedColor = MaterialTheme.colorScheme.primary,
+                                unselectedColor = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         )
                         Text(
                             text = text,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = dynamicConfig.getPrimaryTextOnBackGroundColor()
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 }

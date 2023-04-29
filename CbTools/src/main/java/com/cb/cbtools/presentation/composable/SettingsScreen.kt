@@ -7,12 +7,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,32 +27,39 @@ import com.cb.cbtools.dynamic.util.ActionResolver
 import com.cb.cbtools.dynamic.util.IconResolver
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
+import com.cb.cbtools.presentation.common.Font.getGoogleFontFamily
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     navController: NavController,
     activity: Activity,
-    dynamicConfig: DynamicConfig
+    dynamicConfig: DynamicConfig,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
+    primaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
+    secondaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
+    dividerColor: Color = Color.Transparent
 ) {
     Scaffold(
         topBar = {
             CbAppBar(
                 title = "Settings",
                 backAction = { navController.navigateUp() },
-                dynamicConfig = dynamicConfig
             )
         },
     ) { padding ->
         Column(
             modifier = Modifier
                 .padding(padding)
-                .background(dynamicConfig.getBackgroundColor())
+                .background(backgroundColor)
         ) {
             Settings(
                 dynamicConfig = dynamicConfig,
-                activity = activity
+                activity = activity,
+                backgroundColor = backgroundColor,
+                primaryTextColor = primaryTextColor,
+                secondaryTextColor = secondaryTextColor,
+                dividerColor = dividerColor
             )
         }
     }
@@ -56,7 +68,11 @@ fun SettingsScreen(
 @Composable
 fun Settings(
     activity: Activity,
-    dynamicConfig: DynamicConfig
+    dynamicConfig: DynamicConfig,
+    backgroundColor: Color,
+    primaryTextColor: Color,
+    secondaryTextColor: Color,
+    dividerColor: Color
 ) {
     dynamicConfig.getPreferenceCategories()?.let {
         LazyColumn(
@@ -67,7 +83,11 @@ fun Settings(
                 PreferenceCategoryComposable(
                     preferenceCategory = preferenceCategory,
                     dynamicConfig = dynamicConfig,
-                    activity = activity
+                    activity = activity,
+                    backgroundColor = backgroundColor,
+                    primaryTextColor = primaryTextColor,
+                    secondaryTextColor = secondaryTextColor,
+                    dividerColor = dividerColor
                 )
             }
         }
@@ -80,13 +100,18 @@ fun Settings(
 fun PreferenceCategoryComposable(
     preferenceCategory: PreferenceCategory,
     activity: Activity,
-    dynamicConfig: DynamicConfig
+    dynamicConfig: DynamicConfig,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
+    primaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
+    secondaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
+    dividerColor: Color = Color.Transparent
+
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                color = dynamicConfig.getBackgroundColor()
+                color = backgroundColor
             ),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -106,9 +131,43 @@ fun PreferenceCategoryComposable(
                     )
                 }
                 CbListItem(
-                    title = preference.title!!.replace("#APP_NAME#", dynamicConfig.getAppName()),
-                    summary = preference.summary?.replace("#APP_NAME#", dynamicConfig.getAppName()),
-                    maxSummaryLines = Int.MAX_VALUE,
+                    titleUnit = {
+                        Text(
+                            text = preference.title!!.replace(
+                                "#APP_NAME#",
+                                dynamicConfig.getAppName()
+                            ),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontFamily = getGoogleFontFamily(
+                                name = "Poppins",
+                                weights = listOf(
+                                    FontWeight.Medium
+                                )
+                            ),
+                            color = primaryTextColor,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
+                    },
+                    summaryUnit = {
+                        preference.summary?.let { it ->
+                            Text(
+                                text = it.replace("#APP_NAME#", dynamicConfig.getAppName()),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontFamily = getGoogleFontFamily(
+                                    name = "Roboto",
+                                    weights = listOf(
+                                        FontWeight.Light
+                                    )
+                                ),
+                                color = secondaryTextColor,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+                            )
+                        }
+
+                    },
+
                     primaryBitmap = if (preference.icon != null && preference.icon!!.imageVector == null) IconResolver.getBitmap(
                         icon = preference.icon!!
                     ) else null,
@@ -116,7 +175,6 @@ fun PreferenceCategoryComposable(
                         preference.icon,
                         Icons.Filled.Settings
                     ),
-                    dynamicConfig = dynamicConfig,
                     actionType = preference.type,
                     checked = isChecked,
                     onChange = { value ->
@@ -133,7 +191,7 @@ fun PreferenceCategoryComposable(
                 )
 
                 Divider(
-                    color = dynamicConfig.getDividerColor()
+                    color = dividerColor
                 )
             }
         }

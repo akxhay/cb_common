@@ -4,16 +4,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.cb.cbtools.dynamic.DynamicConfig
-
 
 @Composable
 fun CbGenericDialog(
@@ -24,14 +20,20 @@ fun CbGenericDialog(
     confirmText: String = "Ok",
     dismissText: String = "Cancel",
     showDivider: Boolean = true,
-    dynamicConfig: DynamicConfig
-) {
+    alertBackgroundColor: Color = MaterialTheme.colorScheme.surface,
+    alertConfirmButtonColor: Color = MaterialTheme.colorScheme.primary,
+    alertConfirmTextColor: Color = MaterialTheme.colorScheme.onPrimary,
+    alertDismissTextColor: Color = MaterialTheme.colorScheme.primary,
+    alertDividerColor: Color = MaterialTheme.colorScheme.primary,
+    alertTitleColor: Color = MaterialTheme.colorScheme.onSurface,
+
+    ) {
     AlertDialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp),
-        containerColor = dynamicConfig.getAlertBackgroundColor(),
+        containerColor = alertBackgroundColor,
         onDismissRequest = { onDismissClick() },
         confirmButton = {
             Card(
@@ -39,7 +41,7 @@ fun CbGenericDialog(
                     .padding(horizontal = 20.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = dynamicConfig.getAlertConfirmButtonColor(),
+                    containerColor = alertConfirmButtonColor,
                 ),
             )
             {
@@ -53,7 +55,7 @@ fun CbGenericDialog(
                 {
                     Text(
                         text = confirmText,
-                        color = dynamicConfig.getAlertConfirmTextColor(),
+                        color = alertConfirmTextColor,
                         style = MaterialTheme.typography.titleSmall
                     )
                 }
@@ -66,7 +68,7 @@ fun CbGenericDialog(
             {
                 Text(
                     text = dismissText,
-                    color = dynamicConfig.getAlertDismissTextColor(),
+                    color = alertDismissTextColor,
                     style = MaterialTheme.typography.titleSmall
 
                 )
@@ -74,11 +76,14 @@ fun CbGenericDialog(
         },
 
         title = {
-            Column() {
-                AlertTitleText(text = title, color = dynamicConfig.getAlertTitleColor())
+            Column {
+                AlertTitleText(
+                    text = title,
+                    color = alertTitleColor
+                )
                 Spacer(modifier = Modifier.height(10.dp))
                 if (showDivider)
-                    Divider(color = dynamicConfig.getAlertDividerColor(), thickness = 1.dp)
+                    Divider(color = alertDividerColor, thickness = 1.dp)
             }
         },
         text = {
@@ -96,7 +101,7 @@ fun CbDecisionDialog(
     text: String,
     confirmText: String = "Ok",
     dismissText: String = "Cancel",
-    dynamicConfig: DynamicConfig
+    alertContentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     CbGenericDialog(
         onConfirmClick = onConfirmClick,
@@ -111,12 +116,11 @@ fun CbDecisionDialog(
             ) {
                 Text(
                     text = text,
-                    color = dynamicConfig.getAlertContentColor(),
+                    color = alertContentColor,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
         },
-        dynamicConfig = dynamicConfig
     )
 
 }
@@ -129,7 +133,7 @@ fun CbDoubleDecisionDialog(
     text: String,
     confirmText: String = "Ok",
     dismissText: String = "Cancel",
-    dynamicConfig: DynamicConfig
+    alertContentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     CbGenericDialog(
         onConfirmClick = onConfirmClick,
@@ -144,12 +148,11 @@ fun CbDoubleDecisionDialog(
             ) {
                 Text(
                     text = text,
-                    color = dynamicConfig.getAlertContentColor(),
+                    color = alertContentColor,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
-        },
-        dynamicConfig = dynamicConfig
+        }
     )
 
 }

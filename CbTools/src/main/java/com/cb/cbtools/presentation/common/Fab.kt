@@ -5,17 +5,19 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.cb.cbtools.dynamic.DynamicConfig
 
 
 @Composable
 fun CbFab(
-    dynamicConfig: DynamicConfig,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    contentColor: Color = MaterialTheme.colorScheme.onPrimary,
     icon: ImageVector = Icons.Default.Add,
     onClick: () -> Unit
 ) {
@@ -31,10 +33,10 @@ fun CbFab(
 
         FloatingActionButton(
             onClick = onClick,
-            backgroundColor = dynamicConfig.getFloatingBackgroundColor(),
-            contentColor = dynamicConfig.getFloatingContentColor()
+            backgroundColor = containerColor,
+            contentColor = contentColor
         ) {
-            Icon(icon, "icon", tint = dynamicConfig.getFloatingContentColor())
+            Icon(icon, "icon", tint = contentColor)
         }
 
     }
