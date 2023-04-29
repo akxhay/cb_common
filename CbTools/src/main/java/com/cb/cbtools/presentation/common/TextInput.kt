@@ -77,7 +77,6 @@ fun CbTextInputWithError(
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxWidth()
                 .padding(vertical = 2.dp)
                 .padding(horizontal = horizontalPadding)
                 .onFocusChanged { focusState ->

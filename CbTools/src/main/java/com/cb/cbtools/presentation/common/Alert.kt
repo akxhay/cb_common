@@ -23,7 +23,7 @@ fun CbGenericDialog(
     alertBackgroundColor: Color = MaterialTheme.colorScheme.surface,
     alertConfirmButtonColor: Color = MaterialTheme.colorScheme.primary,
     alertConfirmTextColor: Color = MaterialTheme.colorScheme.onPrimary,
-    alertDismissTextColor: Color = MaterialTheme.colorScheme.primary,
+    alertDismissTextColor: Color = MaterialTheme.colorScheme.onSurface,
     alertDividerColor: Color = MaterialTheme.colorScheme.primary,
     alertTitleColor: Color = MaterialTheme.colorScheme.onSurface,
 

@@ -36,7 +36,7 @@ import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
 import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
 import com.cb.cbtools.presentation.common.CbGenericDialog
 import com.cb.cbtools.presentation.composable.SettingsScreen
-import com.cb.cbtools.presentation.composable.screen.ExceptionScreen
+import com.cb.cbtools.presentation.composable.ExceptionScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -149,8 +149,7 @@ class MainActivity : ComponentActivity() {
             text = {
                 Column(
                     modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .fillMaxSize(),
+                        .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -240,8 +239,7 @@ class MainActivity : ComponentActivity() {
         navController: NavHostController,
     ) {
         ExceptionScreen(
-            navController = navController,
-            dynamicConfig = BaseApplication.getInstance().dynamicConfig
+            navController = navController
         )
     }
 

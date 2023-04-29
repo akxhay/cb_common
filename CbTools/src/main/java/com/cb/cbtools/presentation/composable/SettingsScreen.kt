@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -27,7 +26,6 @@ import com.cb.cbtools.dynamic.util.ActionResolver
 import com.cb.cbtools.dynamic.util.IconResolver
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
-import com.cb.cbtools.presentation.common.Font.getGoogleFontFamily
 
 
 @Composable
@@ -137,16 +135,7 @@ fun PreferenceCategoryComposable(
                                 "#APP_NAME#",
                                 dynamicConfig.getAppName()
                             ),
-                            style = MaterialTheme.typography.titleMedium,
-                            fontFamily = getGoogleFontFamily(
-                                name = "Poppins",
-                                weights = listOf(
-                                    FontWeight.Medium
-                                )
-                            ),
-                            color = primaryTextColor,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
+                            color = primaryTextColor
                         )
                     },
                     summaryUnit = {
@@ -154,15 +143,7 @@ fun PreferenceCategoryComposable(
                             Text(
                                 text = it.replace("#APP_NAME#", dynamicConfig.getAppName()),
                                 style = MaterialTheme.typography.bodyMedium,
-                                fontFamily = getGoogleFontFamily(
-                                    name = "Roboto",
-                                    weights = listOf(
-                                        FontWeight.Light
-                                    )
-                                ),
-                                color = secondaryTextColor,
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1
+                                color = secondaryTextColor
                             )
                         }
 

@@ -1,4 +1,4 @@
-package com.cb.cbtools.presentation.composable.screen
+package com.cb.cbtools.presentation.composable
 
 import android.content.Context
 import android.widget.Toast
@@ -31,21 +31,17 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.cb.cbtools.data.model.ExceptionRecord
-import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbDecisionDialog
 import com.cb.cbtools.presentation.common.CbNoResult
 import com.cb.cbtools.presentation.viewModel.ExceptionViewModel
 import com.cb.cbtools.util.DateUtil
-import java.util.*
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalAnimationApi
 @Composable
 fun ExceptionScreen(
     navController: NavController,
-    dynamicConfig: DynamicConfig,
     viewModel: ExceptionViewModel = hiltViewModel()
 ) {
     val exceptions by viewModel.exceptions.observeAsState(initial = emptyList())
@@ -85,8 +81,7 @@ fun ExceptionScreen(
                 LocalContext.current,
                 viewModel,
                 showAlert,
-                navController,
-                dynamicConfig
+                navController
             )
         }
     }
@@ -100,7 +95,6 @@ fun DeleteExceptionAlertDialog(
     viewModel: ExceptionViewModel,
     showAlert: MutableState<Boolean>,
     navController: NavController,
-    dynamicConfig: DynamicConfig,
 
     ) {
     CbDecisionDialog(
