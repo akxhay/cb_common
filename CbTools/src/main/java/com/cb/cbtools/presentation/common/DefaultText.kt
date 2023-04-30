@@ -1,5 +1,6 @@
 package com.cb.cbtools.presentation.common
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
@@ -13,8 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun ErrorInfoCard(
@@ -139,4 +143,49 @@ fun CbNoResult(
         )
     }
 
+}
+
+@Composable
+fun IconInfo(
+    text1: String,
+    icon: ImageVector,
+    text2: String,
+    background: Color = MaterialTheme.colorScheme.background,
+    color: Color = MaterialTheme.colorScheme.onBackground
+) {
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(background),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = text1,
+
+            style = TextStyle(
+                fontSize = 15.sp,
+                color = color
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Icon(
+            imageVector = icon,
+            contentDescription = "save",
+            tint = color
+        )
+        Text(
+            textAlign = TextAlign.Center,
+            text = text2,
+
+            style = TextStyle(
+                fontSize = 15.sp,
+                color = color
+            ),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
 }

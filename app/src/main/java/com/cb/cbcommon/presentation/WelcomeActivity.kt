@@ -28,9 +28,9 @@ class WelcomeActivity : ComponentActivity() {
             CbCommonTheme {
                 WelcomeScreen(
                     context = this@WelcomeActivity,
-                    appIcon = appIconRes,
                     appName = getString(appNameRes),
                     appDesc = getString(appDescRes),
+                    appIcon = appIconRes,
                     onclickSkip = {
                         getPermissions()
                     },

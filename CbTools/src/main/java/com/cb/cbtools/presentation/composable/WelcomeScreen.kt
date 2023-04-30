@@ -55,8 +55,7 @@ fun WelcomeScreen(
     secondaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
     tertiaryTextColor: Color = MaterialTheme.colorScheme.primary,
     cardColor: Color = MaterialTheme.colorScheme.primary,
-    cardTextColor: Color = MaterialTheme.colorScheme.onPrimary,
-    dividerColor: Color = Color.Transparent
+    cardTextColor: Color = MaterialTheme.colorScheme.onPrimary
 
 ) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -351,7 +350,6 @@ fun Footer(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @RequiresApi(Build.VERSION_CODES.M)
 @Composable
 fun PermissionButton(
