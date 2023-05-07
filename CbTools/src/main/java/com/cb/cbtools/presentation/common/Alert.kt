@@ -101,7 +101,6 @@ fun CbInfoDialog(
     text: @Composable () -> Unit,
     confirmText: String = "Ok",
     alertBackgroundColor: Color = MaterialTheme.colorScheme.surface,
-    alertContentColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     CbGenericDialog(
         onConfirmClick = onConfirmClick,
@@ -109,7 +108,7 @@ fun CbInfoDialog(
         confirmText = confirmText,
         dismissText = null,
         text = { text() },
-        alertBackgroundColor = alertContentColor,
+        alertBackgroundColor = alertBackgroundColor,
         onDismissClick = {}
     )
 
