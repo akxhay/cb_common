@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun PopUpUpdateInput(
+fun PopUpInput(
     title: String,
     input: String,
     invalidSet: Set<String> = HashSet(),
@@ -23,7 +23,7 @@ fun PopUpUpdateInput(
     val error: MutableState<String?> = remember {
         mutableStateOf(
             if (input.isEmpty()) {
-                "$title cannot be empty"
+                "text cannot be empty"
             } else {
                 null
             }
@@ -33,10 +33,10 @@ fun PopUpUpdateInput(
     val onValueChange: (String) -> Unit = {
         text.value = it
         error.value = if (it.trim().isEmpty()) {
-            "$title cannot be empty"
+            "text cannot be empty"
         } else if (invalidSet.contains(it.trim())) {
-            "$title is invalid"
-        } else {
+            "text is invalid"
+        }  else {
             null
         }
 
@@ -54,7 +54,7 @@ fun PopUpUpdateInput(
                 Toast.makeText(context, error.value, Toast.LENGTH_SHORT).show()
             }
         },
-        title = "Update $title",
+        title = title,
         text = {
             CbTextInputWithError(
                 modifier = Modifier,
