@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PopUpInput(
     title: String,
+    label: String,
     input: String,
     invalidSet: Set<String> = HashSet(),
     dismiss: () -> Unit,
@@ -58,7 +59,7 @@ fun PopUpInput(
         text = {
             CbTextInputWithError(
                 modifier = Modifier,
-                label = title,
+                label = label,
                 input = text,
                 error = error,
                 horizontalPadding = 10.dp,
