@@ -3,9 +3,7 @@ package com.cb.cbtools.presentation.common
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
@@ -26,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.cb.cbtools.constants.ActionType
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CbListItem(
     modifier: Modifier = Modifier,
@@ -47,6 +46,8 @@ fun CbListItem(
     checked: MutableState<Boolean>? = null,
     onChange: (Boolean) -> Unit = {},
     onClick: () -> Unit = {},
+    onLongPress: () -> Unit = {},
+
     actionImageVector: @Composable () -> Unit = {},
     tonalElevation: Dp = ListItemDefaults.Elevation,
     shadowElevation: Dp = ListItemDefaults.Elevation,
@@ -57,14 +58,24 @@ fun CbListItem(
     ListItem(
         modifier = modifier
             .fillMaxWidth()
-            .clickable {
-                if (enabled)
-                    onClick()
-                else
-                    Toast
-                        .makeText(context, "This field is disabled", Toast.LENGTH_SHORT)
-                        .show()
-            },
+            .combinedClickable(
+                onClick = {
+                    if (enabled)
+                        onClick()
+                    else
+                        Toast
+                            .makeText(context, "This field is disabled", Toast.LENGTH_SHORT)
+                            .show()
+                },
+                onLongClick = {
+                    if (enabled)
+                        onLongPress()
+                    else
+                        Toast
+                            .makeText(context, "This field is disabled", Toast.LENGTH_SHORT)
+                            .show()
+                },
+            ),
         tonalElevation = tonalElevation,
         shadowElevation = shadowElevation,
         colors = ListItemDefaults.colors(containerColor = containerColor),
