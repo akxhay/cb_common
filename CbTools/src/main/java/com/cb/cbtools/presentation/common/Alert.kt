@@ -18,7 +18,7 @@ fun CbGenericDialog(
     title: String,
     text: @Composable () -> Unit,
     confirmText: String = "Ok",
-    dismissText: String = "Cancel",
+    dismissText: String? = "Cancel",
     showDivider: Boolean = true,
     alertBackgroundColor: Color = MaterialTheme.colorScheme.surface,
     alertConfirmButtonColor: Color = MaterialTheme.colorScheme.primary,
@@ -62,16 +62,18 @@ fun CbGenericDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = {
-                onDismissClick()
-            })
-            {
-                Text(
-                    text = dismissText,
-                    color = alertDismissTextColor,
-                    style = MaterialTheme.typography.titleSmall
+            if (dismissText != null) {
+                TextButton(onClick = {
+                    onDismissClick()
+                })
+                {
+                    Text(
+                        text = dismissText,
+                        color = alertDismissTextColor,
+                        style = MaterialTheme.typography.titleSmall
 
-                )
+                    )
+                }
             }
         },
 
@@ -90,6 +92,26 @@ fun CbGenericDialog(
             text()
         }
     )
+}
+
+@Composable
+fun CbInfoDialog(
+    onConfirmClick: () -> Unit,
+    title: String,
+    text: @Composable () -> Unit,
+    confirmText: String = "Ok",
+    alertContentColor: Color = MaterialTheme.colorScheme.onSurface
+) {
+    CbGenericDialog(
+        onConfirmClick = onConfirmClick,
+        title = title,
+        confirmText = confirmText,
+        dismissText = null,
+        text = { text() },
+        alertBackgroundColor = alertContentColor,
+        onDismissClick = {}
+    )
+
 }
 
 
