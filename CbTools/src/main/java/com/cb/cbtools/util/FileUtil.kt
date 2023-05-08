@@ -244,7 +244,7 @@ object FileUtil {
                 "$fileSizeInKB.$remainIngB KB"
             }
         } else {
-            readableSize = fileSize.toString() + "Bytes"
+            readableSize = fileSize.toString() + " Bytes"
         }
         return readableSize
     }
