@@ -12,12 +12,15 @@ object DateUtil {
     private val completeDateTimeFormatWoSec: DateFormat =
         SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.ENGLISH)
     private val completeDateTimeFormat: DateFormat =
-        SimpleDateFormat("yyyy:MM:dd hh:mm:ss aa", Locale.ENGLISH)
+        SimpleDateFormat("yyyy/MM/dd hh:mm:ss aa", Locale.ENGLISH)
 
     private val dateFormatterMMMM: DateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
 
     private val timeFormatter24: DateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     private var timeFormatter12 = SimpleDateFormat("hh:mm aa", Locale.ENGLISH)
+
+    private val dateTimeFormat: DateFormat =
+        SimpleDateFormat("dd/MM/yy hh:mm:ss aa", Locale.ENGLISH)
 
     fun isAppValid(validTillDate: String): Boolean {
         return (appValidFormat.parse(validTillDate)?.compareTo(Date()) ?: 1) == 1
@@ -43,6 +46,10 @@ object DateUtil {
 
     fun convertCompleteDateTime(calendar: Calendar): String {
         return completeDateTimeFormat.format(calendar.time)
+    }
+
+    fun convertDateTime(calendar: Calendar): String {
+        return dateTimeFormat.format(calendar.time)
     }
 
     fun getNextRepeatDate(calendar: Calendar): Calendar {
