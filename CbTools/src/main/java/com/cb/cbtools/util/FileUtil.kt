@@ -1,9 +1,11 @@
 package com.cb.cbtools.util
 
 import android.os.Environment
+import android.os.StatFs
 import android.util.Log
 import com.cb.cbtools.constants.Constants.divider
 import java.io.*
+import java.text.DecimalFormat
 import java.util.regex.Pattern
 
 
@@ -101,23 +103,16 @@ object FileUtil {
         try {
             for (filePath in filePaths) {
                 val file = File(filePath)
-                if (file.exists()) {
-                    deleteRecursive(file)
+                if (file.isDirectory) {
+                    file.deleteRecursively()
+                } else {
+                    file.delete()
                 }
             }
             onSuccess()
         } catch (e: Exception) {
             onFailure(e)
         }
-    }
-
-    private fun deleteRecursive(fileOrDirectory: File) {
-        if (fileOrDirectory.isDirectory) {
-            for (child in fileOrDirectory.listFiles()!!) {
-                deleteRecursive(child)
-            }
-        }
-        fileOrDirectory.delete()
     }
 
     fun createFolder(
@@ -157,6 +152,62 @@ object FileUtil {
             onFailure(e)
         } catch (e: java.lang.Exception) {
             onFailure(e)
+        }
+    }
+
+    fun createNewFile(
+        fileName: String,
+        path: String,
+        callback: (result: Boolean, message: String) -> Unit
+    ) {
+        val fileAlreadyExists = File(path).listFiles()!!.map { it.name }.contains(fileName)
+        if (fileAlreadyExists) {
+            callback(false, "'${fileName}' already exists.")
+        } else {
+            val file = File(path, fileName)
+            try {
+                val result = file.createNewFile()
+
+                callback(
+                    result,
+                    if (result) {
+                        "File '${fileName}' created successfully."
+                    } else {
+                        "Unable to create file '${fileName}'."
+                    }
+                )
+
+            } catch (e: Exception) {
+                callback(false, "Unable to create file. Please try again.")
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun createNewFolder(
+        folderName: String,
+        path: String,
+        callback: (result: Boolean, message: String) -> Unit
+    ) {
+        val folderAlreadyExists = File(path).listFiles()!!.map { it.name }.contains(folderName)
+        if (folderAlreadyExists) {
+            callback(false, "'${folderName}' already exists.")
+        } else {
+            val file = File(path, folderName)
+            try {
+                val result = file.mkdir()
+                callback(
+                    result,
+                    if (result) {
+                        "Folder '${folderName}' created successfully."
+                    } else {
+                        "Unable to create folder '${folderName}'."
+                    }
+                )
+            } catch (e: Exception) {
+                callback(false, "Unable to create folder. Please try again.")
+                e.printStackTrace()
+            }
         }
     }
 
@@ -225,6 +276,37 @@ object FileUtil {
     }
 
 
+
+
+    fun getFreeMemory(path: File?): Long {
+        if (null != path && path.exists() && path.isDirectory) {
+            val stats = StatFs(path.absolutePath)
+            return stats.availableBlocksLong * stats.blockSizeLong
+        }
+        return -1
+    }
+
+    fun getTotalMemory(path: File?): Long {
+        if (null != path && path.exists() && path.isDirectory) {
+            val stats = StatFs(path.absolutePath)
+            return stats.blockCountLong * stats.blockSizeLong
+        }
+        return -1
+    }
+
+
+
+
+    fun isExternalStorageReadOnly(): Boolean {
+        val extStorageState: String = Environment.getExternalStorageState()
+        return Environment.MEDIA_MOUNTED_READ_ONLY == extStorageState
+    }
+
+    fun isExternalStorageAvailable(): Boolean {
+        val extStorageState: String = Environment.getExternalStorageState()
+        return Environment.MEDIA_MOUNTED == extStorageState
+    }
+
     fun getReadableSize(fileSize: Long): String {
         val readableSize: String
         if (fileSize > 1024) {
@@ -248,4 +330,21 @@ object FileUtil {
         }
         return readableSize
     }
+
+    fun bytesToHuman(totalBytes: Long): String? {
+        val symbols = arrayOf("B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB")
+        var scale = 1L
+        for (symbol in symbols) {
+            if (totalBytes < scale * 1024L) {
+                return java.lang.String.format(
+                    "%s %s",
+                    DecimalFormat("#.##").format(totalBytes.toDouble() / scale),
+                    symbol
+                )
+            }
+            scale *= 1024L
+        }
+        return "-1 B"
+    }
+
 }
