@@ -1,9 +1,12 @@
 package com.cb.cbtools.service
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageInstaller.SessionParams
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -17,7 +20,9 @@ import com.cb.cbtools.exception.SelfDestructionException
 import com.cb.cbtools.exception.SystemAppException
 import com.cb.cbtools.util.FileUtil
 import java.io.File
+import java.io.IOException
 import javax.inject.Inject
+
 
 class AppInfoService @Inject constructor(
     private val context: Context,
@@ -147,17 +152,49 @@ class AppInfoService @Inject constructor(
         onFailure: (Exception) -> Unit
     ) {
         if (app.appType == 0) {
-            if (app.pkg == activity.packageName) {
-                onFailure(SelfDestructionException("Are you kidding me?"))
-            } else {
-                val intent = Intent(Intent.ACTION_DELETE)
-                intent.data = Uri.parse("package:" + app.pkg)
-                activity.startActivity(intent)
-                onSuccess()
+            try {
+                if (app.pkg == activity.packageName) {
+                    onFailure(SelfDestructionException("Are you kidding me?"))
+                } else {
+                    if (uninstallPackage(activity, app.pkg))
+                        onSuccess()
+                }
+            } catch (e: Exception) {
+                onFailure(e)
             }
         } else {
             onFailure(SystemAppException("This is a system app, Please install our desktop app to uninstall this"))
         }
+    }
+
+    fun uninstallPackageWithIntent(activity: Activity, packageName: String?) {
+        val intent = Intent(Intent.ACTION_DELETE)
+        intent.data = Uri.parse("package:$packageName")
+        activity.startActivity(intent)
+    }
+
+    @SuppressLint("MissingPermission")
+    fun uninstallPackage(context: Context, packageName: String?): Boolean {
+        val packageManger = context.packageManager
+        val packageInstaller = packageManger.packageInstaller
+        val params = SessionParams(
+            SessionParams.MODE_FULL_INSTALL
+        )
+        params.setAppPackageName(packageName)
+        var sessionId = 0
+        sessionId = try {
+            packageInstaller.createSession(params)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return false
+        }
+        packageInstaller.uninstall(
+            packageName!!, PendingIntent.getBroadcast(
+                context, sessionId,
+                Intent("android.intent.action.MAIN"), 0
+            ).intentSender
+        )
+        return true
     }
 
 }
