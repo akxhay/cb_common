@@ -143,7 +143,6 @@ class AppInfoService @Inject constructor(
     fun uninstall(
         activity: Activity,
         app: AppListInfo,
-        onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         if (app.appType == 0) {
@@ -153,7 +152,6 @@ class AppInfoService @Inject constructor(
                 val intent = Intent(Intent.ACTION_DELETE)
                 intent.data = Uri.parse("package:" + app.pkg)
                 activity.startActivity(intent)
-                onSuccess()
             }
         } else {
             onFailure(SystemAppException("This is a system app, Please install our desktop app to uninstall this"))
