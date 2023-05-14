@@ -5,8 +5,8 @@ import java.io.Serializable
 import java.util.*
 
 data class AppListInfo(
-    var pkg: String? = null,
-    var name: String? = null,
+    var pkg: String,
+    var name: String,
     var icon: Drawable? = null,
     var appType: Int = 0,
     var version: String = "",
@@ -18,7 +18,7 @@ data class AppListInfo(
     }
 
     override fun compareTo(other: AppListInfo): Int {
-        return name!!.compareTo(other.name!!)
+        return name.compareTo(other.name)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -33,12 +33,8 @@ data class AppListInfo(
     }
 
     override fun toString(): String {
-        return "AppListInfo{" +
-                "pkg='" + pkg + '\'' +
-                ", name='" + name + '\'' +
-                ", icon=" + icon +
-                ", appType=" + appType +
-                ", isEnabled=" + isEnabled +
-                '}'
+        return "AppListInfo(pkg='$pkg', name='$name', icon=$icon, appType=$appType, version='$version', sourceDir=$sourceDir, isEnabled=$isEnabled)"
     }
+
+
 }

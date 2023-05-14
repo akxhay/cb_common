@@ -5,11 +5,16 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.cb.cbtools.dto.AppListInfo
+import com.cb.cbtools.exception.SelfDestructionException
+import com.cb.cbtools.exception.SystemAppException
+import com.cb.cbtools.util.FileUtil
 import java.io.File
 import javax.inject.Inject
 
@@ -116,6 +121,40 @@ class AppInfoService @Inject constructor(
             ).longVersionCode
         } catch (e: Exception) {
             0
+        }
+    }
+
+    private fun extract(
+        extractTo: String,
+        app: AppListInfo,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        FileUtil.copyFile(
+            app.sourceDir!!,
+            Environment.getExternalStoragePublicDirectory(extractTo).absolutePath,
+            app.name + ".apk",
+            onSuccess,
+            onFailure
+        )
+    }
+
+    private fun uninstall(
+        app: AppListInfo,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        if (app.appType == 0) {
+            if (app.pkg == context.packageName) {
+                onFailure(SelfDestructionException("Are you kidding me?"))
+            } else {
+                val intent = Intent(Intent.ACTION_DELETE)
+                intent.data = Uri.parse("package:" + app.pkg)
+                context.startActivity(intent)
+                onSuccess()
+            }
+        } else {
+            onFailure(SystemAppException("This is a system app, Please install our desktop app to uninstall this"))
         }
     }
 

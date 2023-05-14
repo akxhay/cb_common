@@ -222,7 +222,6 @@ object FileUtil {
         outputDir: String,
         fileName: String,
         onSuccess: () -> Unit,
-
         onFailure: (Exception) -> Unit
     ) {
         try {
