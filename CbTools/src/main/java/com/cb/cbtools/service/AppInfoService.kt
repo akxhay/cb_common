@@ -1,5 +1,6 @@
 package com.cb.cbtools.service
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -140,17 +141,18 @@ class AppInfoService @Inject constructor(
     }
 
     fun uninstall(
+        activity: Activity,
         app: AppListInfo,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         if (app.appType == 0) {
-            if (app.pkg == context.packageName) {
+            if (app.pkg == activity.packageName) {
                 onFailure(SelfDestructionException("Are you kidding me?"))
             } else {
                 val intent = Intent(Intent.ACTION_DELETE)
                 intent.data = Uri.parse("package:" + app.pkg)
-                context.startActivity(intent)
+                activity.startActivity(intent)
                 onSuccess()
             }
         } else {

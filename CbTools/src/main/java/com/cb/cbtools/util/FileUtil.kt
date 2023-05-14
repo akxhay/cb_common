@@ -241,7 +241,7 @@ object FileUtil {
         } catch (e: FileNotFoundException) {
             onFailure(e)
 
-        } catch (e: java.lang.Exception) {
+        } catch (e: Exception) {
             onFailure(e)
 
         }
