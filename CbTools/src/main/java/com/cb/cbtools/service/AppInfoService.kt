@@ -28,11 +28,13 @@ class AppInfoService @Inject constructor(
                 if (pkgName != context.packageName) {
                     appList.add(
                         AppListInfo(
-                            pkgName,
-                            packInfo.applicationInfo.loadLabel(packageManager).toString(),
-                            packInfo.applicationInfo.loadIcon(packageManager),
-                            0,
-                            data.contains(pkgName)
+                            pkg = pkgName,
+                            name = packInfo.applicationInfo.loadLabel(packageManager).toString(),
+                            icon = packInfo.applicationInfo.loadIcon(packageManager),
+                            appType = 0,
+                            version = packInfo.versionName,
+                            sourceDir = packInfo.applicationInfo.sourceDir,
+                            isEnabled = data.contains(pkgName)
                         )
                     )
                 }
@@ -42,11 +44,14 @@ class AppInfoService @Inject constructor(
                     if (map.containsKey(pkgName)) {
                         appList.add(
                             AppListInfo(
-                                pkgName,
-                                packInfo.applicationInfo.loadLabel(packageManager).toString(),
-                                packInfo.applicationInfo.loadIcon(packageManager),
-                                1,
-                                data.contains(pkgName)
+                                pkg = pkgName,
+                                name = packInfo.applicationInfo.loadLabel(packageManager)
+                                    .toString(),
+                                icon = packInfo.applicationInfo.loadIcon(packageManager),
+                                appType = 1,
+                                version = packInfo.versionName,
+                                sourceDir = packInfo.applicationInfo.sourceDir,
+                                isEnabled = data.contains(pkgName)
                             )
                         )
                     }
