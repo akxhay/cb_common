@@ -156,8 +156,7 @@ class AppInfoService @Inject constructor(
                 if (app.pkg == activity.packageName) {
                     onFailure(SelfDestructionException("Are you kidding me?"))
                 } else {
-                    if (uninstallPackage(activity, app.pkg))
-                        onSuccess()
+                    uninstallPackageWithIntent(activity, app.pkg)
                 }
             } catch (e: Exception) {
                 onFailure(e)
@@ -167,7 +166,7 @@ class AppInfoService @Inject constructor(
         }
     }
 
-    fun uninstallPackageWithIntent(activity: Activity, packageName: String?) {
+    private fun uninstallPackageWithIntent(activity: Activity, packageName: String?) {
         val intent = Intent(Intent.ACTION_DELETE)
         intent.data = Uri.parse("package:$packageName")
         activity.startActivity(intent)
@@ -181,8 +180,7 @@ class AppInfoService @Inject constructor(
             SessionParams.MODE_FULL_INSTALL
         )
         params.setAppPackageName(packageName)
-        var sessionId = 0
-        sessionId = try {
+        val sessionId: Int = try {
             packageInstaller.createSession(params)
         } catch (e: IOException) {
             e.printStackTrace()
