@@ -148,7 +148,6 @@ class AppInfoService @Inject constructor(
     fun uninstall(
         activity: Activity,
         app: AppListInfo,
-        onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         if (app.appType == 0) {
