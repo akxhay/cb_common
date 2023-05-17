@@ -38,13 +38,12 @@ class AccessNotification : PermissionHandler {
             context.contentResolver,
             "enabled_notification_listeners"
         )?.let { notificationListenerString ->
-            return notificationListenerString.contains(":") &&
-                    notificationListenerString.split(":")
-                        .filter { it.contains("/") }
-                        .any {
-                            it.split("/")[0] == context.packageName &&
-                                    it.split("/")[1] == data[KEY_NOTIFICATION_RECEIVER]
-                        }
+            return notificationListenerString.split(":")
+                .filter { it.contains("/") }
+                .any {
+                    it.split("/")[0] == context.packageName &&
+                            it.split("/")[1] == data[KEY_NOTIFICATION_RECEIVER]
+                }
         } ?: false
     }
 
