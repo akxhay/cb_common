@@ -1,10 +1,18 @@
 package com.cb.cbtools.util
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Environment
 import android.os.StatFs
 import android.util.Log
+import androidx.core.content.FileProvider
 import com.cb.cbtools.constants.Constants.divider
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.DecimalFormat
 import java.util.regex.Pattern
 
@@ -344,6 +352,30 @@ object FileUtil {
             scale *= 1024L
         }
         return "-1 B"
+    }
+
+    fun shareFile(
+        title: String = "Share ",
+        path: String,
+        mimeType: String,
+        activity: Activity,
+        onFailure: (Exception) -> Unit
+    ) {
+        try {
+            val uri = FileProvider.getUriForFile(
+                activity,
+                activity.packageName + ".provider",
+                File(path)
+            )
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            shareIntent.type = mimeType
+            activity.startActivity(Intent.createChooser(shareIntent, title))
+        } catch (e: Exception) {
+            onFailure(e)
+        }
+
     }
 
 }
