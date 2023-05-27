@@ -13,7 +13,11 @@ import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +26,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cb.cbtools.util.RateUtil
 import com.cb.cbtools.util.RateUtil.rate
 import kotlinx.coroutines.delay
 
@@ -36,9 +39,9 @@ fun RatePopUp(
         onDismissClick = {
             showRatePopUp.value = false
         }, onConfirmClick = {
-            RateUtil.rate(activity)
+            rate(activity)
         },
-        title = "Please rate chat bin",
+        title = "Please rate us on play store",
         text = {
 
             Column(
