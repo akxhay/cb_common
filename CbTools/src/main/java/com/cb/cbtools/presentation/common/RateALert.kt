@@ -60,7 +60,7 @@ fun RatePopUp(
                     overflow = TextOverflow.Ellipsis
                 )
                 RatingBar(
-                    rating = 2.5,
+                    rating = "2.5",
                     starsColor = startColor
                 )
             }
@@ -73,7 +73,7 @@ fun RatePopUp(
 @Composable
 fun RatingBar(
     modifier: Modifier = Modifier,
-    rating: Double = 0.0,
+    rating: String = "0.0",
     stars: Int = 5,
     starsColor: Color = Color.Blue,
 ) {
@@ -82,20 +82,20 @@ fun RatingBar(
         mutableStateOf(rating)
     }
     LaunchedEffect(rate) {
-        delay(5)
-        rate.value = 3.0
-        delay(5)
-        rate.value = 3.5
-        delay(5)
-        rate.value = 4.0
-        delay(5)
-        rate.value = 4.5
-        delay(5)
-        rate.value = 5.0
+        delay(100)
+        rate.value = "3.0"
+        delay(100)
+        rate.value = "3.5"
+        delay(100)
+        rate.value = "4.0"
+        delay(100)
+        rate.value = "4.5"
+        delay(100)
+        rate.value = "5.0"
     }
-    val filledStars = kotlin.math.floor(rate.value).toInt()
-    val unfilledStars = (stars - kotlin.math.ceil(rate.value)).toInt()
-    val halfStar = !(rate.value.rem(1).equals(0.0))
+    val filledStars = kotlin.math.floor(rate.value.toDouble()).toInt()
+    val unfilledStars = (stars - kotlin.math.ceil(rate.value.toDouble())).toInt()
+    val halfStar = !(rate.value.toDouble().rem(1).equals(0.0))
     Row(modifier = modifier) {
         repeat(filledStars) {
             Icon(

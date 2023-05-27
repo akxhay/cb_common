@@ -35,8 +35,9 @@ import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
 import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
 import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
 import com.cb.cbtools.presentation.common.CbGenericDialog
-import com.cb.cbtools.presentation.composable.SettingsScreen
+import com.cb.cbtools.presentation.common.RatePopUp
 import com.cb.cbtools.presentation.composable.ExceptionScreen
+import com.cb.cbtools.presentation.composable.SettingsScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,10 +45,15 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    lateinit var showRatePopUp: MutableState<Boolean>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val darkTheme = remember {
+                mutableStateOf(false)
+            }
+            showRatePopUp = remember {
                 mutableStateOf(false)
             }
             CbCommonTheme(darkTheme = darkTheme.value) {
@@ -76,7 +82,11 @@ class MainActivity : ComponentActivity() {
                             OpenExceptionScreen(navController)
                         }
                     }
-
+                    if (showRatePopUp.value)
+                        RatePopUp(
+                            showRatePopUp = showRatePopUp,
+                            activity = this,
+                        )
                 }
             }
         }
@@ -242,5 +252,13 @@ class MainActivity : ComponentActivity() {
             navController = navController
         )
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (this::showRatePopUp.isInitialized) {
+            showRatePopUp.value = true
+        }
+    }
+
 
 }
