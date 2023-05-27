@@ -47,6 +47,7 @@ fun WelcomeScreen(
     context: Activity,
     appName: String,
     appDesc: String,
+    version: String,
     @DrawableRes appIcon: Int,
     onclickSkip: () -> Unit,
     viewModel: PermissionViewModel,
@@ -70,6 +71,7 @@ fun WelcomeScreen(
                     appIcon = appIcon,
                     appName = appName,
                     appDesc = appDesc,
+                    version = version,
                     onclickSkip = onclickSkip,
                     currentPermission = it,
                     backgroundColor = backgroundColor,
@@ -91,6 +93,7 @@ fun PermissionScreen(
     @DrawableRes appIcon: Int,
     appName: String,
     appDesc: String,
+    version: String,
     onclickSkip: () -> Unit,
     currentPermission: CbPermission,
     backgroundColor: Color,
@@ -109,6 +112,7 @@ fun PermissionScreen(
             appIcon = appIcon,
             appName = appName,
             appDesc = appDesc,
+            version = version,
             primaryTextColor = primaryTextColor,
             secondaryTextColor = secondaryTextColor
         )
@@ -136,6 +140,7 @@ fun AppInfo(
     @DrawableRes appIcon: Int,
     appName: String,
     appDesc: String,
+    version: String,
     primaryTextColor: Color = MaterialTheme.colorScheme.onSurface,
     secondaryTextColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
 ) {
@@ -153,6 +158,12 @@ fun AppInfo(
             text = appDesc,
             color = secondaryTextColor,
             style = MaterialTheme.typography.bodyLarge
+        )
+        WelcomeInfoSpacer()
+        WelcomeInfoText(
+            text = version,
+            color = secondaryTextColor,
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

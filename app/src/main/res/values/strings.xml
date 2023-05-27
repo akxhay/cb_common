@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name" translatable="false">Cb Common</string>
-    <string name="app_desc">This app is build to test common tools which are being used across all application.</string>
+    <string name="app_desc" translatable="false">This app is build to test common tools which are being used across all application.</string>
 </resources>

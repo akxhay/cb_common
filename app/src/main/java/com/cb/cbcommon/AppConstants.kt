@@ -27,6 +27,8 @@ object AppConstants {
     const val appNameRes: Int = R.string.app_name
     const val appDescRes: Int = R.string.app_desc
     const val appIconRes: Int = R.drawable.play_store_512
+    const val version: String =
+        "Version :  ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
     val home = MainActivity::class.java
 }
