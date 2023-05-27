@@ -5,7 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 
-object RateUtil {
+object PlayStoreUtil {
 
     fun rate(
         activity: Activity,
