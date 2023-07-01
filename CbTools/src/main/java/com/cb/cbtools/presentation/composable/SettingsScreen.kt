@@ -2,13 +2,26 @@ package com.cb.cbtools.presentation.composable
 
 import android.app.Activity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +34,7 @@ import androidx.navigation.NavController
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ActionResolver
+import com.cb.cbtools.dynamic.util.ExpressionResolver
 import com.cb.cbtools.dynamic.util.IconResolver
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
@@ -85,15 +99,21 @@ fun Settings(
                     .fillMaxSize()
             ) {
                 items(it) { preferenceCategory ->
-                    PreferenceCategoryComposable(
-                        preferenceCategory = preferenceCategory,
-                        dynamicConfig = dynamicConfig,
-                        activity = activity,
-                        backgroundColor = backgroundColor,
-                        primaryTextColor = primaryTextColor,
-                        secondaryTextColor = secondaryTextColor,
-                        dividerColor = dividerColor
-                    )
+                    if (ExpressionResolver.evaluate(
+                            dynamicConfig.getSharedPreferences(),
+                            preferenceCategory.showExpression
+                        )
+                    ) {
+                        PreferenceCategoryComposable(
+                            preferenceCategory = preferenceCategory,
+                            dynamicConfig = dynamicConfig,
+                            activity = activity,
+                            backgroundColor = backgroundColor,
+                            primaryTextColor = primaryTextColor,
+                            secondaryTextColor = secondaryTextColor,
+                            dividerColor = dividerColor
+                        )
+                    }
                 }
             }
         }
@@ -129,58 +149,63 @@ fun PreferenceCategoryComposable(
         )
         preferenceCategory.preferences?.let {
             for (preference in it) {
-                val isChecked = remember {
-                    mutableStateOf(
-                        dynamicConfig.getSharedPreferences()
-                            .getBoolean(preference.pref, true)
+                if (ExpressionResolver.evaluate(
+                        dynamicConfig.getSharedPreferences(),
+                        preference.showExpression
+                    )
+                ) {
+                    val isChecked = remember {
+                        mutableStateOf(
+                            dynamicConfig.getSharedPreferences()
+                                .getBoolean(preference.pref, true)
+                        )
+                    }
+                    CbListItem(
+                        titleUnit = {
+                            Text(
+                                text = preference.title!!.replace(
+                                    "#APP_NAME#",
+                                    dynamicConfig.getAppName()
+                                ),
+                                color = primaryTextColor
+                            )
+                        },
+                        summaryUnit = {
+                            preference.summary?.let { it ->
+                                Text(
+                                    text = it.replace("#APP_NAME#", dynamicConfig.getAppName()),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = secondaryTextColor
+                                )
+                            }
+
+                        },
+
+                        primaryBitmap = if (preference.icon != null && preference.icon!!.imageVector == null) IconResolver.getBitmap(
+                            icon = preference.icon!!
+                        ) else null,
+                        primaryImageVector = if (preference.icon != null && preference.icon!!.imageVector == null) null else IconResolver.getImageVector(
+                            preference.icon,
+                            Icons.Filled.Settings
+                        ),
+                        actionType = preference.type,
+                        checked = isChecked,
+                        onChange = { value ->
+                            dynamicConfig.getSharedPreferences().edit()
+                                .putBoolean(preference.pref, value).apply()
+                        },
+                        onClick = {
+                            ActionResolver.getAction(
+                                dynamicConfig.getAppName(),
+                                activity,
+                                preference.action
+                            )()
+                        }
+                    )
+                    Divider(
+                        color = dividerColor
                     )
                 }
-                CbListItem(
-                    titleUnit = {
-                        Text(
-                            text = preference.title!!.replace(
-                                "#APP_NAME#",
-                                dynamicConfig.getAppName()
-                            ),
-                            color = primaryTextColor
-                        )
-                    },
-                    summaryUnit = {
-                        preference.summary?.let { it ->
-                            Text(
-                                text = it.replace("#APP_NAME#", dynamicConfig.getAppName()),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = secondaryTextColor
-                            )
-                        }
-
-                    },
-
-                    primaryBitmap = if (preference.icon != null && preference.icon!!.imageVector == null) IconResolver.getBitmap(
-                        icon = preference.icon!!
-                    ) else null,
-                    primaryImageVector = if (preference.icon != null && preference.icon!!.imageVector == null) null else IconResolver.getImageVector(
-                        preference.icon,
-                        Icons.Filled.Settings
-                    ),
-                    actionType = preference.type,
-                    checked = isChecked,
-                    onChange = { value ->
-                        dynamicConfig.getSharedPreferences().edit()
-                            .putBoolean(preference.pref, value).apply()
-                    },
-                    onClick = {
-                        ActionResolver.getAction(
-                            dynamicConfig.getAppName(),
-                            activity,
-                            preference.action
-                        )()
-                    }
-                )
-
-                Divider(
-                    color = dividerColor
-                )
             }
         }
     }

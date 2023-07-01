@@ -14,7 +14,12 @@ class TestUtil {
 
     companion object {
         fun test(context: Context, name: String) {
-            Log.i("InterstitialAdUtil", "Test 2 success ${context.javaClass.canonicalName} with name $name")
+            Log.i(
+                "InterstitialAdUtil",
+                "Test 2 success ${context.javaClass.canonicalName} with name $name"
+            )
+            BaseApplication.getInstance().dynamicConfig.getSharedPreferences().edit()
+                .putString("proMode", "enabled").apply()
         }
 
     }

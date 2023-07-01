@@ -40,6 +40,11 @@
         "title": "test",
         "preferences": [
           {
+            "showExpression": {
+              "key": "proMode",
+              "value": "enabled",
+              "operator": "ne"
+            },
             "type": "DEFAULT",
             "title": "Pro mode enabled",
             "icon": {

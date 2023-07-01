@@ -11,7 +11,9 @@ data class Preference(
     @SerializedName("action") @Expose var action: Array<String>? = null,
     @SerializedName("icon") @Expose var icon: DynamicIcon? = null,
     @SerializedName("pref") @Expose var pref: String? = null,
-) {
+    @SerializedName("showExpression") @Expose var showExpression: Expression? = null,
+
+    ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -27,7 +29,7 @@ data class Preference(
     }
 
     override fun hashCode(): Int {
-        var result = type?.hashCode() ?: 0
+        var result = type.hashCode()
         result = 31 * result + (title?.hashCode() ?: 0)
         result = 31 * result + (summary?.hashCode() ?: 0)
         result = 31 * result + (icon?.hashCode() ?: 0)
