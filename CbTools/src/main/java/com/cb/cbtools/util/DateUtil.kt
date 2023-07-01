@@ -2,7 +2,9 @@ package com.cb.cbtools.util
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 object DateUtil {
 
@@ -24,6 +26,14 @@ object DateUtil {
 
     fun isAppValid(validTillDate: String): Boolean {
         return (appValidFormat.parse(validTillDate)?.compareTo(Date()) ?: 1) == 1
+    }
+
+    fun isProModeValid(validTillDate: String): Boolean {
+        return (appValidFormat.parse(validTillDate)?.compareTo(Date()) ?: 1) >= 0
+    }
+
+    fun getAppValidFormat(date: Date): String {
+        return appValidFormat.format(date)
     }
 
     fun convertDateMMMM(calendar: Calendar): String {
