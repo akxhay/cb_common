@@ -10,6 +10,24 @@ import com.facebook.ads.AdView
 class AdViewUtil {
     companion object {
         private val TAG = AdViewUtil::class.java.simpleName
+        val map = HashMap<String, AdView>()
+        private val adListener: AdListener = object : AdListener {
+            override fun onError(ad: Ad, adError: AdError) {
+                Log.e(TAG, "ad failed to load: " + adError.errorMessage)
+            }
+
+            override fun onAdLoaded(ad: Ad) {
+                Log.d(TAG, "Ad loaded!")
+            }
+
+            override fun onAdClicked(ad: Ad) {
+                Log.d(TAG, "Ad clicked!")
+            }
+
+            override fun onLoggingImpression(ad: Ad) {
+                Log.d(TAG, "Ad impression logged!")
+            }
+        }
 
         fun getAdView(
             label: String,
@@ -17,26 +35,12 @@ class AdViewUtil {
             placementId: String,
             adSize: FanAdSize
         ): AdView {
-            val adListener: AdListener = object : AdListener {
-                override fun onError(ad: Ad, adError: AdError) {
-                    Log.e(TAG, "$label::ad failed to load: " + adError.errorMessage)
-                }
-
-                override fun onAdLoaded(ad: Ad) {
-                    Log.d(TAG, "$label::Ad loaded!")
-                }
-
-                override fun onAdClicked(ad: Ad) {
-                    Log.d(TAG, "$label::Ad clicked!")
-                }
-
-                override fun onLoggingImpression(ad: Ad) {
-                    Log.d(TAG, "$label::Ad impression logged!")
+            if (!map.contains(label)) {
+                map[label] = AdView(context, placementId, adSize.adSize).apply {
+                    loadAd(this.buildLoadAdConfig().withAdListener(adListener).build())
                 }
             }
-            return AdView(context, placementId, adSize.adSize).apply {
-                loadAd(this.buildLoadAdConfig().withAdListener(adListener).build())
-            }
+            return map[label]!!
         }
 
     }
