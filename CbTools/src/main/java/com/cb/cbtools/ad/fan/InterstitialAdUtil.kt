@@ -54,13 +54,14 @@ class InterstitialAdUtil {
             }
         }
 
-        fun show(context: Context?, placementId: String) {
-            if (!map.contains(placementId) || map[placementId]!!.isAdInvalidated) {
+        fun show(context: Context?, placementId: String): Int {
+            return if (!map.contains(placementId) || map[placementId]!!.isAdInvalidated) {
                 init(context, placementId)
-
+                -1
             } else if (map[placementId]!!.isAdLoaded) {
                 map[placementId]!!.show()
-            }
+                1
+            } else 0
         }
     }
 }
