@@ -1,6 +1,7 @@
 package com.cb.cbtools.presentation.composable
 
 import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,8 +24,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -92,12 +95,15 @@ fun Settings(
         shape = RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp),
     )
     {
+        var counter by remember { mutableStateOf(GlobalState(0)) }
+
         dynamicConfig.getPreferenceCategories()?.let {
 
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
+
                 items(it) { preferenceCategory ->
                     if (ExpressionResolver.evaluate(
                             dynamicConfig.getSharedPreferences(),
@@ -111,7 +117,11 @@ fun Settings(
                             backgroundColor = backgroundColor,
                             primaryTextColor = primaryTextColor,
                             secondaryTextColor = secondaryTextColor,
-                            dividerColor = dividerColor
+                            dividerColor = dividerColor,
+                            globalState = counter,
+                            onUpdateCount = {
+                                counter = counter.copy(count = counter.count + 1)
+                            }
                         )
                     }
                 }
@@ -129,7 +139,9 @@ fun PreferenceCategoryComposable(
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     primaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
     secondaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
-    dividerColor: Color = Color.Transparent
+    dividerColor: Color = Color.Transparent,
+    globalState: GlobalState,
+    onUpdateCount: () -> Unit
 
 ) {
     Column(
@@ -149,6 +161,7 @@ fun PreferenceCategoryComposable(
         )
         preferenceCategory.preferences?.let {
             for (preference in it) {
+                Log.i("globalState", globalState.count.toString())
                 if (ExpressionResolver.evaluate(
                         dynamicConfig.getSharedPreferences(),
                         preference.showExpression
@@ -160,6 +173,8 @@ fun PreferenceCategoryComposable(
                                 .getBoolean(preference.pref, true)
                         )
                     }
+                    if (globalState.count < 0)
+                        Text("count ${globalState.count}")
                     CbListItem(
                         titleUnit = {
                             Text(
@@ -195,6 +210,8 @@ fun PreferenceCategoryComposable(
                                 .putBoolean(preference.pref, value).apply()
                         },
                         onClick = {
+                            if (preference.showExpression != null)
+                                onUpdateCount()
                             ActionResolver.getAction(
                                 dynamicConfig.getAppName(),
                                 activity,
@@ -234,6 +251,7 @@ fun PreferenceHeader(modifier: Modifier, title: String) {
 
 }
 
+data class GlobalState(var count: Int = 0)
 
 
 
