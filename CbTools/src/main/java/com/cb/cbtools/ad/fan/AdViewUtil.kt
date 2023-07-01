@@ -5,7 +5,6 @@ import android.util.Log
 import com.facebook.ads.Ad
 import com.facebook.ads.AdError
 import com.facebook.ads.AdListener
-import com.facebook.ads.AdSize
 import com.facebook.ads.AdView
 
 class AdViewUtil {
@@ -16,7 +15,7 @@ class AdViewUtil {
             label: String,
             context: Context,
             placementId: String,
-            adSize: AdSize
+            adSize: FanAdSize
         ): AdView {
             val adListener: AdListener = object : AdListener {
                 override fun onError(ad: Ad, adError: AdError) {
@@ -35,7 +34,7 @@ class AdViewUtil {
                     Log.d(TAG, "$label::Ad impression logged!")
                 }
             }
-            return AdView(context, placementId, adSize).apply {
+            return AdView(context, placementId, adSize.adSize).apply {
                 loadAd(this.buildLoadAdConfig().withAdListener(adListener).build())
             }
         }
