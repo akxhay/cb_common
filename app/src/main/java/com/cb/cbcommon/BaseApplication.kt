@@ -4,6 +4,7 @@ import android.app.Application
 import com.cb.cbtools.data.model.ExceptionRecord
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.service.ExceptionHelper
+import com.cb.cbtools.util.PlayStoreUtil
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -18,6 +19,8 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         baseApplication = this
+        PlayStoreUtil.printAdId(this)
+
         Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
             exceptionHelper.saveException(
                 ExceptionRecord(

@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.cb.cbcommon'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.cb.cbcommon"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
