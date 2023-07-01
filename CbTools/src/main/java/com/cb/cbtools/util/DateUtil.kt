@@ -29,7 +29,24 @@ object DateUtil {
     }
 
     fun isProModeValid(validTillDate: String): Boolean {
-        return (appValidFormat.parse(validTillDate)?.compareTo(Date()) ?: 1) >= 0
+        try {
+            val date1 = Calendar.getInstance()
+            date1.set(Calendar.HOUR_OF_DAY, 0)
+            date1.set(Calendar.MINUTE, 0)
+            date1.set(Calendar.SECOND, 0)
+            date1.set(Calendar.MILLISECOND, 0)
+
+            val date2 = Calendar.getInstance()
+            date2.timeInMillis = appValidFormat.parse(validTillDate)!!.time
+            date2.set(Calendar.HOUR_OF_DAY, 0)
+            date2.set(Calendar.MINUTE, 0)
+            date2.set(Calendar.SECOND, 0)
+            date2.set(Calendar.MILLISECOND, 0)
+
+            return date2 >= date1
+        } catch (e: Exception) {
+            return true
+        }
     }
 
     fun getAppValidFormat(date: Date): String {
