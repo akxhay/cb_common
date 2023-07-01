@@ -9,6 +9,8 @@ import android.util.Log
 import android.widget.Toast
 import com.cb.cbtools.constants.enums.PermissionType
 import com.cb.cbtools.permission.factory.PermissionHandlerFactory
+import kotlin.reflect.full.companionObject
+import kotlin.reflect.full.functions
 
 object ActionResolver {
     val TAG = "ActionResolver"
@@ -29,6 +31,7 @@ object ActionResolver {
                                 openExternalUrl(context = context, url = args[1])
                             }
                         }
+
                         "SHARE" -> {
                             {
                                 openShareIntentAction(
@@ -39,6 +42,16 @@ object ActionResolver {
                                 )
                             }
                         }
+
+                        "REFLECTION" -> {
+                            {
+                                reflect(
+                                    context = context,
+                                    args = args
+                                )
+                            }
+                        }
+
                         "PERMISSION" -> {
                             {
                                 permissionAction(
@@ -66,6 +79,32 @@ object ActionResolver {
         }
 
         return {}
+    }
+
+    private fun reflect(context: Activity, args: Array<String>) {
+        val methodType = args[1]
+        val className = args[2]
+        val methodName = args[3]
+        val clazz = Class.forName(className)
+        val classList = ArrayList<Class<*>>()
+        val valueList = ArrayList<String>()
+        for (i in 4..args.size.dec()) {
+            classList.add(String::class.java)
+            valueList.add(args[i])
+        }
+        if (methodType == "STATIC") {
+            val companion = clazz.kotlin.companionObject
+            companion?.functions?.first { it.name == methodName }
+                ?.call(companion.objectInstance, context, *valueList.toTypedArray())
+
+        } else {
+            val method = clazz
+                .getMethod(methodName, Context::class.java, *classList.toTypedArray())
+            val ins = clazz.getConstructor().newInstance()
+            method.invoke(ins, context, *valueList.toTypedArray())
+        }
+
+
     }
 
     private fun permissionAction(
