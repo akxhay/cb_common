@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <meta-data
-        android:name="applovin.sdk.key"
-        android:value="eB61nUXcGuz2u_qF3XG5q8Q4oAOvNJOuyz6WMJ1Hfs9kGM3SHKbLoGbDsTVqJmC98VcuTTWmlb0UWzOCPsU9JK" />
 </manifest>
