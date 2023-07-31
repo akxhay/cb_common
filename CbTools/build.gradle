@@ -3,6 +3,10 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id("com.google.dagger.hilt.android")
+    id("applovin-quality-service")
+}
+applovin {
+    apiKey = "l8sLodWRK-ZLp50GMsw0SJHyBDCaNlO89dD3GRCKklmGNxVEmG92TaBckGLGHmDTg125gbgqnr6r-bUsGdykeN"
 }
 
 android {
@@ -49,7 +53,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.21"
     implementation 'com.facebook.android:audience-network-sdk:6.14.0'
-
+        implementation 'com.applovin:applovin-sdk:11.11.1'
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
     implementation "androidx.compose.runtime:runtime-livedata:1.4.3"
