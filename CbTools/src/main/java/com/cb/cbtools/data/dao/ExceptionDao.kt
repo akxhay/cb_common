@@ -11,8 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface ExceptionDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertExceptionRecords(exceptionRecord: ExceptionRecord?)
-
+    suspend fun insertExceptionRecords(exceptionRecord: ExceptionRecord)
 
     @Query("SELECT * FROM exception_record ORDER BY time DESC")
     fun getException(): Flow<List<ExceptionRecord>>

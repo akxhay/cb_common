@@ -11,13 +11,22 @@ import kotlinx.coroutines.launch
 class ExceptionHelper(
     private val exceptionRepository: ExceptionRepository
 ) {
-    val TAG = "ExceptionHelper"
+    val tag = "ExceptionHelper"
 
     fun saveException(exceptionRecord: ExceptionRecord) {
-        Log.d(TAG, exceptionRecord.toString())
+        Log.d(tag, exceptionRecord.toString())
         CoroutineScope(Dispatchers.IO).launch {
             exceptionRepository.insertExceptionRecords(exceptionRecord)
         }
     }
 
+    fun saveException(paramThread: Thread, paramThrowable: Throwable) {
+        saveException(
+            ExceptionRecord(
+                exception = paramThrowable,
+                className = paramThread.javaClass.name,
+                lineNumber = paramThread.stackTrace.getOrNull(2)?.lineNumber ?: -1
+            )
+        )
+    }
 }

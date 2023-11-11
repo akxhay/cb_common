@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExceptionRepository {
 
-    suspend fun insertExceptionRecords(exceptionRecord: ExceptionRecord?)
+    suspend fun insertExceptionRecords(exceptionRecord: ExceptionRecord)
     fun getException(): Flow<List<ExceptionRecord>>
     suspend fun deleteRecords()
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ExceptionRepositoryImpl @Inject constructor(private val dao: ExceptionDao) :
     ExceptionRepository {
 
-    override suspend fun insertExceptionRecords(exceptionRecord: ExceptionRecord?) =
+    override suspend fun insertExceptionRecords(exceptionRecord: ExceptionRecord) =
         dao.insertExceptionRecords(exceptionRecord)
 
 

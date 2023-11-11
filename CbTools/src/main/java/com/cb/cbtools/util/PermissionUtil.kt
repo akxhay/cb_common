@@ -14,7 +14,7 @@ object PermissionUtil {
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun getPermission(
-        permissions: ArrayList<CbPermission>,
+        permissions: List<CbPermission>,
         context: Activity,
     ): CbPermission? {
         for (permission in permissions) {

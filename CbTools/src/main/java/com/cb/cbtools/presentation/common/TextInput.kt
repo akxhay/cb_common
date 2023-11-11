@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cb.cbtools.R
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CbTextInputWithError(
     modifier: Modifier = Modifier,

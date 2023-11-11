@@ -7,7 +7,7 @@ import com.cb.cbtools.constants.enums.PermissionType
 import com.cb.cbtools.dto.CbPermission
 
 object AppConstants {
-    val requiredPermissionOnStartup = arrayListOf(
+    val requiredPermissionOnStartup = listOf(
         CbPermission(
             permissionType = PermissionType.PERMISSION_ACCESS_NOTIFICATION,
             data = mapOf(
@@ -24,11 +24,11 @@ object AppConstants {
             canBeSkipped = true
         )
     )
-    const val appNameRes: Int = R.string.app_name
-    const val appDescRes: Int = R.string.app_desc
-    const val appIconRes: Int = R.drawable.play_store_512
-    const val version: String =
-        "Version :  ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
-    val home = MainActivity::class.java
+
+    val version: String by lazy {
+        "Version :  ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+    }
+
+    val home: Class<*> = MainActivity::class.java
 }

@@ -1,7 +1,6 @@
 package com.cb.cbcommon
 
 import android.app.Application
-import com.cb.cbtools.data.model.ExceptionRecord
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.service.ExceptionHelper
 import com.cb.cbtools.util.PlayStoreUtil
@@ -20,22 +19,13 @@ class BaseApplication : Application() {
         super.onCreate()
         baseApplication = this
         PlayStoreUtil.printAdId(this)
-
         Thread.setDefaultUncaughtExceptionHandler { paramThread, paramThrowable ->
-            exceptionHelper.saveException(
-                ExceptionRecord(
-                    exception = paramThrowable,
-                    className = paramThread.javaClass.name,
-                    lineNumber = paramThread.stackTrace[2].lineNumber
-                )
-            )
+            exceptionHelper.saveException(paramThread, paramThrowable)
         }
     }
 
     companion object {
         private lateinit var baseApplication: BaseApplication
-        fun getInstance(): BaseApplication {
-            return baseApplication
-        }
+        fun getInstance(): BaseApplication = baseApplication
     }
 }
