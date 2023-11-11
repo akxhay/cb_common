@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class ExceptionHelper(
     private val exceptionRepository: ExceptionRepository
 ) {
-    val tag = "ExceptionHelper"
+    private val tag = "ExceptionHelper"
 
     fun saveException(exceptionRecord: ExceptionRecord) {
         Log.d(tag, exceptionRecord.toString())

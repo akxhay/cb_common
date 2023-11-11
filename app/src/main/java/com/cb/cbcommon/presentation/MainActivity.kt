@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    lateinit var showRatePopUp: MutableState<Boolean>
+    private lateinit var showRatePopUp: MutableState<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

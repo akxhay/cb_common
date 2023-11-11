@@ -1,15 +1,15 @@
 package com.cb.cbcommon.presentation.route
 
 sealed class Screen(val route: String) {
-    object HomeScreen : Screen(
+    data object HomeScreen : Screen(
         "home_screen"
     )
 
-    object SettingsScreen : Screen(
+    data object SettingsScreen : Screen(
         "settings_screen"
     )
 
-    object ExceptionScreen : Screen(
+    data object ExceptionScreen : Screen(
         "exception_screen"
     )
 }

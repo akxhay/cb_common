@@ -2,17 +2,35 @@ package com.cb.cbtools.presentation.composable
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.animation.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -21,15 +39,16 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.cb.cbtools.R
 import com.cb.cbtools.data.model.ExceptionRecord
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbDecisionDialog
@@ -37,21 +56,18 @@ import com.cb.cbtools.presentation.common.CbNoResult
 import com.cb.cbtools.presentation.viewModel.ExceptionViewModel
 import com.cb.cbtools.util.DateUtil
 
-
-@ExperimentalAnimationApi
 @Composable
 fun ExceptionScreen(
     navController: NavController,
     viewModel: ExceptionViewModel = hiltViewModel()
 ) {
     val exceptions by viewModel.exceptions.observeAsState(initial = emptyList())
-    val showAlert = remember {
-        mutableStateOf(false)
-    }
+    val showAlert = remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             CbAppBar(
-                title = "Exceptions",
+                title = stringResource(id = R.string.exceptions_title),
                 backAction = { navController.navigateUp() },
                 actions = {
                     IconButton(onClick = {
@@ -59,7 +75,7 @@ fun ExceptionScreen(
                     }) {
                         Icon(
                             Icons.Default.Delete,
-                            "Delete",
+                            stringResource(id = R.string.delete),
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -72,7 +88,7 @@ fun ExceptionScreen(
                 ExceptionLoaded(exceptions)
             } else {
                 CbNoResult(
-                    text = "No exceptions"
+                    text = stringResource(id = R.string.no_exceptions)
                 )
             }
         }
@@ -85,9 +101,7 @@ fun ExceptionScreen(
             )
         }
     }
-
 }
-
 
 @Composable
 fun DeleteExceptionAlertDialog(
@@ -95,12 +109,10 @@ fun DeleteExceptionAlertDialog(
     viewModel: ExceptionViewModel,
     showAlert: MutableState<Boolean>,
     navController: NavController,
-
-    ) {
+) {
     CbDecisionDialog(
         onConfirmClick = {
-            Toast.makeText(context, "Exceptions are being deleted", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(context, "Exceptions are being deleted", Toast.LENGTH_SHORT).show()
             viewModel.deleteRecord()
             showAlert.value = false
             navController.navigateUp()
@@ -108,31 +120,23 @@ fun DeleteExceptionAlertDialog(
         onDismissClick = {
             showAlert.value = false
         },
-        title = "Please confirm",
-        text = "Delete all exception?",
+        title = stringResource(id = R.string.confirm_delete),
+        text = stringResource(id = R.string.delete_all_exceptions),
     )
-
 }
-
 
 @Composable
 fun ExceptionLoaded(
     exceptions: List<ExceptionRecord>
 ) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                color = MaterialTheme.colorScheme.surface
-            )
-    ) {
-        items(exceptions) {
-            ExceptionItem(
-                exception = it
-            )
+        modifier = Modifier.fillMaxSize(),
+        content = {
+            items(exceptions) { exception ->
+                ExceptionItem(exception)
+            }
         }
-    }
-
+    )
 }
 
 @Composable
@@ -146,67 +150,66 @@ fun ExceptionItem(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, Color.Gray)
-    )
-    {
+    ) {
         Column {
-            Row(modifier = Modifier.padding(20.dp, 10.dp)) {
-                Box(
-                    contentAlignment = Center
-                ) {
-
-                    Text(
-                        text = exception.className!! + " : " + exception.lineNumber + " : " +
-                                DateUtil.convertCompleteDateTime(
-                                    exception.time
-                                ),
-                        style = TextStyle(
-                            fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.onSurface
-                        ),
-                        overflow = TextOverflow.Ellipsis
-                    )
-
-                }
-            }
+            ExceptionDateInfo(exception)
             if (exception.exceptionDetails != null) {
-
-                Row(modifier = Modifier.padding(20.dp, 10.dp)) {
-
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Center
-                    ) {
-
-                        Text(
-                            text = exception.exceptionDetails!!,
-                            style = TextStyle(
-                                fontSize = 15.sp,
-                                color = MaterialTheme.colorScheme.onSurface
-                            ),
-                            overflow = TextOverflow.Ellipsis,
-                        )
-
-                    }
-                }
+                ExceptionDetails(exception)
             }
             if (exception.stackTrace != null) {
-                Row(modifier = Modifier.padding(20.dp, 10.dp)) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                        contentAlignment = Center
-                    ) {
-                        ExpandableText(
-                            text = exception.stackTrace!!,
-                            minimizedMaxLines = 5
-                        )
-                    }
-                }
+                ExceptionStackTrace(exception)
             }
         }
     }
+}
 
+@Composable
+fun ExceptionDateInfo(exception: ExceptionRecord) {
+    Row(modifier = Modifier.padding(20.dp, 10.dp)) {
+        Box(contentAlignment = Center) {
+            Text(
+                text = "${exception.className!!} : ${exception.lineNumber} : ${
+                    DateUtil.convertCompleteDateTime(
+                        exception.time
+                    )
+                }",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+    }
+}
+
+@Composable
+fun ExceptionDetails(exception: ExceptionRecord) {
+    Row(modifier = Modifier.padding(20.dp, 10.dp)) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Center
+        ) {
+            Text(
+                text = exception.exceptionDetails!!,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+@Composable
+fun ExceptionStackTrace(exception: ExceptionRecord) {
+    Row(modifier = Modifier.padding(20.dp, 10.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            contentAlignment = Center
+        ) {
+            ExpandableText(text = exception.stackTrace!!)
+        }
+    }
 }
 
 @Composable
