@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/black" />
-    <item>
+
+    <!-- Background Color -->
+    <item android:drawable="@color/splashBackground" />
+
+    <!-- Centered Round-Cropped Logo with Padding -->
+    <item
+        android:gravity="center"
+        android:left="32dp"
+        android:right="32dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/play_store_512" />
+            android:src="@drawable/ic_round_cropped" />
     </item>
 
 </layer-list>

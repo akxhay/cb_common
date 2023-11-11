@@ -35,4 +35,5 @@
     <color name="incoming">#ffffff</color>
     <color name="outgoing">#212121</color>
     <color name="yellow">#FFDE03</color>
+    <color name="splashBackground">#000000</color>
 </resources>
