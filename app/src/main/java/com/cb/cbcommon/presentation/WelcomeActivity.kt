@@ -5,37 +5,67 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.cb.cbcommon.AppConstants.home
 import com.cb.cbcommon.AppConstants.requiredPermissionOnStartup
 import com.cb.cbcommon.AppConstants.version
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
+import com.cb.cbtools.presentation.composable.PermissionDialog
+import com.cb.cbtools.presentation.composable.PermissionSkipDialog
 import com.cb.cbtools.presentation.composable.WelcomeScreen
-import com.cb.cbtools.presentation.viewModel.PermissionViewModel
 import com.cb.cbtools.util.PermissionUtil.getPermission
 import dagger.hilt.android.AndroidEntryPoint
 
-
+@RequiresApi(Build.VERSION_CODES.M)
 @AndroidEntryPoint
 class WelcomeActivity : ComponentActivity() {
 
-    private val viewModel: PermissionViewModel by viewModels()
+    private var currentPermission by mutableStateOf(requiredPermissionOnStartup.first())
+    private var showPermissionAlert by mutableStateOf(false)
+    private var showSkipAlert by mutableStateOf(false)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CbCommonTheme {
                 WelcomeScreen(
-                    context = this@WelcomeActivity,
                     appName = getString(R.string.app_name),
                     appDesc = getString(R.string.app_desc),
                     appIcon = R.drawable.play_store_512,
                     version = version,
                     onclickSkip = {
-                        getPermissions()
+                        showSkipAlert = true
                     },
-                    viewModel = viewModel
+                    currentPermission = currentPermission,
+                    onPermissionClick = {
+                        showPermissionAlert = true
+                    }
                 )
+                if (showPermissionAlert) {
+                    PermissionDialog(
+                        appName = getString(R.string.app_name),
+                        context = this@WelcomeActivity,
+                        currentPermission = currentPermission,
+                        dismiss = {
+                            showPermissionAlert = false
+                        },
+                    )
+                }
+                if (showSkipAlert) {
+                    PermissionSkipDialog(
+                        context = this@WelcomeActivity,
+                        currentPermission = currentPermission,
+                        dismiss = {
+                            showSkipAlert = false
+                            getPermissions()
+                        },
+                    )
+                }
             }
         }
     }
@@ -46,9 +76,13 @@ class WelcomeActivity : ComponentActivity() {
     }
 
     private fun getPermissions() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) goToHome()
-        else getPermission(requiredPermissionOnStartup, this)?.let { viewModel.changeType(it) }
-            ?: goToHome()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            goToHome()
+        } else {
+            getPermission(requiredPermissionOnStartup, this)?.let { permission ->
+                currentPermission = permission
+            } ?: goToHome()
+        }
     }
 
     private fun goToHome() {
@@ -56,4 +90,5 @@ class WelcomeActivity : ComponentActivity() {
         finish()
     }
 }
+
 

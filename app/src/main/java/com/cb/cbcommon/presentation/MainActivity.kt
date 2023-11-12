@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.InputScreen.route
                         ) {
-                            OpenSearchBarScreen(navController)
+                            OpenInputScreen(navController)
                         }
                         composable(
                             route = Screen.ListItemsScreen.route
@@ -132,7 +132,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun OpenSearchBarScreen(
+    fun OpenInputScreen(
         navController: NavHostController,
     ) {
         InputScreen(
