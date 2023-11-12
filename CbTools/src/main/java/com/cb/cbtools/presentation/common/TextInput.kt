@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -29,24 +28,25 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.cb.cbtools.R
 
+
 @Composable
 fun CbTextInputWithError(
     modifier: Modifier = Modifier,
+    input: String,
+    onInputChanged: (String) -> Unit,
+    validation: (String) -> Boolean,
+    validationMessage: String,
     label: String,
-    inputString: String? = null,
-    input: MutableState<String>? = null,
-    error: MutableState<String?>? = null,
     horizontalPadding: Dp = 0.dp,
-    onValueChange: (String) -> Unit,
     onClearClick: () -> Unit,
     maxLines: Int = 6,
     keyboardType: KeyboardType = KeyboardType.Text,
     isSearchBar: Boolean = false,
-    usingMutableState: Boolean = true,
     requestFocus: Boolean = false,
     inputTextFocusedColor: Color = MaterialTheme.colorScheme.primary,
     inputTextUnFocusedColor: Color = MaterialTheme.colorScheme.secondary,
@@ -57,23 +57,21 @@ fun CbTextInputWithError(
     drawColor: Color = Color.Transparent,
 
     ) {
+    val isValid = validation(input)
     var showClearButton by remember { mutableStateOf(false) }
-
     val softwareKeyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     if (requestFocus) {
         LaunchedEffect(Unit) {
-            if ((inputString != null && inputString.isEmpty()) ||
-                (input != null && input.value.isEmpty())
-            )
-                focusRequester.requestFocus()
+            (input.isEmpty())
+            focusRequester.requestFocus()
         }
     }
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
-        OutlinedTextField(
+
+
+    Column(modifier = modifier) {
+
+        TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp)
@@ -94,18 +92,12 @@ fun CbTextInputWithError(
                     )
                 },
             shape = RoundedCornerShape(12.dp),
-            value = if (usingMutableState) input!!.value else inputString!!,
 
-            onValueChange = { newText ->
-                onValueChange(newText)
+            value = input,
+            onValueChange = {
+                onInputChanged(it)
             },
-            singleLine = false,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = if (!error?.value.isNullOrBlank()) inputTextErrorColor else inputTextFocusedColor,
-                unfocusedBorderColor = if (!error?.value.isNullOrBlank()) inputTextErrorColor else inputTextUnFocusedColor,
-                cursorColor = inputTextCursorColor,
-                focusedTextColor = inputTextContentColor,
-            ),
+            isError = !isValid,
             label = {
                 Text(
                     text = label,
@@ -119,10 +111,9 @@ fun CbTextInputWithError(
             keyboardActions = KeyboardActions(onDone = {
                 softwareKeyboardController?.hide()
             }),
-
             trailingIcon = {
                 AnimatedVisibility(
-                    visible = if (usingMutableState) input!!.value.isNotEmpty() else inputString!!.isNotEmpty(),
+                    visible = input.isNotEmpty(),
                     enter = fadeIn(),
                     exit = fadeOut()
                 ) {
@@ -150,8 +141,23 @@ fun CbTextInputWithError(
                     }
                 })
             } else null,
-            maxLines = maxLines
+            maxLines = maxLines,
+            singleLine = false,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = if (!isValid) inputTextErrorColor else inputTextFocusedColor,
+                unfocusedBorderColor = if (!isValid) inputTextErrorColor else inputTextUnFocusedColor,
+                cursorColor = inputTextCursorColor,
+                focusedTextColor = inputTextContentColor,
+            ),
         )
+
+        if (!isValid) {
+            Text(
+                text = validationMessage,
+                color = Color.Red,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
     }
 }
 
@@ -288,4 +294,20 @@ fun CbTextDropDown(
     }
 }
 
+
+@Preview
+@Composable
+fun previewCbTextInputWithError() {
+    CbTextInputWithError(
+        input = "text",
+        onInputChanged = {
+        },
+        validation = { input ->
+            input.isNotBlank() // Implement your validation logic here
+        },
+        validationMessage = "Field cannot be blank",
+        label = "Text Field Label",
+        onClearClick = {}
+    )
+}
 

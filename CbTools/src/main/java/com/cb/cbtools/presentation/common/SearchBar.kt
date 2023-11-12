@@ -1,20 +1,17 @@
 package com.cb.cbtools.presentation.common
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
 @Composable
 fun CbSearchBarUI(
     searchText: String,
@@ -22,7 +19,9 @@ fun CbSearchBarUI(
     onSearchTextChanged: (String) -> Unit = {},
     onClearClick: () -> Unit = {},
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    requestFocus: Boolean = false
+    requestFocus: Boolean = false,
+    validation: (String) -> Boolean,
+    validationMessage: String,
 ) {
 
     Box {
@@ -37,15 +36,32 @@ fun CbSearchBarUI(
             CbTextInputWithError(
                 modifier = Modifier,
                 label = placeholderText,
-                inputString = searchText,
-                onValueChange = onSearchTextChanged,
+                input = searchText,
                 onClearClick = onClearClick,
                 isSearchBar = true,
                 maxLines = 1,
-                usingMutableState = false,
-                requestFocus = requestFocus
+                requestFocus = requestFocus,
+                onInputChanged = onSearchTextChanged,
+                validation = validation,
+                validationMessage = validationMessage,
+                horizontalPadding = 10.dp,
             )
         }
     }
 }
 
+@Composable
+@Preview
+fun previewCbSearchBarUI() {
+    CbSearchBarUI(
+        searchText = "text",
+        placeholderText = "Search recipients",
+        onSearchTextChanged = { },
+        onClearClick = { },
+        requestFocus = false,
+        validationMessage = "",
+        validation = {
+            "".isNotBlank()
+        }
+    )
+}

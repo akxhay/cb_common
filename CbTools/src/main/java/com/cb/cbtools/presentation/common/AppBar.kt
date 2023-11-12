@@ -6,7 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -55,11 +55,12 @@ fun CbAppBar(
                                 byteArray.size
                             ).asImageBitmap()
                             Image(
+                                modifier = Modifier.size(primaryIconSize),
                                 painter = BitmapPainter(image = bitmap),
                                 contentDescription = "dp",
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(primaryIconSize)
                             )
+
                         } else if (icon != null) {
                             Icon(
                                 modifier = Modifier
@@ -69,12 +70,11 @@ fun CbAppBar(
                                 contentDescription = "icon",
                                 tint = appBarMenuIconColor
                             )
-                        } else if (drawable != null) {
+                        } else {
                             Image(
                                 modifier = Modifier
                                     .size(primaryIconSize)
                                     .padding(bottom = 3.dp, end = 3.dp),
-
                                 painter = rememberDrawablePainter(
                                     drawable = drawable
                                 ),
@@ -87,7 +87,9 @@ fun CbAppBar(
                 Text(
                     title,
                     color = appbarTitleColor,
-                    modifier = Modifier.padding(top = 3.dp), maxLines = 1
+                    modifier = Modifier.padding(start = 8.dp, top = 3.dp),
+                    maxLines = 1,
+                    style = MaterialTheme.typography.headlineMedium,
                 )
             }
         },
@@ -95,7 +97,7 @@ fun CbAppBar(
             backAction?.let { it ->
                 IconButton(onClick = { it() }) {
                     Icon(
-                        imageVector = Icons.Filled.ArrowBack,
+                        imageVector = Icons.Filled.ArrowBackIosNew,
                         contentDescription = "ArrowBack",
                         tint = appBarMenuIconColor
                     )

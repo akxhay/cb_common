@@ -3,25 +3,13 @@
 package com.cb.cbcommon.presentation
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,19 +17,13 @@ import androidx.navigation.compose.rememberNavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbcommon.presentation.screen.HomeScreen
+import com.cb.cbcommon.presentation.screen.ListItemsScreen
+import com.cb.cbcommon.presentation.screen.SearchBarScreen
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
-import com.cb.cbtools.ccp.component.CbCCC
-import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
-import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
-import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
-import com.cb.cbtools.presentation.common.CbGenericDialog
 import com.cb.cbtools.presentation.common.RatePopUp
 import com.cb.cbtools.presentation.composable.ExceptionScreen
 import com.cb.cbtools.presentation.composable.SettingsScreen
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -52,6 +34,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             val darkTheme = remember {
                 mutableStateOf(false)
+            }
+            val toggleDarkMode: () -> Unit = {
+                darkTheme.value = !darkTheme.value
             }
             showRatePopUp = remember {
                 mutableStateOf(false)
@@ -69,7 +54,21 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.HomeScreen.route
                         ) {
-                            OpenHomeScreen(navController, darkTheme)
+                            OpenHomeScreen(
+                                navController,
+                                darkTheme.value,
+                                toggleDarkMode
+                            )
+                        }
+                        composable(
+                            route = Screen.SearchBarScreen.route
+                        ) {
+                            OpenSearchBarScreen(navController)
+                        }
+                        composable(
+                            route = Screen.ListItemsScreen.route
+                        ) {
+                            OpenListItemsScreen(navController)
                         }
                         composable(
                             route = Screen.SettingsScreen.route
@@ -81,6 +80,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             OpenExceptionScreen(navController)
                         }
+
                     }
                     if (showRatePopUp.value)
                         RatePopUp(
@@ -94,142 +94,16 @@ class MainActivity : ComponentActivity() {
 
 
     @Composable
-    fun ShowDialog(
-        showAlert: MutableState<Boolean>,
-    ) {
-        val context = LocalContext.current
-        val phoneNumber = rememberSaveable { mutableStateOf("") }
-
-        val phoneCode = rememberSaveable {
-            mutableStateOf(
-                getDefaultPhoneCode(
-                    context
-                )
-            )
-        }
-        val defaultLang = rememberSaveable {
-            mutableStateOf(
-                getDefaultLangCode(context)
-            )
-        }
-        val error: MutableState<String?> = remember {
-            mutableStateOf(
-                if (phoneNumber.value.isEmpty()) {
-                    "Cannot be empty"
-                } else {
-                    null
-                }
-            )
-        }
-        val onValueChange: (String) -> Unit = {
-            phoneNumber.value = it
-            error.value = if (checkPhoneNumber(
-                    phone = phoneNumber.value,
-                    fullPhoneNumber = phoneCode.value + phoneNumber.value,
-                    countryCode = defaultLang.value
-                )
-            ) {
-                "Please enter valid number"
-            } else {
-                null
-            }
-        }
-        val onClearClick: () -> Unit = {
-            onValueChange("")
-        }
-
-        CbGenericDialog(
-            onConfirmClick = {
-                if (error.value.isNullOrBlank()) {
-                    CoroutineScope(Dispatchers.Default).launch {
-                        Toast.makeText(
-                            context,
-                            phoneCode.value + phoneNumber.value,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                } else {
-                    Toast.makeText(context, error.value, Toast.LENGTH_SHORT).show()
-                }
-            },
-            onDismissClick = {
-                showAlert.value = false
-            },
-            title = "Send message without saving number",
-            text = {
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CbCCC(
-                        phoneCode = phoneCode,
-                        phoneNumber = phoneNumber,
-                        defaultLang = defaultLang,
-                        error = error,
-                        onValueChange = onValueChange,
-                        onClearClick = onClearClick,
-                    )
-                }
-            },
-            confirmText = "Proceed",
-        )
-    }
-
-
-    @Composable
-    fun FloatingActionButtons(
-        backgroundColor: Color = MaterialTheme.colorScheme.primary,
-        contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-        icon: ImageVector = Icons.Default.Add,
-        onClick: () -> Unit
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 15.dp),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.End
-        ) {
-
-            FloatingActionButton(
-                onClick = onClick,
-                containerColor = backgroundColor,
-                contentColor = contentColor
-            ) {
-                Icon(icon, "icon")
-            }
-
-        }
-    }
-
-
-    @Composable
     fun OpenHomeScreen(
         navController: NavHostController,
-        darkTheme: MutableState<Boolean>
+        darkMode: Boolean,
+        toggleDarkMode: () -> Unit,
     ) {
-
-        HomeScreen(navController = navController, darkTheme)
-        val dialog = remember { mutableStateOf(false) }
-
-        FloatingActionButtons(icon = Icons.Default.Chat) {
-            dialog.value = true
-        }
-//        RatePopUp(
-//            showRatePopUp = dialog,
-//            activity = this,
-//            dynamicConfig = BaseApplication.getInstance().dynamicConfig
-//        )
-
-        if (dialog.value) {
-            ShowDialog(
-                showAlert = dialog
-            )
-        }
+        HomeScreen(
+            navController = navController,
+            darkMode = darkMode,
+            toggleDarkMode = toggleDarkMode
+        )
     }
 
     @Composable
@@ -243,12 +117,29 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     fun OpenExceptionScreen(
         navController: NavHostController,
     ) {
         ExceptionScreen(
+            navController = navController
+        )
+    }
+
+    @Composable
+    fun OpenSearchBarScreen(
+        navController: NavHostController,
+    ) {
+        SearchBarScreen(
+            navController = navController
+        )
+    }
+
+    @Composable
+    fun OpenListItemsScreen(
+        navController: NavHostController,
+    ) {
+        ListItemsScreen(
             navController = navController
         )
     }

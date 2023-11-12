@@ -19,7 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -41,6 +41,12 @@ import com.cb.cbtools.dynamic.util.ExpressionResolver
 import com.cb.cbtools.dynamic.util.IconResolver
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
+import com.cb.cbtools.presentation.common.CbListItemAction
+import com.cb.cbtools.presentation.common.CbListItemIconDouble
+import com.cb.cbtools.presentation.common.CbListItemIconImageBitmapPrimary
+import com.cb.cbtools.presentation.common.CbListItemIconImageVectorSecondary
+import com.cb.cbtools.presentation.common.CbListItemSummary
+import com.cb.cbtools.presentation.common.CbListItemTitle
 
 
 @Composable
@@ -176,38 +182,55 @@ fun PreferenceCategoryComposable(
                     if (globalState.count < 0)
                         Text("count ${globalState.count}")
                     CbListItem(
+                        iconUnit = {
+                            if (preference.icon != null && preference.icon!!.imageVector == null) {
+                                CbListItemIconDouble(primaryIconUnit = {
+                                    CbListItemIconImageBitmapPrimary(
+                                        bitmap = IconResolver.getBitmap(
+                                            icon = preference.icon!!
+                                        )
+                                    ) {
+
+                                    }
+                                }, secondaryIconUnit = {
+                                    CbListItemIconImageVectorSecondary(
+                                        imageVector = IconResolver.getImageVector(
+                                            preference.icon,
+                                            Icons.Filled.Settings
+                                        )
+                                    )
+                                }
+                                )
+                            }
+                        },
                         titleUnit = {
-                            Text(
+                            CbListItemTitle(
                                 text = preference.title!!.replace(
                                     "#APP_NAME#",
                                     dynamicConfig.getAppName()
-                                ),
-                                color = primaryTextColor
+                                )
                             )
                         },
                         summaryUnit = {
                             preference.summary?.let { it ->
-                                Text(
-                                    text = it.replace("#APP_NAME#", dynamicConfig.getAppName()),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = secondaryTextColor
+                                CbListItemSummary(
+                                    text = it.replace(
+                                        "#APP_NAME#",
+                                        dynamicConfig.getAppName()
+                                    )
                                 )
                             }
 
                         },
-
-                        primaryBitmap = if (preference.icon != null && preference.icon!!.imageVector == null) IconResolver.getBitmap(
-                            icon = preference.icon!!
-                        ) else null,
-                        primaryImageVector = if (preference.icon != null && preference.icon!!.imageVector == null) null else IconResolver.getImageVector(
-                            preference.icon,
-                            Icons.Filled.Settings
-                        ),
-                        actionType = preference.type,
-                        checked = isChecked,
-                        onChange = { value ->
-                            dynamicConfig.getSharedPreferences().edit()
-                                .putBoolean(preference.pref, value).apply()
+                        actionUnit = {
+                            CbListItemAction(
+                                actionType = preference.type,
+                                state = isChecked.value
+                            ) {
+                                isChecked.value = !isChecked.value
+                                dynamicConfig.getSharedPreferences().edit()
+                                    .putBoolean(preference.pref, isChecked.value).apply()
+                            }
                         },
                         onClick = {
                             if (preference.showExpression != null)
@@ -219,7 +242,7 @@ fun PreferenceCategoryComposable(
                             )()
                         }
                     )
-                    Divider(
+                    HorizontalDivider(
                         color = dividerColor
                     )
                 }

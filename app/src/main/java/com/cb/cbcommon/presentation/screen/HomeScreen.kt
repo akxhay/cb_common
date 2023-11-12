@@ -1,36 +1,49 @@
 package com.cb.cbcommon.presentation.screen
 
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
-import com.cb.cbtools.constants.ActionType
+import com.cb.cbtools.ccp.component.CbCCC
+import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
+import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
+import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
 import com.cb.cbtools.presentation.common.CbAppBar
+import com.cb.cbtools.presentation.common.CbFab
+import com.cb.cbtools.presentation.common.CbGenericDialog
 import com.cb.cbtools.presentation.common.CbListItem
+import com.cb.cbtools.presentation.common.CbListItemIconImageVectorPrimary
+import com.cb.cbtools.presentation.common.CbListItemTitle
 import com.cb.cbtools.presentation.common.CbRadioGroup
 import com.cb.cbtools.presentation.common.CbTextDropDown
 import com.cb.cbtools.presentation.common.ErrorInfoCard
@@ -40,87 +53,171 @@ import com.cb.cbtools.presentation.common.InfoCard
 @Composable
 fun HomeScreen(
     navController: NavController,
-    darkTheme: MutableState<Boolean>,
+    darkMode: Boolean,
+    toggleDarkMode: () -> Unit,
 ) {
-    val context = LocalContext.current
-    val checkedMap: MutableState<Map<String, MutableState<Boolean>>> =
-        remember {
-            mutableStateOf(HashMap<String, MutableState<Boolean>>().also {
-                it["org.telegram.messenger.web"] = mutableStateOf(false)
-
-            })
-        }
+    val dialog = remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = "title",
                 navController = navController,
-                darkTheme = darkTheme
+                darkMode = darkMode,
+                toggleDarkMode = toggleDarkMode
             )
         },
+        floatingActionButton = {
+            CbFab(icon = Icons.Default.ChatBubble, onClick = {
+                dialog.value = true
+            })
+        }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding)) {
-            CbListItem(
-                titleUnit = {
-                    Text(
-                        text = "AKshay",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1
-                    )
-                },
-                summaryUnit = {
-                    Text(
-                        text = "sharma",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
-                    )
-                },
-                primaryDrawable = context.getDrawable(R.drawable.play_store_512),
-                actionType = ActionType.CHECKBOX,
-                checked = checkedMap.value["org.telegram.messenger.web"],
-                onChange = { value ->
-                    checkedMap.value["org.telegram.messenger.web"]?.value = value
-                },
-                onClick = {
-                    checkedMap.value["org.telegram.messenger.web"]?.value =
-                        checkedMap.value["org.telegram.messenger.web"]?.value?.not() ?: false
-
-                },
-                enabled = false
+        HomeScreenContent(padding = padding, navController = navController)
+        if (dialog.value) {
+            ShowDialog(
+                dismissDialog = {
+                    dialog.value = false
+                }
             )
-            val selectedOption = remember {
-                mutableStateOf(1)
+        }
+    }
+}
+
+@Composable
+fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
+    val context = LocalContext.current
+    val checkedMap: MutableState<Map<String, MutableState<Boolean>>> =
+        remember {
+            mutableStateOf(HashMap<String, MutableState<Boolean>>().also {
+                it["org.telegram.messenger.web"] = mutableStateOf(false)
+            })
+        }
+    Column(modifier = Modifier.padding(padding)) {
+        CbListItem(
+            iconUnit = {
+                CbListItemIconImageVectorPrimary(imageVector = Icons.Default.Search) {
+                }
+            },
+            titleUnit = { CbListItemTitle(text = "CB search box") },
+            onClick = {
+                navController.navigate(Screen.SearchBarScreen.route)
             }
-            val assistantRadioOptions = listOf("Disable", "Enable", "Test")
+        )
+        CbListItem(
+            iconUnit = {
+                CbListItemIconImageVectorPrimary(imageVector = Icons.Default.FormatListNumbered) {
+                }
+            },
+            titleUnit = { CbListItemTitle(text = "CB List items") },
+            onClick = {
+                navController.navigate(Screen.ListItemsScreen.route)
+            }
+        )
 
-            CbRadioGroup(
-                selectedOption.value,
-                assistantRadioOptions,
-            ) {
+        val selectedOption = remember {
+            mutableIntStateOf(1)
+        }
+        val assistantRadioOptions = listOf("Disable", "Enable", "Test")
+
+        CbRadioGroup(
+            selectedOption.intValue,
+            assistantRadioOptions,
+        ) {
+
+        }
+        ErrorInfoCard(
+            message = "*Assistant is disabled"
+        )
+        InfoCard(
+            message = "*Assistant is enabled",
+        )
+        CbTextDropDown(
+            label = "Type",
+            options = arrayOf("1", "2"),
+            selectedOption = "1",
+            onValueChange = {
 
             }
-            ErrorInfoCard(
-                message = "*Assistant is disabled"
-            )
-            InfoCard(
-                message = "*Assistant is enabled",
-            )
-            CbTextDropDown(
-                label = "Type",
-                options = arrayOf("1", "2"),
-                selectedOption = "1",
-                onValueChange = {
+        )
 
+    }
+}
+
+@Composable
+fun ShowDialog(
+    dismissDialog: () -> Unit,
+) {
+    val context = LocalContext.current
+    val phoneNumber = rememberSaveable { mutableStateOf("") }
+
+    val phoneCode = rememberSaveable {
+        mutableStateOf(
+            getDefaultPhoneCode(
+                context
+            )
+        )
+    }
+    val defaultLang = rememberSaveable {
+        mutableStateOf(
+            getDefaultLangCode(context)
+        )
+    }
+    val validationMessage = rememberSaveable {
+        mutableStateOf("")
+    }
+    val onInputChanged: (String) -> Unit = {
+        phoneNumber.value = it
+    }
+    val validation: (String) -> Boolean = {
+        if (checkPhoneNumber(
+                phone = phoneNumber.value,
+                fullPhoneNumber = phoneCode.value + phoneNumber.value,
+                countryCode = defaultLang.value
+            )
+        ) {
+            validationMessage.value = "Please enter valid number"
+            false
+        } else {
+            true
+        }
+    }
+    val onClearClick: () -> Unit = {
+        onInputChanged("")
+    }
+
+    CbGenericDialog(
+        onConfirmClick = {
+            if (validation(phoneNumber.value)) {
+                Toast.makeText(
+                    context,
+                    phoneCode.value + phoneNumber.value,
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(context, validationMessage.value, Toast.LENGTH_SHORT).show()
+            }
+        },
+        onDismissClick = {
+            dismissDialog()
+        },
+        title = "Send message without saving number",
+        text = {
+            CbCCC(
+                phoneNumber = phoneNumber.value,
+                defaultLang = defaultLang.value,
+                onInputChanged = onInputChanged,
+                onClearClick = onClearClick,
+                validation = validation,
+                validationMessage = validationMessage.value,
+                onPickedCountryChange = {
+                    phoneCode.value = it.countryPhoneCode
+                    defaultLang.value = it.countryCode
                 }
             )
 
-        }
-    }
-
+        },
+        confirmText = stringResource(R.string.proceed),
+    )
 }
 
 
@@ -128,7 +225,8 @@ fun HomeScreen(
 fun TopAppBar(
     title: String,
     navController: NavController,
-    darkTheme: MutableState<Boolean>
+    darkMode: Boolean,
+    toggleDarkMode: () -> Unit,
 ) {
     var showMenu by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -140,10 +238,10 @@ fun TopAppBar(
         ),
         actions = {
             IconButton(onClick = {
-                darkTheme.value = !darkTheme.value
+                toggleDarkMode()
             }) {
                 Icon(
-                    if (darkTheme.value) Icons.Default.LightMode else Icons.Default.DarkMode,
+                    if (darkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
                     "DarkMode",
                     tint = Color.White
                 )

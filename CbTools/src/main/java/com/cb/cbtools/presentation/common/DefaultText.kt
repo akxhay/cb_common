@@ -1,7 +1,11 @@
 package com.cb.cbtools.presentation.common
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
@@ -76,15 +80,18 @@ fun ErrorCard(
 
                 }
             },
-            actionImageVector = {
-                IconButton(onClick = { onIconClick() }) {
-                    Icon(
-                        imageVector = Icons.Default.VisibilityOff,
-                        contentDescription = "VisibilityOff",
-                        tint = containerColor
-                    )
+            actionUnit = {
+                CbListItemActionCustom {
+                    IconButton(onClick = { onIconClick() }) {
+                        Icon(
+                            imageVector = Icons.Default.VisibilityOff,
+                            contentDescription = "VisibilityOff",
+                            tint = containerColor
+                        )
+                    }
                 }
             },
+
             containerColor = containerColor
         )
 }
