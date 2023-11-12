@@ -28,21 +28,18 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private lateinit var showRatePopUp: MutableState<Boolean>
+    private var darkTheme by mutableStateOf(false)
+
+    private var showRatePopUp by mutableStateOf(false)
+
+    private val toggleDarkMode: () -> Unit = {
+        darkTheme = !darkTheme
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val darkTheme = remember {
-                mutableStateOf(false)
-            }
-            val toggleDarkMode: () -> Unit = {
-                darkTheme.value = !darkTheme.value
-            }
-            showRatePopUp = remember {
-                mutableStateOf(false)
-            }
-            CbCommonTheme(darkTheme = darkTheme.value) {
+            CbCommonTheme(darkTheme = darkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -57,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             OpenHomeScreen(
                                 navController,
-                                darkTheme.value,
+                                darkTheme,
                                 toggleDarkMode
                             )
                         }
@@ -87,9 +84,9 @@ class MainActivity : ComponentActivity() {
                             OpenCardsScreen(navController)
                         }
                     }
-                    if (showRatePopUp.value)
+                    if (showRatePopUp)
                         RatePopUp(
-                            dismiss = { showRatePopUp.value = false },
+                            dismiss = { showRatePopUp = false },
                             activity = this,
                         )
                 }
@@ -131,6 +128,7 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     fun OpenInputScreen(
         navController: NavHostController,
@@ -160,9 +158,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (this::showRatePopUp.isInitialized) {
-            showRatePopUp.value = true
-        }
+        showRatePopUp = true
+
     }
 
 

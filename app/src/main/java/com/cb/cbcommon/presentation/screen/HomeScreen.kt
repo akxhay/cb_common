@@ -62,7 +62,7 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = "title",
+                title = "Home",
                 navController = navController,
                 darkMode = darkMode,
                 toggleDarkMode = toggleDarkMode
@@ -76,7 +76,7 @@ fun HomeScreen(
     ) { padding ->
         HomeScreenContent(padding = padding, navController = navController)
         if (dialog.value) {
-            ShowDialog(
+            ShowCCDialog(
                 dismissDialog = {
                     dialog.value = false
                 }
@@ -138,7 +138,7 @@ fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
 }
 
 @Composable
-fun ShowDialog(
+fun ShowCCDialog(
     dismissDialog: () -> Unit,
 ) {
     val context = LocalContext.current

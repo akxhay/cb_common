@@ -84,13 +84,15 @@ fun CbAppBar(
                         }
                     }
                 }
-                Text(
-                    title,
-                    color = appbarTitleColor,
-                    modifier = Modifier.padding(start = 8.dp, top = 3.dp),
-                    maxLines = 1,
-                    style = MaterialTheme.typography.headlineMedium,
-                )
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        title,
+                        color = appbarTitleColor,
+                        modifier = Modifier.padding(start = 8.dp, top = 3.dp),
+                        maxLines = 1,
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
+                }
             }
         },
         navigationIcon = {
