@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -25,6 +26,7 @@ import com.cb.cbcommon.R
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbListItemActionCheckBox
+import com.cb.cbtools.presentation.common.CbListItemActionCustom
 import com.cb.cbtools.presentation.common.CbListItemActionSwitch
 import com.cb.cbtools.presentation.common.CbListItemIconByteArrayPrimary
 import com.cb.cbtools.presentation.common.CbListItemIconDouble
@@ -179,6 +181,24 @@ fun ListItemsScreen(
                     CbListItemActionSwitch(state = switch.value, onChange = {
                         switch.value = !switch.value
                     })
+                }
+            )
+            CbListItem(
+                iconUnit = {
+                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.AccountCircle) {
+                    }
+                },
+                titleUnit = { CbListItemTitle(text = "List item ") },
+                summaryUnit = { CbListItemSummary(text = "With custom action") },
+
+                actionUnit = {
+                    CbListItemActionCustom {
+                        CbListItemIconImageVectorPrimary(imageVector = Icons.Default.Delete, iconTint =  MaterialTheme.colorScheme.error) {
+                            Toast.makeText(context, "item will be deleted", Toast.LENGTH_SHORT)
+                                .show()
+
+                        }
+                    }
                 }
             )
             CbListItem(
