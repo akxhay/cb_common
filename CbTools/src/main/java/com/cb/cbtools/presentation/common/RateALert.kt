@@ -7,15 +7,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.StarHalf
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material.icons.outlined.StarHalf
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,18 +31,17 @@ import kotlinx.coroutines.delay
 @Composable
 fun RatePopUp(
     activity: Activity,
-    showRatePopUp: MutableState<Boolean>,
+    dismiss: () -> Unit,
     startColor: Color = MaterialTheme.colorScheme.primary
 ) {
     CbGenericDialog(
         onDismissClick = {
-            showRatePopUp.value = false
+            dismiss()
         }, onConfirmClick = {
             rate(activity)
         },
         title = "Please rate us on play store",
         text = {
-
             Column(
                 modifier = Modifier.clickable { rate(activity) },
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -108,7 +106,7 @@ fun RatingBar(
         if (halfStar) {
             Icon(
                 modifier = Modifier.size(50.dp),
-                imageVector = Icons.Outlined.StarHalf,
+                imageVector = Icons.AutoMirrored.Outlined.StarHalf,
                 contentDescription = null,
                 tint = starsColor
             )

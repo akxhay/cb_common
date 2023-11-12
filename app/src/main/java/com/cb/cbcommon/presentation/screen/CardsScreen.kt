@@ -2,41 +2,36 @@ package com.cb.cbcommon.presentation.screen
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbtools.presentation.common.CbAppBar
-import com.cb.cbtools.presentation.common.CbSearchBarUI
+import com.cb.cbtools.presentation.common.CbNoResult
+import com.cb.cbtools.presentation.common.ErrorInfoCard
+import com.cb.cbtools.presentation.common.IconInfo
+import com.cb.cbtools.presentation.common.InfoCard
 
 @ExperimentalAnimationApi
 @Composable
-fun SearchBarScreen(
+fun CardsScreen(
     navController: NavController
 ) {
-    val searchText = rememberSaveable() {
-        mutableStateOf("")
-    }
 
     Scaffold(
         topBar = {
             CbAppBar(
-                title = "Search bar",
+                title = "Cards",
                 backAction = { navController.navigateUp() },
             )
         },
@@ -55,21 +50,19 @@ fun SearchBarScreen(
                 shape = RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp),
             )
             {
-                Spacer(modifier = Modifier.height(10.dp))
-                CbSearchBarUI(
-                    searchText = searchText.value,
-                    placeholderText = "Search",
-                    onSearchTextChanged = { searchText.value = it },
-                    onClearClick = { searchText.value = "" },
-                    requestFocus = true,
-                    validation = {
-                        true
-                    },
-                    validationMessage = ""
+                ErrorInfoCard(
+                    message = "*This is error card",
+                    containerColor = MaterialTheme.colorScheme.background
                 )
-                Box(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
-                    Text(text = "Searched text is " + searchText.value)
-                }
+                InfoCard(
+                    message = "This is info card",
+                    textColor = MaterialTheme.colorScheme.onBackground,
+                    containerColor = MaterialTheme.colorScheme.background
+                )
+                CbNoResult(
+                    text = "No result found"
+                )
+                IconInfo("Click on ", Icons.Default.Save, " Icon to save changes")
 
             }
         }

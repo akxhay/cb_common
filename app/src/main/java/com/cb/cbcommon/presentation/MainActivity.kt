@@ -16,9 +16,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.presentation.route.Screen
+import com.cb.cbcommon.presentation.screen.CardsScreen
 import com.cb.cbcommon.presentation.screen.HomeScreen
+import com.cb.cbcommon.presentation.screen.InputScreen
 import com.cb.cbcommon.presentation.screen.ListItemsScreen
-import com.cb.cbcommon.presentation.screen.SearchBarScreen
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
 import com.cb.cbtools.presentation.common.RatePopUp
 import com.cb.cbtools.presentation.composable.ExceptionScreen
@@ -61,7 +62,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(
-                            route = Screen.SearchBarScreen.route
+                            route = Screen.InputScreen.route
                         ) {
                             OpenSearchBarScreen(navController)
                         }
@@ -80,11 +81,15 @@ class MainActivity : ComponentActivity() {
                         ) {
                             OpenExceptionScreen(navController)
                         }
-
+                        composable(
+                            route = Screen.CardsScreen.route
+                        ) {
+                            OpenCardsScreen(navController)
+                        }
                     }
                     if (showRatePopUp.value)
                         RatePopUp(
-                            showRatePopUp = showRatePopUp,
+                            dismiss = { showRatePopUp.value = false },
                             activity = this,
                         )
                 }
@@ -130,7 +135,7 @@ class MainActivity : ComponentActivity() {
     fun OpenSearchBarScreen(
         navController: NavHostController,
     ) {
-        SearchBarScreen(
+        InputScreen(
             navController = navController
         )
     }
@@ -140,6 +145,15 @@ class MainActivity : ComponentActivity() {
         navController: NavHostController,
     ) {
         ListItemsScreen(
+            navController = navController
+        )
+    }
+
+    @Composable
+    fun OpenCardsScreen(
+        navController: NavHostController,
+    ) {
+        CardsScreen(
             navController = navController
         )
     }

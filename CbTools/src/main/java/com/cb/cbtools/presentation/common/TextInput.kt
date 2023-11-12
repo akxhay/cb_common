@@ -165,7 +165,7 @@ fun CbTextInputWithError(
 @Composable
 fun CbTextInputBasic(
     modifier: Modifier = Modifier,
-    trailingIcon: @Composable() (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     value: String,
     onValueChange: (String) -> Unit,
     hint: String = stringResource(id = R.string.search),
@@ -217,10 +217,10 @@ fun CbTextInputBasic(
 @Composable
 fun CbTextDropDown(
     label: String,
-    modifierText: Modifier = Modifier.width(100.dp),
+    modifier: Modifier = Modifier,
     modifierBox: Modifier = Modifier,
     selectedOption: String,
-    options: Array<String>,
+    options: List<String>,
     useTextFiled: Boolean = false,
     onValueChange: (String) -> Unit,
     inputTextContentColor: Color = MaterialTheme.colorScheme.onSurface,
@@ -261,8 +261,7 @@ fun CbTextDropDown(
             )
         } else {
             Text(
-                modifier = modifierText
-                    .menuAnchor(),
+                modifier = modifier.menuAnchor(),
                 text = "$selectedOptionText ▼",
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center
@@ -311,3 +310,20 @@ fun previewCbTextInputWithError() {
     )
 }
 
+@Preview
+@Composable
+fun previewCbTextDropDown() {
+    CbListItem(
+        titleUnit = { CbListItemTitle(text = "Dropdown") },
+        iconUnit = {
+            CbTextDropDown(
+                modifier = Modifier.width(50.dp),
+                label = "Type",
+                options = listOf("1", "2", "3"),
+                selectedOption = "1",
+                onValueChange = {
+                }
+            )
+        }
+    )
+}

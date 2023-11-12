@@ -3,26 +3,31 @@ package com.cb.cbcommon.presentation.screen
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubble
+import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
@@ -44,10 +50,6 @@ import com.cb.cbtools.presentation.common.CbGenericDialog
 import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbListItemIconImageVectorPrimary
 import com.cb.cbtools.presentation.common.CbListItemTitle
-import com.cb.cbtools.presentation.common.CbRadioGroup
-import com.cb.cbtools.presentation.common.CbTextDropDown
-import com.cb.cbtools.presentation.common.ErrorInfoCard
-import com.cb.cbtools.presentation.common.InfoCard
 
 @ExperimentalAnimationApi
 @Composable
@@ -85,60 +87,52 @@ fun HomeScreen(
 
 @Composable
 fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
-    val context = LocalContext.current
-    val checkedMap: MutableState<Map<String, MutableState<Boolean>>> =
-        remember {
-            mutableStateOf(HashMap<String, MutableState<Boolean>>().also {
-                it["org.telegram.messenger.web"] = mutableStateOf(false)
-            })
-        }
-    Column(modifier = Modifier.padding(padding)) {
-        CbListItem(
-            iconUnit = {
-                CbListItemIconImageVectorPrimary(imageVector = Icons.Default.Search) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding)
+            .background(color = MaterialTheme.colorScheme.primary)
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 20.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+            shape = RoundedCornerShape(topStart = 35.dp, topEnd = 35.dp),
+        )
+        {
+            CbListItem(
+                iconUnit = {
+                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.Search) {
+                    }
+                },
+                titleUnit = { CbListItemTitle(text = "CB input") },
+                onClick = {
+                    navController.navigate(Screen.InputScreen.route)
                 }
-            },
-            titleUnit = { CbListItemTitle(text = "CB search box") },
-            onClick = {
-                navController.navigate(Screen.SearchBarScreen.route)
-            }
-        )
-        CbListItem(
-            iconUnit = {
-                CbListItemIconImageVectorPrimary(imageVector = Icons.Default.FormatListNumbered) {
+            )
+            CbListItem(
+                iconUnit = {
+                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.FormatListNumbered) {
+                    }
+                },
+                titleUnit = { CbListItemTitle(text = "CB List items") },
+                onClick = {
+                    navController.navigate(Screen.ListItemsScreen.route)
                 }
-            },
-            titleUnit = { CbListItemTitle(text = "CB List items") },
-            onClick = {
-                navController.navigate(Screen.ListItemsScreen.route)
-            }
-        )
+            )
 
-        val selectedOption = remember {
-            mutableIntStateOf(1)
+            CbListItem(
+                iconUnit = {
+                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.CreditCard) {
+                    }
+                },
+                titleUnit = { CbListItemTitle(text = "CB Cards") },
+                onClick = {
+                    navController.navigate(Screen.CardsScreen.route)
+                }
+            )
         }
-        val assistantRadioOptions = listOf("Disable", "Enable", "Test")
-
-        CbRadioGroup(
-            selectedOption.intValue,
-            assistantRadioOptions,
-        ) {
-
-        }
-        ErrorInfoCard(
-            message = "*Assistant is disabled"
-        )
-        InfoCard(
-            message = "*Assistant is enabled",
-        )
-        CbTextDropDown(
-            label = "Type",
-            options = arrayOf("1", "2"),
-            selectedOption = "1",
-            onValueChange = {
-
-            }
-        )
 
     }
 }
