@@ -13,6 +13,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.cb.cbtools.dto.AppListInfo
 import com.cb.cbtools.exception.SelfDestructionException
 import com.cb.cbtools.exception.SystemAppException
@@ -27,7 +29,7 @@ class AppInfoService @Inject constructor(
     private val packageManager: PackageManager
 ) {
 
-    fun getAppInfoList(data: Set<String>): List<AppListInfo> {
+    fun getAppInfoList(data: Set<String>): LiveData<List<AppListInfo>> {
         val appList: MutableList<AppListInfo> = ArrayList()
         val map = getAppWithLauncher()
         val packList = packageManager.getInstalledPackages(0)
@@ -68,7 +70,7 @@ class AppInfoService @Inject constructor(
             }
         }
         appList.sort()
-        return appList
+        return MutableLiveData(appList)
     }
 
     private fun getAppWithLauncher(): MutableMap<String, File> {
@@ -128,17 +130,17 @@ class AppInfoService @Inject constructor(
         }
     }
 
-    fun extract(
-        extractTo: String,
-        app: AppListInfo,
-        onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
-        FileUtil.copyFile(
-            app.sourceDir!!,
-            Environment.getExternalStoragePublicDirectory(extractTo).absolutePath,
-            app.name + ".apk",
-            onSuccess,
+     fun extract(
+         extractTo: String,
+         app: AppListInfo,
+         onSuccess: () -> Unit,
+         onFailure: (Exception) -> Unit
+     ) {
+         FileUtil.copyFile(
+             app.sourceDir!!,
+             Environment.getExternalStoragePublicDirectory(extractTo).absolutePath,
+             app.name + ".apk",
+             onSuccess,
             onFailure
         )
     }
