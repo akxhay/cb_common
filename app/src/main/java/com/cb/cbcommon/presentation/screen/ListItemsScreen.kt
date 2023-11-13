@@ -3,7 +3,6 @@ package com.cb.cbcommon.presentation.screen
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.Toast
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,8 +41,6 @@ import com.cb.cbtools.presentation.common.CbListItemSummary
 import com.cb.cbtools.presentation.common.CbListItemTitle
 import java.io.ByteArrayOutputStream
 
-
-@ExperimentalAnimationApi
 @Composable
 fun ListItemsScreen(
     navController: NavController

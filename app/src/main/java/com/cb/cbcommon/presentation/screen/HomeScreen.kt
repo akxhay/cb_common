@@ -2,7 +2,6 @@ package com.cb.cbcommon.presentation.screen
 
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -51,7 +50,6 @@ import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbListItemIconImageVectorPrimary
 import com.cb.cbtools.presentation.common.CbListItemTitle
 
-@ExperimentalAnimationApi
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -249,6 +247,7 @@ fun TopAppBar(
             ) {
                 DropdownMenuItem(
                     onClick = {
+                        showMenu = false
                         navController.navigate(Screen.ExceptionScreen.route)
                     },
                     text =
@@ -258,6 +257,7 @@ fun TopAppBar(
                 )
                 DropdownMenuItem(
                     onClick = {
+                        showMenu = false
                         navController.navigate(Screen.SettingsScreen.route)
                     },
                     text =

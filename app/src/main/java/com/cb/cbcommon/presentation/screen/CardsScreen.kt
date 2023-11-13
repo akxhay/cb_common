@@ -1,6 +1,5 @@
 package com.cb.cbcommon.presentation.screen
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import com.cb.cbtools.presentation.common.ErrorInfoCard
 import com.cb.cbtools.presentation.common.IconInfo
 import com.cb.cbtools.presentation.common.InfoCard
 
-@ExperimentalAnimationApi
 @Composable
 fun CardsScreen(
     navController: NavController

@@ -31,4 +31,6 @@ object AppConstants {
     }
 
     val home: Class<*> = MainActivity::class.java
+
+    const val PREF_RATE_FLAG = "rate_dialog"
 }
