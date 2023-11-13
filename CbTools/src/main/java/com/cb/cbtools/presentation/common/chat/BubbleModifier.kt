@@ -1,8 +1,8 @@
 package com.cb.cbtools.presentation.common.chat
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -26,7 +26,12 @@ import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.debugInspectorInfo
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.constrainHeight
+import androidx.compose.ui.unit.constrainWidth
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.offset
 import kotlin.math.roundToInt
 
 /**
@@ -93,7 +98,7 @@ fun Modifier.drawBubble(bubbleState: BubbleState) = composed(
             .then(
                 if (bubbleState.clickable) {
                     this.pointerInput(Unit) {
-                        forEachGesture {
+                        awaitEachGesture {
                             awaitPointerEventScope {
                                 val down: PointerInputChange = awaitFirstDown()
                                 pressed = down.pressed
@@ -200,7 +205,7 @@ fun Modifier.drawBubbleWithShape(bubbleState: BubbleState) = composed(
             .then(
                 if (bubbleState.clickable) {
                     this.pointerInput(Unit) {
-                        forEachGesture {
+                        awaitEachGesture {
                             awaitPointerEventScope {
                                 val down: PointerInputChange = awaitFirstDown()
                                 pressed = down.pressed

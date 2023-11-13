@@ -1,7 +1,7 @@
 package com.cb.cbtools.ccp.data
 
 import com.cb.cbtools.R
-import java.util.*
+import java.util.Locale
 
 data class CountryData(
     private var cCodes: String,

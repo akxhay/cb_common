@@ -283,8 +283,6 @@ object FileUtil {
     }
 
 
-
-
     fun getFreeMemory(path: File?): Long {
         if (null != path && path.exists() && path.isDirectory) {
             val stats = StatFs(path.absolutePath)
@@ -300,8 +298,6 @@ object FileUtil {
         }
         return -1
     }
-
-
 
 
     fun isExternalStorageReadOnly(): Boolean {

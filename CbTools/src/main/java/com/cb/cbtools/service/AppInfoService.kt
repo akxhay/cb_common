@@ -128,17 +128,17 @@ class AppInfoService @Inject constructor(
         }
     }
 
-     fun extract(
-         extractTo: String,
-         app: AppListInfo,
-         onSuccess: () -> Unit,
-         onFailure: (Exception) -> Unit
-     ) {
-         FileUtil.copyFile(
-             app.sourceDir!!,
-             Environment.getExternalStoragePublicDirectory(extractTo).absolutePath,
-             app.name + ".apk",
-             onSuccess,
+    fun extract(
+        extractTo: String,
+        app: AppListInfo,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        FileUtil.copyFile(
+            app.sourceDir!!,
+            Environment.getExternalStoragePublicDirectory(extractTo).absolutePath,
+            app.name + ".apk",
+            onSuccess,
             onFailure
         )
     }

@@ -1,4 +1,4 @@
-package com.cb.cbcommon.presentation.screen
+package com.cb.cbcommon.presentation.page
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

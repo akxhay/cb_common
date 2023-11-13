@@ -4,10 +4,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.NativePaint
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.translate
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -83,8 +87,8 @@ fun DrawScope.drawShadow(
             }
 
         } else {
-            val dx = shadow.offsetX.toPx()* 0.2f
-            val dy = shadow.offsetY.toPx()* 0.7f
+            val dx = shadow.offsetX.toPx() * 0.2f
+            val dy = shadow.offsetY.toPx() * 0.7f
             translate(-dx, dy) {
                 drawPath(color = shadow.color.copy(shadow.alpha), path = path)
             }

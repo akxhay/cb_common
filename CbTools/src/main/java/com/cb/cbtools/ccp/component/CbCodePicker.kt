@@ -199,7 +199,7 @@ fun CountryDialog(
                                     )
                                     Text(
                                         modifier = Modifier.padding(horizontal = 18.dp),
-                                        text = "("+countryItem.countryPhoneCode + ") " +
+                                        text = "(" + countryItem.countryPhoneCode + ") " +
                                                 stringResource(id = getCountryName(countryItem.countryCode.lowercase())),
                                         color = alertContentColor,
                                         style = MaterialTheme.typography.bodyMedium
@@ -221,7 +221,7 @@ fun previewCountryCodeDIalog() {
         pickedCountry = {
             println(it)
         },
-        defaultSelectedCountry = getLibCountries.first { it.countryCode =="in" },
+        defaultSelectedCountry = getLibCountries.first { it.countryCode == "in" },
         showCountryCode = true,
         showFlag = true,
     )

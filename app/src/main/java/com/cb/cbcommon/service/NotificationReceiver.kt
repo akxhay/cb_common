@@ -1,4 +1,4 @@
-package com.cb.cbcommon.notification
+package com.cb.cbcommon.service
 
 import android.content.Intent
 import android.service.notification.NotificationListenerService

@@ -315,7 +315,7 @@ fun PreviewCbPermissionPage() {
             canBeSkipped = true
         )
     )
-    
+
     CbPermissionPage(
         appName = "CB tools ",
         appDesc = "This is app description",

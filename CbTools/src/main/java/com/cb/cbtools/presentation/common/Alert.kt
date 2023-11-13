@@ -10,7 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -96,7 +96,7 @@ fun CbGenericDialog(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 if (showDivider)
-                    Divider(color = alertDividerColor, thickness = 1.dp)
+                    HorizontalDivider(thickness = 1.dp, color = alertDividerColor)
             }
         },
         text = {

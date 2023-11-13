@@ -27,7 +27,7 @@ fun MessageTimeText(
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
                 modifier = Modifier
-                    .padding(top = 1.dp, bottom = 1.dp, start = 10.dp ),
+                    .padding(top = 1.dp, bottom = 1.dp, start = 10.dp),
                 text = messageTime,
                 style = MaterialTheme.typography.bodySmall,
                 color = color

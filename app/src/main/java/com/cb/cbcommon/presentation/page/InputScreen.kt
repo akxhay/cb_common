@@ -1,4 +1,4 @@
-package com.cb.cbcommon.presentation.screen
+package com.cb.cbcommon.presentation.page
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background

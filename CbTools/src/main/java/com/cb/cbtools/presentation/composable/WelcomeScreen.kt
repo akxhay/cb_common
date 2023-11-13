@@ -45,28 +45,27 @@ fun WelcomeScreen(
     cardColor: Color = MaterialTheme.colorScheme.primary,
     cardTextColor: Color = MaterialTheme.colorScheme.onPrimary,
 ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = backgroundColor
-        ) {
-            CbPermissionPage(
-                appIcon = appIcon,
-                appName = appName,
-                appDesc = appDesc,
-                version = version,
-                onclickSkip = onclickSkip,
-                currentPermission = currentPermission,
-                backgroundColor = backgroundColor,
-                primaryTextColor = primaryTextColor,
-                secondaryTextColor = secondaryTextColor,
-                tertiaryTextColor = tertiaryTextColor,
-                cardColor = cardColor,
-                cardTextColor = cardTextColor,
-                onPermissionClick = onPermissionClick
-            )
-        }
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = backgroundColor
+    ) {
+        CbPermissionPage(
+            appIcon = appIcon,
+            appName = appName,
+            appDesc = appDesc,
+            version = version,
+            onclickSkip = onclickSkip,
+            currentPermission = currentPermission,
+            backgroundColor = backgroundColor,
+            primaryTextColor = primaryTextColor,
+            secondaryTextColor = secondaryTextColor,
+            tertiaryTextColor = tertiaryTextColor,
+            cardColor = cardColor,
+            cardTextColor = cardTextColor,
+            onPermissionClick = onPermissionClick
+        )
+    }
 }
-
 
 
 @OptIn(ExperimentalPermissionsApi::class)

@@ -7,4 +7,4 @@ data class DynamicIcon(
     @SerializedName("type") @Expose var type: String? = null,
     @SerializedName("value") @Expose var value: String? = null,
     @SerializedName("imageVector") @Expose var imageVector: String? = null,
-    )
+)

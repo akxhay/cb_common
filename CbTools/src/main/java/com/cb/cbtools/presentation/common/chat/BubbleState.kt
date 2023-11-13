@@ -72,7 +72,6 @@ fun rememberBubbleState(
 }
 
 
-
 /**
  *
  * [BubbleState] class  contains information about chat or speech **Bubble**.

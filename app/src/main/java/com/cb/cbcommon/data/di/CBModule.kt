@@ -1,4 +1,4 @@
-package com.cb.cbcommon.di
+package com.cb.cbcommon.data.di
 
 import android.content.Context
 import com.cb.cbtools.data.repository.ExceptionRepository

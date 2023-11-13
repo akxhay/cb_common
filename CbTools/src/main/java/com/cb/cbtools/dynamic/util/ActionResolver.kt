@@ -26,6 +26,7 @@ object ActionResolver {
                                 makeToastAction(context = context, text = args[1])
                             }
                         }
+
                         "URL" -> {
                             {
                                 openExternalUrl(context = context, url = args[1])

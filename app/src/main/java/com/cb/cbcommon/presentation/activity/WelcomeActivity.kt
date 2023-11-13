@@ -1,4 +1,4 @@
-package com.cb.cbcommon.presentation
+package com.cb.cbcommon.presentation.activity
 
 import android.content.Intent
 import android.os.Build
@@ -9,10 +9,10 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.cb.cbcommon.AppConstants.home
-import com.cb.cbcommon.AppConstants.requiredPermissionOnStartup
-import com.cb.cbcommon.AppConstants.version
 import com.cb.cbcommon.R
+import com.cb.cbcommon.data.constant.AppConstants.home
+import com.cb.cbcommon.data.constant.AppConstants.requiredPermissionOnStartup
+import com.cb.cbcommon.data.constant.AppConstants.version
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
 import com.cb.cbtools.presentation.composable.PermissionDialog
 import com.cb.cbtools.presentation.composable.PermissionSkipDialog

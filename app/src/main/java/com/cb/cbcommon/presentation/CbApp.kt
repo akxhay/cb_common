@@ -1,4 +1,4 @@
-package com.cb.cbcommon.presentation.screen
+package com.cb.cbcommon.presentation
 
 import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -7,6 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.cb.cbcommon.BaseApplication
+import com.cb.cbcommon.presentation.page.CardsScreen
+import com.cb.cbcommon.presentation.page.HomeScreen
+import com.cb.cbcommon.presentation.page.InputScreen
+import com.cb.cbcommon.presentation.page.ListItemsScreen
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.presentation.composable.ExceptionScreen
 import com.cb.cbtools.presentation.composable.SettingsScreen

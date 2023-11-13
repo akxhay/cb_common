@@ -78,7 +78,7 @@ fun ChatInput(
         ) {
             Icon(
                 tint = fabContentColor,
-                imageVector = Icons.Filled.Send,
+                imageVector = Icons.AutoMirrored.Filled.Send,
                 contentDescription = null
             )
         }

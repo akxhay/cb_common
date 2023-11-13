@@ -204,9 +204,11 @@ private fun calculateArrowTopPosition(
         state.isHorizontalTopAligned() -> {
             contentTop + arrowOffsetY
         }
+
         state.isHorizontalBottomAligned() -> {
             contentHeight + arrowOffsetY - arrowHeight
         }
+
         else -> {
             (contentHeight - arrowHeight) / 2f + arrowOffsetY
         }
@@ -360,9 +362,11 @@ private fun calculateArrowLeftPosition(
         state.isVerticalLeftAligned() -> {
             contentLeft + arrowOffsetX
         }
+
         state.isVerticalRightAligned() -> {
             contentWidth + arrowOffsetX - arrowWidth
         }
+
         else -> {
             (contentWidth - arrowWidth) / 2f + arrowOffsetX
         }

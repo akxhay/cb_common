@@ -1,5 +1,5 @@
 
-package com.cb.cbcommon.presentation
+package com.cb.cbcommon.presentation.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,9 +12,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.cb.cbcommon.AppConstants.PREF_RATE_FLAG
 import com.cb.cbcommon.BaseApplication
-import com.cb.cbcommon.presentation.screen.CbApp
+import com.cb.cbcommon.data.constant.AppConstants.PREF_RATE_FLAG
+import com.cb.cbcommon.presentation.CbApp
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
 import com.cb.cbtools.presentation.common.RatePopUp
 import dagger.hilt.android.AndroidEntryPoint

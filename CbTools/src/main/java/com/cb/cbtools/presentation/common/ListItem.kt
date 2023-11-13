@@ -199,7 +199,7 @@ fun CbListItemActionCheckBox(
     state: Boolean = false,
     onChange: () -> Unit
 ) {
-    CbListItemActionBox() {
+    CbListItemActionBox {
         Checkbox(
             modifier = Modifier.padding(end = 20.dp),
             checked = state,
@@ -215,7 +215,7 @@ fun CbListItemActionSwitch(
     state: Boolean = false,
     onChange: () -> Unit
 ) {
-    CbListItemActionBox() {
+    CbListItemActionBox {
         Switch(
             modifier = Modifier.padding(end = 20.dp),
             checked = state,
@@ -230,7 +230,7 @@ fun CbListItemActionSwitch(
 fun CbListItemActionCustom(
     actionUnit: (@Composable () -> Unit),
 ) {
-    CbListItemActionBox() {
+    CbListItemActionBox {
         actionUnit()
     }
 }

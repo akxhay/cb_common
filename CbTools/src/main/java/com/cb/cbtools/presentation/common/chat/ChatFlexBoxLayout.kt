@@ -74,7 +74,7 @@ fun ChatFlexBoxLayout(
         Message(
             modifier = messageModifier,
             text = text,
-            urlColor=urlColor,
+            urlColor = urlColor,
             color = color,
             fontSize = fontSize,
             fontStyle = fontStyle,
@@ -101,6 +101,7 @@ fun ChatFlexBoxLayout(
 
     ChatLayout(modifier, chatRowData, content, onMeasure)
 }
+
 /**
  * Chat Composable that positions it's contents(message only or message and message status)
  * based on [chatRowData] calculation.

@@ -1,7 +1,8 @@
-package com.cb.cbcommon
+package com.cb.cbcommon.data.constant
 
-import com.cb.cbcommon.notification.NotificationReceiver
-import com.cb.cbcommon.presentation.MainActivity
+import com.cb.cbcommon.BuildConfig
+import com.cb.cbcommon.presentation.activity.MainActivity
+import com.cb.cbcommon.service.NotificationReceiver
 import com.cb.cbtools.constants.Constants
 import com.cb.cbtools.constants.enums.PermissionType
 import com.cb.cbtools.dto.CbPermission

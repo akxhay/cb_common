@@ -1,4 +1,4 @@
-package com.cb.cbcommon.presentation.screen
+package com.cb.cbcommon.presentation.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

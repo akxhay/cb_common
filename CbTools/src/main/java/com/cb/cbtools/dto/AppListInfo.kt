@@ -2,7 +2,7 @@ package com.cb.cbtools.dto
 
 import android.graphics.drawable.Drawable
 import java.io.Serializable
-import java.util.*
+import java.util.Objects
 
 data class AppListInfo(
     var pkg: String,

@@ -2,7 +2,6 @@ package com.cb.cbtools.permission.factory
 
 import android.Manifest
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CallMissed
 import com.cb.cbtools.constants.enums.PermissionType
 import com.cb.cbtools.permission.PermissionHandler
 
@@ -22,6 +21,6 @@ class ReadWriteCallLogs : PermissionHandler {
 
     override fun getPermissionButtonText() = "Provide access to call logs"
 
-    override fun getPermissionIcon() = Icons.Default.CallMissed
+    override fun getPermissionIcon() = Icons.AutoMirrored.Filled.CallMissed
 
 }

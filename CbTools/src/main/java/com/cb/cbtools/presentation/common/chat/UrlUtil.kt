@@ -7,8 +7,8 @@ import java.util.regex.Pattern
 object UrlUtil {
     fun getStartAndEndOfUrls(text: String): List<Array<Int>> {
         val result = ArrayList<Array<Int>>()
-        var i = 0;
-        var j: Int;
+        var i = 0
+        var j: Int
 
         for (split in text.split(" ")) {
             j = i + split.length

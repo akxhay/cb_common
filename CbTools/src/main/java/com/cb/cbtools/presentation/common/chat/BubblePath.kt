@@ -79,27 +79,32 @@ private fun getRoundedRectPath(
             // Arrow on left side of the bubble
             ArrowAlignment.LeftTop, ArrowAlignment.LeftCenter, ArrowAlignment.LeftBottom -> {
                 topLeftCornerRadius = min(arrowTop, topLeftCornerRadius)
-                bottomLeftCornerRadius = min(bottomLeftCornerRadius, (contentRect.height - arrowBottom))
+                bottomLeftCornerRadius =
+                    min(bottomLeftCornerRadius, (contentRect.height - arrowBottom))
             }
 
             // Arrow on right side of the bubble
             ArrowAlignment.RightTop, ArrowAlignment.RightCenter, ArrowAlignment.RightBottom -> {
                 topRightCornerRadius = min(arrowTop, topRightCornerRadius)
-                bottomRightCornerRadius = min(bottomRightCornerRadius, (contentRect.height - arrowBottom))
+                bottomRightCornerRadius =
+                    min(bottomRightCornerRadius, (contentRect.height - arrowBottom))
             }
 
             // Arrow at the bottom of bubble
             ArrowAlignment.BottomLeft, ArrowAlignment.BottomCenter, ArrowAlignment.BottomRight -> {
 
                 bottomLeftCornerRadius = min(arrowLeft, bottomLeftCornerRadius)
-                bottomRightCornerRadius = min(bottomRightCornerRadius, (contentRect.width - arrowRight))
+                bottomRightCornerRadius =
+                    min(bottomRightCornerRadius, (contentRect.width - arrowRight))
             }
 
             // Arrow at the top of bubble
             ArrowAlignment.TopLeft, ArrowAlignment.TopCenter, ArrowAlignment.TopRight -> {
                 topLeftCornerRadius = min(arrowLeft, topLeftCornerRadius)
                 topRightCornerRadius = min(topRightCornerRadius, (contentRect.width - arrowRight))
-            }else -> Unit
+            }
+
+            else -> Unit
         }
     }
 

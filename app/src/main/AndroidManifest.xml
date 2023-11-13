@@ -39,7 +39,7 @@
         android:theme="@style/Theme.CbCommon"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.WelcomeActivity"
+            android:name=".presentation.activity.WelcomeActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.activity.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.CbCommon">
             <meta-data
@@ -57,7 +57,7 @@
         </activity>
 
         <service
-            android:name=".notification.NotificationReceiver"
+            android:name=".service.NotificationReceiver"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="connectedDevice"
