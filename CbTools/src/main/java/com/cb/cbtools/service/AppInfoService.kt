@@ -26,6 +26,44 @@ class AppInfoService @Inject constructor(
     private val context: Context,
     private val packageManager: PackageManager
 ) {
+    @SuppressLint("QueryPermissionsNeeded")
+    fun getAppInfoListWithoutIconAndVersion(data: Set<String>): List<AppListInfo> {
+        val appList: MutableList<AppListInfo> = ArrayList()
+        val map = getAppWithLauncher()
+
+        val packList = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        for (packInfo in packList) {
+            val pkgName = packInfo.packageName
+            if (pkgName != context.packageName) {
+                if (packInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0) {
+                    appList.add(
+                        AppListInfo(
+                            pkg = pkgName,
+                            name = packInfo.loadLabel(packageManager).toString(),
+                            appType = 0,
+                            sourceDir = packInfo.sourceDir,
+                            isEnabled = data.contains(pkgName)
+                        )
+                    )
+                } else if (packInfo.flags and ApplicationInfo.FLAG_SYSTEM == 1
+                    && map.containsKey(pkgName)
+                ) {
+                    appList.add(
+                        AppListInfo(
+                            pkg = pkgName,
+                            name = packInfo.loadLabel(packageManager)
+                                .toString(),
+                            appType = 1,
+                            sourceDir = packInfo.sourceDir,
+                            isEnabled = data.contains(pkgName)
+                        )
+                    )
+                }
+            }
+        }
+        appList.sort()
+        return appList
+    }
 
     fun getAppInfoList(data: Set<String>): List<AppListInfo> {
         val appList: MutableList<AppListInfo> = ArrayList()
