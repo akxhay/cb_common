@@ -9,7 +9,7 @@ data class AppListInfo(
     var name: String,
     var icon: Drawable? = null,
     var appType: Int = 0,
-    var version: String = "",
+    var version: String? = "",
     var sourceDir: String? = null,
     var isEnabled: Boolean = false
 ) : Comparable<AppListInfo>, Serializable {
