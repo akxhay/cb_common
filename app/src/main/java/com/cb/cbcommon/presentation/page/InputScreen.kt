@@ -21,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbtools.presentation.common.CbAppBar
@@ -36,7 +35,6 @@ import com.cb.cbtools.presentation.common.CbTextDropDown
 fun InputScreen(
     navController: NavController
 ) {
-    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val searchText = rememberSaveable {
         mutableStateOf("")
