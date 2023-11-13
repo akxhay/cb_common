@@ -44,8 +44,8 @@
             "title": "Rate dialog",
             "summary": "Open rate dialog on resume",
             "icon": {
-              "type": "base64",
-              "value": "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"
+              "imageVector": "default",
+              "value": "stars"
             },
             "pref": "rate_dialog"
           },
@@ -64,7 +64,7 @@
             "action": [
               "REFLECTION",
               "STATIC",
-              "com.cb.cbcommon.TestUtil",
+              "com.cb.cbcommon.DynamicAppUtil",
               "test",
               "akshay"
             ]
@@ -180,7 +180,7 @@
           },
           {
             "type": "DEFAULT",
-            "title": "Join our telegram channel for discussions",
+            "title": "Join our telegram channel",
             "summary": "@ChatBinApp",
             "icon": {
               "type": "svg",
@@ -189,6 +189,19 @@
             "action": [
               "URL",
               "https://t.me/ChatBinApp"
+            ]
+          },
+          {
+            "type": "DEFAULT",
+            "title": "Join our Whatsapp channel",
+            "summary": "Chat bin channel",
+            "icon": {
+              "type": "svg",
+              "value": "<svg xmlns=\"http://www.w3.org/2000/svg\"  viewBox=\"0 0 48 48\" width=\"48px\" height=\"48px\" clip-rule=\"evenodd\"><path fill=\"#fff\" d=\"M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z\"/><path fill=\"#fff\" d=\"M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z\"/><path fill=\"#cfd8dc\" d=\"M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z\"/><path fill=\"#40c351\" d=\"M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z\"/><path fill=\"#fff\" fill-rule=\"evenodd\" d=\"M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z\" clip-rule=\"evenodd\"/></svg>"
+            },
+            "action": [
+              "URL",
+              "https://whatsapp.com/channel/0029Va4ktSw4inos7xiwzR1K"
             ]
           },
           {

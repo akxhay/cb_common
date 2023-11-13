@@ -13,12 +13,12 @@ import kotlin.reflect.full.companionObject
 import kotlin.reflect.full.functions
 
 object ActionResolver {
-    val TAG = "ActionResolver"
+    val tag = "ActionResolver"
 
     fun getAction(appName: String, context: Activity, args: Array<String>?): () -> Unit {
         try {
             args?.let {
-                Log.d(TAG, "getAction: ${args.asList()}")
+                Log.d(tag, "getAction: ${args.asList()}")
                 if (args.isNotEmpty()) {
                     return when (args[0]) {
                         "TOAST" -> {

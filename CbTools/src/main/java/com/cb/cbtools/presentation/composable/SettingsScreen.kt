@@ -33,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.dynamic.data.PreferenceCategory
 import com.cb.cbtools.dynamic.util.ActionResolver
@@ -42,28 +41,27 @@ import com.cb.cbtools.dynamic.util.IconResolver
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbListItemAction
-import com.cb.cbtools.presentation.common.CbListItemIconDouble
 import com.cb.cbtools.presentation.common.CbListItemIconImageBitmapPrimary
-import com.cb.cbtools.presentation.common.CbListItemIconImageVectorSecondary
+import com.cb.cbtools.presentation.common.CbListItemIconImageVectorPrimary
 import com.cb.cbtools.presentation.common.CbListItemSummary
 import com.cb.cbtools.presentation.common.CbListItemTitle
 
 
 @Composable
 fun SettingsScreen(
-    navController: NavController,
+    navigateUp: () -> Boolean,
     activity: Activity,
     dynamicConfig: DynamicConfig,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     primaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
     secondaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
-    dividerColor: Color = Color.Transparent
+    dividerColor: Color = Color.Transparent,
 ) {
     Scaffold(
         topBar = {
             CbAppBar(
                 title = "Settings",
-                backAction = { navController.navigateUp() },
+                backAction = { navigateUp() },
             )
         },
     ) { padding ->
@@ -142,10 +140,10 @@ fun PreferenceCategoryComposable(
     preferenceCategory: PreferenceCategory,
     activity: Activity,
     dynamicConfig: DynamicConfig,
-    backgroundColor: Color = MaterialTheme.colorScheme.background,
-    primaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
-    secondaryTextColor: Color = MaterialTheme.colorScheme.onBackground,
-    dividerColor: Color = Color.Transparent,
+    backgroundColor: Color,
+    primaryTextColor: Color,
+    secondaryTextColor: Color,
+    dividerColor: Color,
     globalState: GlobalState,
     onUpdateCount: () -> Unit
 
@@ -184,23 +182,23 @@ fun PreferenceCategoryComposable(
                     CbListItem(
                         iconUnit = {
                             if (preference.icon != null && preference.icon!!.imageVector == null) {
-                                CbListItemIconDouble(primaryIconUnit = {
-                                    CbListItemIconImageBitmapPrimary(
-                                        bitmap = IconResolver.getBitmap(
-                                            icon = preference.icon!!
-                                        )
-                                    ) {
-
-                                    }
-                                }, secondaryIconUnit = {
-                                    CbListItemIconImageVectorSecondary(
-                                        imageVector = IconResolver.getImageVector(
-                                            preference.icon,
-                                            Icons.Filled.Settings
-                                        )
+                                CbListItemIconImageBitmapPrimary(
+                                    bitmap = IconResolver.getBitmap(
+                                        icon = preference.icon!!
                                     )
+                                ) {
+
                                 }
-                                )
+                            } else {
+                                CbListItemIconImageVectorPrimary(
+                                    imageVector = IconResolver.getImageVector(
+                                        preference.icon,
+                                        Icons.Filled.Settings
+                                    )
+                                ) {
+
+                                }
+
                             }
                         },
                         titleUnit = {
@@ -208,7 +206,8 @@ fun PreferenceCategoryComposable(
                                 text = preference.title!!.replace(
                                     "#APP_NAME#",
                                     dynamicConfig.getAppName()
-                                )
+                                ),
+                                color = primaryTextColor
                             )
                         },
                         summaryUnit = {
@@ -217,7 +216,8 @@ fun PreferenceCategoryComposable(
                                     text = it.replace(
                                         "#APP_NAME#",
                                         dynamicConfig.getAppName()
-                                    )
+                                    ),
+                                    color = secondaryTextColor
                                 )
                             }
 

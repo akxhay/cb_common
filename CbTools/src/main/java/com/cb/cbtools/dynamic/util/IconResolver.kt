@@ -12,11 +12,13 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Stars
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.caverock.androidsvg.SVG
 import com.cb.cbtools.dynamic.data.DynamicIcon
@@ -31,8 +33,11 @@ object IconResolver {
             "svg" -> parseSvg(icon.value)
             "drawable" -> parseDrawable(context, icon.value)
             else -> {
-                context.getDrawable(com.google.android.material.R.drawable.tooltip_frame_dark)!!
-                    .toBitmap().asImageBitmap()
+                ContextCompat.getDrawable(
+                    context,
+                    com.google.android.material.R.drawable.tooltip_frame_dark
+                )!!.toBitmap(width = 120, height = 120)
+                    .asImageBitmap()
             }
         }
     }
@@ -44,13 +49,8 @@ object IconResolver {
             value, "drawable",
             context.packageName
         )
-        if (resourceId != null) {
-            return resources.getDrawable(resourceId).toBitmap(width = 120, height = 120)
-                .asImageBitmap()
-        }
-        return context.getDrawable(com.google.android.material.R.drawable.tooltip_frame_dark)!!
-            .toBitmap().asImageBitmap()
-
+        return ContextCompat.getDrawable(context, resourceId)!!.toBitmap(width = 120, height = 120)
+            .asImageBitmap()
     }
 
     private fun parseBase64(base64: String?): ImageBitmap {
@@ -64,10 +64,10 @@ object IconResolver {
     }
 
     fun getImageVector(icon: DynamicIcon?, defaultIcon: ImageVector): ImageVector {
-        if (icon?.imageVector != null) {
+        if (icon?.imageVector != null && icon.value != null) {
             return when (icon.imageVector) {
-                "default" -> getDefaultIcon(icon.value, defaultIcon)
-                "filled" -> getFilledIcon(icon.value, defaultIcon)
+                "default" -> getDefaultIcon(icon.value!!, defaultIcon)
+                "filled" -> getFilledIcon(icon.value!!, defaultIcon)
 
                 else -> defaultIcon
             }
@@ -84,6 +84,7 @@ object IconResolver {
             "notification2" -> Icons.Filled.NotificationsActive
             "question" -> Icons.Filled.QuestionMark
             "share" -> Icons.Filled.Share
+            "stars" -> Icons.Filled.Stars
 
             else -> defaultIcon
         }
@@ -98,6 +99,7 @@ object IconResolver {
             "notification2" -> Icons.Default.NotificationsActive
             "question" -> Icons.Default.QuestionMark
             "share" -> Icons.Default.Share
+            "stars" -> Icons.Default.Stars
 
             else -> defaultIcon
         }

@@ -116,6 +116,7 @@ fun CbListItemAction(
 @Composable
 fun CbListItemTitle(
     text: String,
+    color: Color = MaterialTheme.colorScheme.onBackground
 ) {
     Text(
         text = text,
@@ -126,7 +127,7 @@ fun CbListItemTitle(
                 FontWeight.Medium
             )
         ),
-        color = MaterialTheme.colorScheme.onBackground,
+        color = color,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1
     )
@@ -136,6 +137,7 @@ fun CbListItemTitle(
 @Composable
 fun CbListItemSummary(
     text: String,
+    color: Color = MaterialTheme.colorScheme.onBackground
 ) {
     Text(
         text = text,
@@ -146,7 +148,7 @@ fun CbListItemSummary(
                 FontWeight.Light
             )
         ),
-        color = MaterialTheme.colorScheme.onBackground,
+        color = color,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1
     )

@@ -86,8 +86,11 @@ fun OpenSettingsScreen(
     navController: NavHostController,
     activity: Activity,
 ) {
+    val navigateUp = {
+        navController.navigateUp()
+    }
     SettingsScreen(
-        navController = navController,
+        navigateUp = navigateUp,
         activity = activity,
         dynamicConfig = BaseApplication.getInstance().dynamicConfig
     )
