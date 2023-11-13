@@ -1,7 +1,6 @@
 package com.cb.cbtools.presentation.common.chat
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Column
@@ -95,20 +94,16 @@ fun Modifier.drawBubble(bubbleState: BubbleState) = composed(
 
                 }
             }
-            .then(
-                if (bubbleState.clickable) {
-                    this.pointerInput(Unit) {
-                        awaitEachGesture {
-                            awaitPointerEventScope {
-                                val down: PointerInputChange = awaitFirstDown()
-                                pressed = down.pressed
-                                waitForUpOrCancellation()
-                                pressed = false
-                            }
-                        }
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val down: PointerInputChange = awaitFirstDown()
+                        pressed = down.pressed
+                        waitForUpOrCancellation()
+                        pressed = false
                     }
-                } else this
-            )
+                }
+            }
             .then(
                 bubbleState.padding?.let { padding ->
                     this.padding(
@@ -202,20 +197,16 @@ fun Modifier.drawBubbleWithShape(bubbleState: BubbleState) = composed(
                 else bubbleState.backgroundColor,
                 shape
             )
-            .then(
-                if (bubbleState.clickable) {
-                    this.pointerInput(Unit) {
-                        awaitEachGesture {
-                            awaitPointerEventScope {
-                                val down: PointerInputChange = awaitFirstDown()
-                                pressed = down.pressed
-                                waitForUpOrCancellation()
-                                pressed = false
-                            }
-                        }
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val down: PointerInputChange = awaitFirstDown()
+                        pressed = down.pressed
+                        waitForUpOrCancellation()
+                        pressed = false
                     }
-                } else this
-            )
+                }
+            }
 
             // Add padding
             .then(
