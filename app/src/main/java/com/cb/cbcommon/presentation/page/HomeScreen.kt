@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.FormatListNumbered
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tab
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -138,6 +139,16 @@ fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
                 titleUnit = { CbListItemTitle(text = "App search") },
                 onClick = {
                     navController.navigate(Screen.AddAppScreen.route)
+                }
+            )
+            CbListItem(
+                iconUnit = {
+                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.Tab) {
+                    }
+                },
+                titleUnit = { CbListItemTitle(text = "Tab layout") },
+                onClick = {
+                    navController.navigate(Screen.TabScreen.route)
                 }
             )
         }

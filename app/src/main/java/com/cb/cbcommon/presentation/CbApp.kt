@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.cb.cbcommon.presentation
 
 import android.app.Activity
@@ -12,6 +14,7 @@ import com.cb.cbcommon.presentation.page.CardsScreen
 import com.cb.cbcommon.presentation.page.HomeScreen
 import com.cb.cbcommon.presentation.page.InputScreen
 import com.cb.cbcommon.presentation.page.ListItemsScreen
+import com.cb.cbcommon.presentation.page.TabScreen
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.presentation.composable.ExceptionScreen
 import com.cb.cbtools.presentation.composable.SettingsScreen
@@ -69,6 +72,11 @@ fun CbApp(
         ) {
             OpenAppScreen(navController)
         }
+        composable(
+            route = Screen.TabScreen.route
+        ) {
+            OpenTabScreen(navController)
+        }
     }
 
 }
@@ -106,9 +114,7 @@ fun OpenSettingsScreen(
 fun OpenExceptionScreen(
     navController: NavHostController,
 ) {
-    ExceptionScreen(
-        navController = navController,
-    )
+    ExceptionScreen(navController = navController)
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -116,34 +122,31 @@ fun OpenExceptionScreen(
 fun OpenInputScreen(
     navController: NavHostController,
 ) {
-    InputScreen(
-        navController = navController
-    )
+    InputScreen(navController = navController)
 }
 
 @Composable
 fun OpenListItemsScreen(
     navController: NavHostController,
 ) {
-    ListItemsScreen(
-        navController = navController
-    )
+    ListItemsScreen(navController = navController)
 }
 
 @Composable
 fun OpenCardsScreen(
     navController: NavHostController,
 ) {
-    CardsScreen(
-        navController = navController
-    )
+    CardsScreen(navController = navController)
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun OpenAppScreen(navController: NavHostController) {
     AddAppScreen(navController = navController)
+}
 
+@Composable
+fun OpenTabScreen(navController: NavHostController) {
+    TabScreen(navController = navController)
 }
 
 

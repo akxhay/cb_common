@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.cb.cbtools.dto.AppListInfo
 import com.cb.cbtools.exception.SelfDestructionException
 import com.cb.cbtools.exception.SystemAppException
@@ -134,13 +135,17 @@ class AppInfoService @Inject constructor(
         }
     }
 
-    fun appIconLookup(packageName: String?): Drawable? {
+    fun appIconLookup(packageName: String?): Drawable {
         return try {
             packageManager.getApplicationIcon(packageManager.getApplicationInfo(packageName!!, 0))
         } catch (e: PackageManager.NameNotFoundException) {
-            null
+            ContextCompat.getDrawable(
+                context, android.R.drawable.sym_def_app_icon
+            )!!
         } catch (e: NullPointerException) {
-            null
+            ContextCompat.getDrawable(
+                context, android.R.drawable.sym_def_app_icon
+            )!!
         }
     }
 
