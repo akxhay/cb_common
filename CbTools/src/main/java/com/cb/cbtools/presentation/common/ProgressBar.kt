@@ -7,6 +7,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CbCircularProgressIndicator() {
@@ -17,4 +18,23 @@ fun CbCircularProgressIndicator() {
     ) {
         CircularProgressIndicator()
     }
+}
+
+@Composable
+fun CbCircularProgressIndicatorWithText(text:String) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CbListItemSummary(text = text)
+        CircularProgressIndicator()
+    }
+}
+
+
+@Composable
+@Preview
+fun PreviewCbCircularProgressIndicator() {
+    CbCircularProgressIndicatorWithText("Akshay ahsas")
 }
