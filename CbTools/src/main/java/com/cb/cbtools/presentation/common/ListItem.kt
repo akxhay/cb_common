@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -372,13 +373,23 @@ fun CbListItemIconDouble(
 
 @Preview
 @Composable
-fun previewCbListItem() {
+fun PreviewCbListItem() {
     CbListItem(
         iconUnit = {
-            CbListItemIconImageVectorPrimary(imageVector = Icons.Default.AccountCircle) {
+            CbListItemIconDouble(primaryIconUnit = {
+                CbListItemIconImageVectorPrimary(imageVector = Icons.Default.AccountCircle) {
+                }
+            }, secondaryIconUnit = {
+                CbListItemIconImageVectorSecondary(
+                    imageVector = Icons.Default.Circle,
+                    iconTint = Color(android.graphics.Color.parseColor("#64DD17")),
+                    iconSize = 18.dp
+                )
             }
+            )
         },
-        titleUnit = { CbListItemTitle(text = "Tis is title") },
-        summaryUnit = { CbListItemSummary(text = "This is summary") }
+        titleUnit = { CbListItemTitle(text = "List item") },
+        summaryUnit = { CbListItemSummary(text = "double icon") }
     )
+
 }

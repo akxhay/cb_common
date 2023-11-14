@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -130,6 +132,23 @@ fun ListItemsScreen(
                     titleUnit = { CbListItemTitle(text = "List item") },
                     summaryUnit = { CbListItemSummary(text = "Image byte array") }
                 )
+                CbListItem(
+                    iconUnit = {
+                        CbListItemIconDouble(primaryIconUnit = {
+                            CbListItemIconImageVectorPrimary(imageVector = Icons.Default.AccountCircle) {
+                            }
+                        }, secondaryIconUnit = {
+                            CbListItemIconImageVectorSecondary(
+                                imageVector = Icons.Default.Circle,
+                                iconTint = Color(android.graphics.Color.parseColor("#64DD17")),
+                                iconSize = 18.dp
+                            )
+                        }
+                        )
+                    },
+                    titleUnit = { CbListItemTitle(text = "List item") },
+                    summaryUnit = { CbListItemSummary(text = "double icon 1") }
+                )
 
                 CbListItem(
                     iconUnit = {
@@ -142,7 +161,7 @@ fun ListItemsScreen(
                         )
                     },
                     titleUnit = { CbListItemTitle(text = "List item") },
-                    summaryUnit = { CbListItemSummary(text = "double icon") }
+                    summaryUnit = { CbListItemSummary(text = "double icon 2") }
                 )
                 CbListItem(
                     iconUnit = {
