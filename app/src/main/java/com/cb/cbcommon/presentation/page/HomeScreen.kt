@@ -30,23 +30,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
-import com.cb.cbtools.ccp.component.CbCCC
-import com.cb.cbtools.ccp.data.utils.checkPhoneNumber
-import com.cb.cbtools.ccp.data.utils.getDefaultLangCode
-import com.cb.cbtools.ccp.data.utils.getDefaultPhoneCode
+import com.cb.cbtools.ccp.component.ShowCCDialog
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbFab
-import com.cb.cbtools.presentation.common.CbGenericDialog
 import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbListItemIconImageVectorPrimary
 import com.cb.cbtools.presentation.common.CbListItemTitle
@@ -58,6 +52,7 @@ fun HomeScreen(
     toggleDarkMode: () -> Unit,
 ) {
     val dialog = remember { mutableStateOf(false) }
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -78,6 +73,10 @@ fun HomeScreen(
             ShowCCDialog(
                 dismissDialog = {
                     dialog.value = false
+                },
+                onProceed = { code, number ->
+                    Toast.makeText(context, "code: $code, number: $number", Toast.LENGTH_SHORT)
+                        .show()
                 }
             )
         }
@@ -144,83 +143,6 @@ fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
         }
 
     }
-}
-
-@Composable
-fun ShowCCDialog(
-    dismissDialog: () -> Unit,
-) {
-    val context = LocalContext.current
-    val phoneNumber = rememberSaveable { mutableStateOf("") }
-
-    val phoneCode = rememberSaveable {
-        mutableStateOf(
-            getDefaultPhoneCode(
-                context
-            )
-        )
-    }
-    val defaultLang = rememberSaveable {
-        mutableStateOf(
-            getDefaultLangCode(context)
-        )
-    }
-    val validationMessage = rememberSaveable {
-        mutableStateOf("")
-    }
-    val onInputChanged: (String) -> Unit = {
-        phoneNumber.value = it
-    }
-    val validation: (String) -> Boolean = {
-        if (checkPhoneNumber(
-                phone = phoneNumber.value,
-                fullPhoneNumber = phoneCode.value + phoneNumber.value,
-                countryCode = defaultLang.value
-            )
-        ) {
-            validationMessage.value = "Please enter valid number"
-            false
-        } else {
-            true
-        }
-    }
-    val onClearClick: () -> Unit = {
-        onInputChanged("")
-    }
-
-    CbGenericDialog(
-        onConfirmClick = {
-            if (validation(phoneNumber.value)) {
-                Toast.makeText(
-                    context,
-                    phoneCode.value + phoneNumber.value,
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(context, validationMessage.value, Toast.LENGTH_SHORT).show()
-            }
-        },
-        onDismissClick = {
-            dismissDialog()
-        },
-        title = "Send message without saving number",
-        text = {
-            CbCCC(
-                phoneNumber = phoneNumber.value,
-                defaultLang = defaultLang.value,
-                onInputChanged = onInputChanged,
-                onClearClick = onClearClick,
-                validation = validation,
-                validationMessage = validationMessage.value,
-                onPickedCountryChange = {
-                    phoneCode.value = it.countryPhoneCode
-                    defaultLang.value = it.countryCode
-                }
-            )
-
-        },
-        confirmText = stringResource(R.string.proceed),
-    )
 }
 
 

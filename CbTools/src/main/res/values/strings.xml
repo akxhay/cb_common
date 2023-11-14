@@ -479,10 +479,11 @@
     <string name="slovenia_hint" translatable="false">070 123 456</string>
     <string name="select_country">Select Country</string>
     <string name="invalid_number">Invalid Phone Number</string>
-    <string name="exceptions_title">Exceptions</string>
-    <string name="delete">Delete</string>
-    <string name="no_exceptions">No exceptions</string>
-    <string name="confirm_delete">Please confirm</string>
-    <string name="delete_all_exceptions">Delete all exception?</string>
+    <string name="exceptions_title" translatable="false">Exceptions</string>
+    <string name="delete" translatable="false">Delete</string>
+    <string name="no_exceptions" translatable="false">No exceptions</string>
+    <string name="confirm_delete" translatable="false">Please confirm</string>
+    <string name="delete_all_exceptions" translatable="false">Delete all exception?</string>
+    <string name="proceed" translatable="false">Proceed</string>
 
 </resources>
