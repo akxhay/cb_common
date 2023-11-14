@@ -113,7 +113,7 @@ fun AddAppScreen(
                                     CbListItemIconDrawablePrimary(
                                         drawable = BaseApplication.getInstance().appInfoService.appIconLookup(
                                             app.pkg
-                                        )!!
+                                        )
                                     ) {
                                     }
                                 },
