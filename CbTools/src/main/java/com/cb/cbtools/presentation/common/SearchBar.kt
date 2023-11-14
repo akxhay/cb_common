@@ -20,8 +20,8 @@ fun CbSearchBarUI(
     onClearClick: () -> Unit = {},
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
     requestFocus: Boolean = false,
-    validation: (String) -> Boolean,
-    validationMessage: String,
+    validation: ((String) -> Boolean)? = null,
+    validationMessage: String? = null,
 ) {
 
     Box {
@@ -52,7 +52,7 @@ fun CbSearchBarUI(
 
 @Composable
 @Preview
-fun previewCbSearchBarUI() {
+fun PreviewCbSearchBarUI() {
     CbSearchBarUI(
         searchText = "text",
         placeholderText = "Search recipients",

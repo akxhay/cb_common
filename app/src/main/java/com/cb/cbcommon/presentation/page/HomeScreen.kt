@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.DarkMode
@@ -128,6 +129,16 @@ fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
                 titleUnit = { CbListItemTitle(text = "CB Cards") },
                 onClick = {
                     navController.navigate(Screen.CardsScreen.route)
+                }
+            )
+            CbListItem(
+                iconUnit = {
+                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.Apps) {
+                    }
+                },
+                titleUnit = { CbListItemTitle(text = "App search") },
+                onClick = {
+                    navController.navigate(Screen.AddAppScreen.route)
                 }
             )
         }

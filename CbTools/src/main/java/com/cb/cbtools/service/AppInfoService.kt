@@ -65,6 +65,7 @@ class AppInfoService @Inject constructor(
         return appList
     }
 
+    @Deprecated(message = "use getAppInfoListWithoutIconAndVersion id needed")
     fun getAppInfoList(data: Set<String>): List<AppListInfo> {
         val appList: MutableList<AppListInfo> = ArrayList()
         val map = getAppWithLauncher()

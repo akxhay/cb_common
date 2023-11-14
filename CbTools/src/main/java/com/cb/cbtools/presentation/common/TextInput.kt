@@ -39,8 +39,8 @@ fun CbTextInputWithError(
     modifier: Modifier = Modifier,
     input: String,
     onInputChanged: (String) -> Unit,
-    validation: (String) -> Boolean,
-    validationMessage: String,
+    validation: ((String) -> Boolean)? = null,
+    validationMessage: String? = null,
     label: String,
     horizontalPadding: Dp = 0.dp,
     onClearClick: () -> Unit,
@@ -57,7 +57,7 @@ fun CbTextInputWithError(
     drawColor: Color = Color.Transparent,
 
     ) {
-    val isValid = validation(input)
+    val isValid = if (validation != null) validation(input) else true
     var showClearButton by remember { mutableStateOf(false) }
     val softwareKeyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -151,7 +151,7 @@ fun CbTextInputWithError(
             ),
         )
 
-        if (!isValid) {
+        if (!isValid && validationMessage != null) {
             Text(
                 text = validationMessage,
                 color = Color.Red,
@@ -296,7 +296,7 @@ fun CbTextDropDown(
 
 @Preview
 @Composable
-fun previewCbTextInputWithError() {
+fun PreviewCbTextInputWithError() {
     CbTextInputWithError(
         input = "text",
         onInputChanged = {
@@ -312,7 +312,7 @@ fun previewCbTextInputWithError() {
 
 @Preview
 @Composable
-fun previewCbTextDropDown() {
+fun PreviewCbTextDropDown() {
     CbListItem(
         titleUnit = { CbListItemTitle(text = "Dropdown") },
         iconUnit = {

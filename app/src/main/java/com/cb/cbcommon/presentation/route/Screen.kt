@@ -24,4 +24,8 @@ sealed class Screen(val route: String) {
     data object ExceptionScreen : Screen(
         "exception_screen"
     )
+
+    data object AddAppScreen : Screen(
+        "add_app_screen"
+    )
 }

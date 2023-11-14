@@ -52,17 +52,22 @@ android {
 dependencies {
     implementation project(path: ':CbTools')
     implementation "androidx.compose.runtime:runtime-livedata:1.5.4"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+    implementation "androidx.compose.runtime:runtime:1.5.4"
 
     implementation "com.google.code.gson:gson:2.10.1"
 
     implementation 'androidx.navigation:navigation-compose:2.7.5'
-    implementation('com.google.dagger:hilt-android:2.48.1')
     implementation 'androidx.appcompat:appcompat-resources:1.6.1'
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.compose.ui:ui-text-google-fonts:1.5.4'
+
+
+    implementation('com.google.dagger:hilt-android:2.48.1')
     ksp('com.google.dagger:hilt-android-compiler:2.48.1')
 
     implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
+    implementation "androidx.hilt:hilt-navigation-compose:1.1.0"
     implementation "androidx.compose.material:material-icons-extended:1.5.4"
 
     implementation 'com.google.accompanist:accompanist-permissions:0.28.0'

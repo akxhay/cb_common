@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.cb.cbcommon.BaseApplication
+import com.cb.cbcommon.presentation.page.AddAppScreen
 import com.cb.cbcommon.presentation.page.CardsScreen
 import com.cb.cbcommon.presentation.page.HomeScreen
 import com.cb.cbcommon.presentation.page.InputScreen
@@ -62,6 +63,11 @@ fun CbApp(
             route = Screen.CardsScreen.route
         ) {
             OpenCardsScreen(navController)
+        }
+        composable(
+            route = Screen.AddAppScreen.route
+        ) {
+            OpenAppScreen(navController)
         }
     }
 
@@ -132,5 +138,13 @@ fun OpenCardsScreen(
         navController = navController
     )
 }
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun OpenAppScreen(navController: NavHostController) {
+    AddAppScreen(navController = navController)
+
+}
+
 
 

@@ -2,6 +2,7 @@ package com.cb.cbcommon
 
 import android.app.Application
 import com.cb.cbtools.dynamic.DynamicConfig
+import com.cb.cbtools.service.AppInfoService
 import com.cb.cbtools.service.ExceptionHelper
 import com.cb.cbtools.util.PlayStoreUtil
 import dagger.hilt.android.HiltAndroidApp
@@ -14,6 +15,9 @@ class BaseApplication : Application() {
 
     @Inject
     lateinit var exceptionHelper: ExceptionHelper
+
+    @Inject
+    lateinit var appInfoService: AppInfoService
 
     override fun onCreate() {
         super.onCreate()

@@ -90,7 +90,7 @@ fun CbAppBar(
                         color = appbarTitleColor,
                         modifier = Modifier.padding(start = 8.dp, top = 3.dp),
                         maxLines = 1,
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.headlineSmall,
                     )
                 }
             }
