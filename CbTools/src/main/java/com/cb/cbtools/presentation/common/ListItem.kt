@@ -258,11 +258,12 @@ fun CbListItemIconDrawableSecondary(
     drawable: Drawable? = null,
     iconSize: Dp = 30.dp,
 ) {
+    val painter = rememberDrawablePainter(
+        drawable = drawable
+    )
     CbListItemSecondaryIconBox {
         Image(
-            painter = rememberDrawablePainter(
-                drawable = drawable
-            ),
+            painter = painter,
             contentScale = ContentScale.Fit,
             contentDescription = "dp",
             modifier = Modifier.size(iconSize)
@@ -273,7 +274,7 @@ fun CbListItemIconDrawableSecondary(
 @Composable
 fun CbListItemIconImageVectorPrimary(
     imageVector: ImageVector,
-    iconSize: Dp = 30.dp,
+    iconSize: Dp = 50.dp,
     iconTint: Color = MaterialTheme.colorScheme.primary,
     iconClick: () -> Unit,
 ) {
@@ -291,7 +292,7 @@ fun CbListItemIconImageVectorPrimary(
 @Composable
 fun CbListItemIconByteArrayPrimary(
     byteArray: ByteArray,
-    iconSize: Dp = 30.dp,
+    iconSize: Dp = 50.dp,
     iconClick: () -> Unit,
 ) {
     CbListItemPrimaryIconBox(iconClick = iconClick) {
@@ -319,7 +320,7 @@ fun CbListItemIconByteArrayPrimary(
 @Composable
 fun CbListItemIconImageBitmapPrimary(
     bitmap: ImageBitmap,
-    iconSize: Dp = 30.dp,
+    iconSize: Dp = 50.dp,
     iconClick: () -> Unit,
 ) {
     CbListItemPrimaryIconBox(iconClick = iconClick) {
@@ -337,14 +338,15 @@ fun CbListItemIconImageBitmapPrimary(
 @Composable
 fun CbListItemIconDrawablePrimary(
     drawable: Drawable? = null,
-    iconSize: Dp = 30.dp,
+    iconSize: Dp = 50.dp,
     iconClick: () -> Unit
 ) {
+    val painter = rememberDrawablePainter(
+        drawable = drawable
+    )
     CbListItemPrimaryIconBox(iconClick = iconClick) {
         Image(
-            painter = rememberDrawablePainter(
-                drawable = drawable
-            ),
+            painter = painter,
             contentScale = ContentScale.Fit,
             contentDescription = "dp",
             modifier = Modifier.size(iconSize)
