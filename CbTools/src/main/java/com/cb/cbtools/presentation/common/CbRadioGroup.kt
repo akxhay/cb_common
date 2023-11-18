@@ -21,46 +21,84 @@ fun CbRadioGroup(
     selectedColor: Color = MaterialTheme.colorScheme.primary,
     unselectedColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
     textColor: Color = MaterialTheme.colorScheme.onBackground,
+    horizontal: Boolean = true,
+
     onOptionSelected: (String) -> Unit,
 
     ) {
+
     CbListItem(
         titleUnit = {
-            Row(
+            if (horizontal) Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
 
             ) {
-                radioOptions.forEach { text ->
-                    Row(
-                        modifier = Modifier
-                            .selectable(
-                                selected = (text == radioOptions[selectedOption]),
-                                onClick = {
-                                    onOptionSelected(text)
-                                }
-                            ),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        RadioButton(
-                            selected = (text == radioOptions[selectedOption]),
-                            onClick = { onOptionSelected(text) },
-                            colors = RadioButtonDefaults.colors(
-                                selectedColor = selectedColor,
-                                unselectedColor = unselectedColor
-                            )
-                        )
-                        Text(
-                            text = text,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = textColor
-                        )
-                    }
+                RadioChild(
+                    selectedOption,
+                    radioOptions,
+                    selectedColor,
+                    unselectedColor,
+                    textColor,
+                    onOptionSelected
+                )
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.SpaceEvenly
+
+                ) {
+                    RadioChild(
+                        selectedOption,
+                        radioOptions,
+                        selectedColor,
+                        unselectedColor,
+                        textColor,
+                        onOptionSelected
+                    )
                 }
             }
         }
     )
+}
+
+@Composable
+fun RadioChild(
+    selectedOption: Int,
+    radioOptions: List<String>,
+    selectedColor: Color = MaterialTheme.colorScheme.primary,
+    unselectedColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
+    textColor: Color = MaterialTheme.colorScheme.onBackground,
+    onOptionSelected: (String) -> Unit,
+) {
+    radioOptions.forEach { text ->
+        Row(
+            modifier = Modifier
+                .selectable(
+                    selected = (text == radioOptions[selectedOption]),
+                    onClick = {
+                        onOptionSelected(text)
+                    }
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            RadioButton(
+                selected = (text == radioOptions[selectedOption]),
+                onClick = { onOptionSelected(text) },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = selectedColor,
+                    unselectedColor = unselectedColor
+                )
+            )
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyMedium,
+                color = textColor
+            )
+        }
+    }
 }
 
 

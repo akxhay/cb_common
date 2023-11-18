@@ -7,6 +7,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -264,9 +266,11 @@ fun CbListItemIconDrawableSecondary(
     CbListItemSecondaryIconBox {
         Image(
             painter = painter,
-            contentScale = ContentScale.Fit,
-            contentDescription = "dp",
-            modifier = Modifier.size(iconSize)
+            contentScale = ContentScale.Crop,
+            contentDescription = "App Icon",
+            modifier = Modifier
+                .size(iconSize)
+                .clip(CircleShape)
         )
     }
 }
@@ -406,6 +410,19 @@ fun CbListItemIconDouble(
 @Composable
 fun PreviewCbListItem() {
     CbListItem(
+        iconUnit = {
+            CbListItemIconDouble(primaryIconUnit = {
+                CbListItemIconImageVectorPrimary(imageVector = Icons.Default.AccountCircle) {
+                }
+            }, secondaryIconUnit = {
+                CbListItemIconImageVectorSecondary(
+                    imageVector = Icons.Default.Circle,
+                    iconTint = Color(android.graphics.Color.parseColor("#64DD17")),
+                    iconSize = 15.dp
+                )
+            }
+            )
+        },
         actionUnit = {
             CbListItemActionCustom {
                 CbListItemIconImageVectorSecondary(
