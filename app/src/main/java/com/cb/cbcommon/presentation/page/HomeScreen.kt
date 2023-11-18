@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.DarkMode
@@ -37,9 +36,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.R
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.ccp.component.ShowCCDialog
+import com.cb.cbtools.presentation.common.AppIcon
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbFab
 import com.cb.cbtools.presentation.common.CbListItem
@@ -133,8 +134,10 @@ fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
             )
             CbListItem(
                 iconUnit = {
-                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.Apps) {
-                    }
+                    AppIcon(
+                        BaseApplication.getInstance().packageName,
+                        BaseApplication.getInstance().appInfoService
+                    )
                 },
                 titleUnit = { CbListItemTitle(text = "App search") },
                 onClick = {
