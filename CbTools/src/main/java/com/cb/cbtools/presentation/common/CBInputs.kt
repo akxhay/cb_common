@@ -330,6 +330,7 @@ fun PreviewCbTextDropDown() {
 
 @Composable
 fun NumberSlider(
+    title: String,
     range: ClosedFloatingPointRange<Float> = 0f..1000f,
     value: Int,
     onValueChange: (Int) -> Unit
@@ -345,7 +346,7 @@ fun NumberSlider(
                 .padding(16.dp)
         ) {
             Text(
-                text = "Select a Value",
+                text = title,
                 style = MaterialTheme.typography.labelMedium
             )
 
@@ -377,7 +378,7 @@ fun YourComposable() {
     var sliderValue by remember { mutableIntStateOf(500) }
 
     NumberSlider(
-
+        title = "Update time",
         value = sliderValue,
         onValueChange = {
             sliderValue = it
