@@ -173,13 +173,10 @@ fun CbListItemPrimaryIconBox(
 
 @Composable
 fun CbListItemSecondaryIconBox(
-    iconClick: () -> Unit,
     iconUnit: (@Composable () -> Unit),
 ) {
     Box(
-        modifier = Modifier
-            .size(30.dp)
-            .clickable { iconClick() },
+        modifier = Modifier.size(50.dp),
         contentAlignment = Alignment.BottomEnd
     ) {
         iconUnit()
@@ -243,11 +240,10 @@ fun CbListItemActionCustom(
 @Composable
 fun CbListItemIconImageVectorSecondary(
     imageVector: ImageVector,
-    iconSize: Dp = 30.dp,
+    iconSize: Dp = 20.dp,
     iconTint: Color = MaterialTheme.colorScheme.primary,
-    iconClick: () -> Unit,
 ) {
-    CbListItemSecondaryIconBox(iconClick) {
+    CbListItemSecondaryIconBox {
         Icon(
             modifier = Modifier.size(iconSize),
             imageVector = imageVector,
@@ -261,18 +257,48 @@ fun CbListItemIconImageVectorSecondary(
 fun CbListItemIconDrawableSecondary(
     drawable: Drawable? = null,
     iconSize: Dp = 30.dp,
-    iconClick: () -> Unit,
-
-    ) {
+) {
     val painter = rememberDrawablePainter(
         drawable = drawable
     )
-    CbListItemSecondaryIconBox(iconClick) {
+    CbListItemSecondaryIconBox {
         Image(
             painter = painter,
             contentScale = ContentScale.Fit,
             contentDescription = "dp",
             modifier = Modifier.size(iconSize)
+        )
+    }
+}
+
+@Composable
+fun CbListItemActionIconBox(
+    iconClick: () -> Unit,
+    iconUnit: (@Composable () -> Unit),
+) {
+    Box(
+        modifier = Modifier
+            .size(30.dp)
+            .clickable { iconClick() },
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        iconUnit()
+    }
+}
+
+@Composable
+fun CbListItemIconImageVectorSecondary(
+    imageVector: ImageVector,
+    iconSize: Dp = 30.dp,
+    iconTint: Color = MaterialTheme.colorScheme.primary,
+    iconClick: () -> Unit,
+) {
+    CbListItemActionIconBox(iconClick) {
+        Icon(
+            modifier = Modifier.size(iconSize),
+            imageVector = imageVector,
+            contentDescription = "dp",
+            tint = iconTint
         )
     }
 }
