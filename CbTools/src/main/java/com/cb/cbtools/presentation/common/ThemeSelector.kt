@@ -23,7 +23,7 @@ fun ThemeSelector(
         ThemeType.LIGHT.type,
     ),
     selectedOption: Int = 0,
-    onChange: (ThemeType) -> Unit
+    onChange: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -37,7 +37,7 @@ fun ThemeSelector(
             radioOptions,
             horizontal = false
         ) {
-            onChange(ThemeType.valueOf(it))
+            onChange(radioOptions.indexOf(it))
         }
     }
 }
