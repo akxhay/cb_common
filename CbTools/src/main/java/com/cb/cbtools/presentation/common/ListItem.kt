@@ -178,7 +178,7 @@ fun CbListItemSecondaryIconBox(
 ) {
     Box(
         modifier = Modifier
-            .size(50.dp)
+            .size(30.dp)
             .clickable { iconClick() },
         contentAlignment = Alignment.BottomEnd
     ) {
