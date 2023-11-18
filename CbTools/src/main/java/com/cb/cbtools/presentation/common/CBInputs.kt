@@ -327,3 +327,62 @@ fun PreviewCbTextDropDown() {
         }
     )
 }
+
+@Composable
+fun NumberSlider(
+    range: ClosedFloatingPointRange<Float> = 0f..1000f,
+    value: Int,
+    onValueChange: (Int) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Select a Value",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            Slider(
+                value = value.toFloat(),
+                onValueChange = { newValue ->
+                    onValueChange(newValue.toInt())
+                },
+                valueRange = range,
+                steps = 1001,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+            )
+
+            // Display the current value
+            Text(
+                text = "Value: $value",
+                modifier = Modifier
+                    .padding(top = 16.dp)
+            )
+        }
+    }
+}
+
+
+@Composable
+@Preview
+fun YourComposable() {
+    var sliderValue by remember { mutableIntStateOf(500) }
+
+    NumberSlider(
+
+        value = sliderValue,
+        onValueChange = {
+            sliderValue = it
+        }
+    )
+
+
+}
