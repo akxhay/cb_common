@@ -7,8 +7,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Circle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -174,10 +173,13 @@ fun CbListItemPrimaryIconBox(
 
 @Composable
 fun CbListItemSecondaryIconBox(
+    iconClick: () -> Unit,
     iconUnit: (@Composable () -> Unit),
 ) {
     Box(
-        modifier = Modifier.size(50.dp),
+        modifier = Modifier
+            .size(50.dp)
+            .clickable { iconClick() },
         contentAlignment = Alignment.BottomEnd
     ) {
         iconUnit()
@@ -243,8 +245,9 @@ fun CbListItemIconImageVectorSecondary(
     imageVector: ImageVector,
     iconSize: Dp = 30.dp,
     iconTint: Color = MaterialTheme.colorScheme.primary,
+    iconClick: () -> Unit,
 ) {
-    CbListItemSecondaryIconBox {
+    CbListItemSecondaryIconBox(iconClick) {
         Icon(
             modifier = Modifier.size(iconSize),
             imageVector = imageVector,
@@ -258,11 +261,13 @@ fun CbListItemIconImageVectorSecondary(
 fun CbListItemIconDrawableSecondary(
     drawable: Drawable? = null,
     iconSize: Dp = 30.dp,
-) {
+    iconClick: () -> Unit,
+
+    ) {
     val painter = rememberDrawablePainter(
         drawable = drawable
     )
-    CbListItemSecondaryIconBox {
+    CbListItemSecondaryIconBox(iconClick) {
         Image(
             painter = painter,
             contentScale = ContentScale.Fit,
@@ -375,18 +380,15 @@ fun CbListItemIconDouble(
 @Composable
 fun PreviewCbListItem() {
     CbListItem(
-        iconUnit = {
-            CbListItemIconDouble(primaryIconUnit = {
-                CbListItemIconImageVectorPrimary(imageVector = Icons.Default.AccountCircle) {
-                }
-            }, secondaryIconUnit = {
+        actionUnit = {
+            CbListItemActionCustom {
                 CbListItemIconImageVectorSecondary(
-                    imageVector = Icons.Default.Circle,
-                    iconTint = Color(android.graphics.Color.parseColor("#64DD17")),
-                    iconSize = 18.dp
-                )
+                    imageVector = Icons.Default.Delete,
+                    iconTint = MaterialTheme.colorScheme.error
+                ) {
+
+                }
             }
-            )
         },
         titleUnit = { CbListItemTitle(text = "List item") },
         summaryUnit = { CbListItemSummary(text = "double icon") }
