@@ -23,7 +23,7 @@ import com.cb.cbtools.presentation.composable.SettingsScreen
 fun CbApp(
     navController: NavHostController,
     activity: Activity,
-    darkTheme: Boolean,
+    theme: Int,
     toggleDarkMode: () -> Unit,
 ) {
 
@@ -36,7 +36,7 @@ fun CbApp(
         ) {
             OpenHomeScreen(
                 navController,
-                darkTheme,
+                theme,
                 toggleDarkMode
             )
         }
@@ -85,12 +85,12 @@ fun CbApp(
 @Composable
 fun OpenHomeScreen(
     navController: NavHostController,
-    darkMode: Boolean,
+    theme: Int,
     toggleDarkMode: () -> Unit,
 ) {
     HomeScreen(
         navController = navController,
-        darkMode = darkMode,
+        theme = theme,
         toggleDarkMode = toggleDarkMode
     )
 }

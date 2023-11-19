@@ -1,6 +1,7 @@
 package com.cb.cbcommon
 
 import android.app.Application
+import android.content.SharedPreferences
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.service.AppInfoService
 import com.cb.cbtools.service.ExceptionHelper
@@ -18,6 +19,9 @@ class BaseApplication : Application() {
 
     @Inject
     lateinit var appInfoService: AppInfoService
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate() {
         super.onCreate()

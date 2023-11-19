@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoMode
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.DarkMode
@@ -50,7 +51,7 @@ import com.cb.cbtools.presentation.common.CbListItemTitle
 @Composable
 fun HomeScreen(
     navController: NavController,
-    darkMode: Boolean,
+    theme: Int,
     toggleDarkMode: () -> Unit,
 ) {
     val dialog = remember { mutableStateOf(false) }
@@ -60,7 +61,7 @@ fun HomeScreen(
             TopAppBar(
                 title = "Home",
                 navController = navController,
-                darkMode = darkMode,
+                theme = theme,
                 toggleDarkMode = toggleDarkMode
             )
         },
@@ -164,7 +165,7 @@ fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
 fun TopAppBar(
     title: String,
     navController: NavController,
-    darkMode: Boolean,
+    theme: Int,
     toggleDarkMode: () -> Unit,
 ) {
     var showMenu by remember { mutableStateOf(false) }
@@ -180,8 +181,8 @@ fun TopAppBar(
                 toggleDarkMode()
             }) {
                 Icon(
-                    if (darkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
-                    "DarkMode",
+                    if (theme == 0) Icons.Default.AutoMode else if (theme == 1) Icons.Default.DarkMode else Icons.Default.LightMode,
+                    "Theme",
                     tint = Color.White
                 )
             }

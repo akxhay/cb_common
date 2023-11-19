@@ -4,10 +4,12 @@ package com.cb.cbcommon.presentation.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -16,38 +18,53 @@ import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.data.constant.AppConstants.PREF_RATE_FLAG
 import com.cb.cbcommon.presentation.CbApp
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
+import com.cb.cbcommon.util.common.AppSetup
+import com.cb.cbcommon.util.common.AppSetup.getSystemTheme
 import com.cb.cbtools.presentation.common.RatePopUp
+import com.cb.cbtools.presentation.common.ThemePopUp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private var darkTheme by mutableStateOf(false)
+    private var currentTheme by mutableIntStateOf(getSystemTheme())
 
     private var showRatePopUp by mutableStateOf(false)
+    private var systemThemePopUp by mutableStateOf(false)
 
-    private val toggleDarkMode: () -> Unit = {
-        darkTheme = !darkTheme
+    private val updateTheme: (Int) -> Unit = {
+        currentTheme = it
+        AppSetup.updateSystemTheme(currentTheme)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CbCommonTheme(darkTheme = darkTheme) {
+            CbCommonTheme(darkTheme = if (currentTheme == 0) isSystemInDarkTheme() else currentTheme == 1) {
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     CbApp(
                         navController = rememberNavController(),
-                        activity=this@MainActivity,
-                        darkTheme=darkTheme,
-                        toggleDarkMode = toggleDarkMode
+                        activity = this@MainActivity,
+                        theme = currentTheme,
+                        toggleDarkMode = {
+                            systemThemePopUp = true
+                        },
                     )
                     if (showRatePopUp)
                         RatePopUp(
                             dismiss = { showRatePopUp = false },
                             activity = this@MainActivity,
                         )
+
+                    if (systemThemePopUp)
+                        ThemePopUp(
+                            currentTheme = currentTheme,
+                            updateTheme = updateTheme
+                        ) { systemThemePopUp = false }
                 }
             }
         }

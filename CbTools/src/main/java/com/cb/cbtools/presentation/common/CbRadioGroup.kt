@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import com.cb.cbtools.constants.enums.ThemeType
 
 @Composable
 fun CbRadioGroup(
@@ -36,6 +38,7 @@ fun CbRadioGroup(
 
             ) {
                 RadioChild(
+                    Modifier,
                     selectedOption,
                     radioOptions,
                     selectedColor,
@@ -51,6 +54,7 @@ fun CbRadioGroup(
 
                 ) {
                     RadioChild(
+                        Modifier.fillMaxWidth(),
                         selectedOption,
                         radioOptions,
                         selectedColor,
@@ -66,6 +70,7 @@ fun CbRadioGroup(
 
 @Composable
 fun RadioChild(
+    modifier: Modifier = Modifier,
     selectedOption: Int,
     radioOptions: List<String>,
     selectedColor: Color = MaterialTheme.colorScheme.primary,
@@ -75,7 +80,7 @@ fun RadioChild(
 ) {
     radioOptions.forEach { text ->
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .selectable(
                     selected = (text == radioOptions[selectedOption]),
                     onClick = {
@@ -150,4 +155,19 @@ fun CbRadioGroupColumn(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun PreviewCbRadioGroup() {
+    CbRadioGroup(
+        0,
+        listOf(
+            ThemeType.SYSTEM.type,
+            ThemeType.DARK.type,
+            ThemeType.LIGHT.type,
+        ),
+        horizontal = false
+    ) {
+    }
 }

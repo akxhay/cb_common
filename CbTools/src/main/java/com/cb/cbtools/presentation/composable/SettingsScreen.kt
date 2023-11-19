@@ -185,7 +185,8 @@ fun PreferenceCategoryComposable(
                                 CbListItemIconImageBitmapPrimary(
                                     bitmap = IconResolver.getBitmap(
                                         icon = preference.icon!!
-                                    )
+                                    ),
+                                    iconSize = 35.dp
                                 ) {
 
                                 }
@@ -194,7 +195,8 @@ fun PreferenceCategoryComposable(
                                     imageVector = IconResolver.getImageVector(
                                         preference.icon,
                                         Icons.Filled.Settings
-                                    )
+                                    ),
+                                    iconSize = 35.dp
                                 ) {
 
                                 }
@@ -211,9 +213,9 @@ fun PreferenceCategoryComposable(
                             )
                         },
                         summaryUnit = {
-                            preference.summary?.let { it ->
+                            preference.summary?.let { summary ->
                                 CbListItemSummary(
-                                    text = it.replace(
+                                    text = summary.replace(
                                         "#APP_NAME#",
                                         dynamicConfig.getAppName()
                                     ),
