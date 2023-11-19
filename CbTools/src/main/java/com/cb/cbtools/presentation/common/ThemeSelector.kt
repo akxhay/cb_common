@@ -29,6 +29,7 @@ fun ThemePopUp(
     ),
     currentTheme: Int = 0,
     currentDynamicColor: Boolean = false,
+    dynamicColorApplicable: Boolean = false,
     updateTheme: (Int, Boolean) -> Unit,
     dismiss: () -> Unit,
 ) {
@@ -45,30 +46,31 @@ fun ThemePopUp(
         title = title,
         text = {
             Column {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
-                ) {
-                    CbListItem(
-                        titleUnit = {
-                            CbListItemTitle(
-                                text = "Use dynamic color",
-                            )
-                        },
-                        actionUnit = {
-                            CbListItemAction(
-                                actionType = ActionType.CHECKBOX,
-                                state = dynamicColor
-                            ) {
+                if (dynamicColorApplicable)
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+                    ) {
+                        CbListItem(
+                            titleUnit = {
+                                CbListItemTitle(
+                                    text = "Use dynamic color",
+                                )
+                            },
+                            actionUnit = {
+                                CbListItemAction(
+                                    actionType = ActionType.CHECKBOX,
+                                    state = dynamicColor
+                                ) {
+                                    dynamicColor = !dynamicColor
+                                }
+                            },
+                            onClick = {
                                 dynamicColor = !dynamicColor
                             }
-                        },
-                        onClick = {
-                            dynamicColor = !dynamicColor
-                        }
-                    )
-                }
+                        )
+                    }
                 Spacer(modifier = Modifier.height(2.dp))
                 ThemeSelector(
                     selectedOption = theme,
