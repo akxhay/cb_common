@@ -19,6 +19,7 @@ import com.cb.cbcommon.data.constant.AppConstants.PREF_RATE_FLAG
 import com.cb.cbcommon.presentation.CbApp
 import com.cb.cbcommon.presentation.theme.CbCommonTheme
 import com.cb.cbcommon.util.common.AppSetup
+import com.cb.cbcommon.util.common.AppSetup.getDynamicColor
 import com.cb.cbcommon.util.common.AppSetup.getSystemTheme
 import com.cb.cbtools.presentation.common.RatePopUp
 import com.cb.cbtools.presentation.common.ThemePopUp
@@ -27,20 +28,26 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private var currentTheme by mutableIntStateOf(getSystemTheme())
+    private var currentDynamicColor by mutableStateOf(getDynamicColor())
 
     private var showRatePopUp by mutableStateOf(false)
     private var systemThemePopUp by mutableStateOf(false)
 
-    private val updateTheme: (Int) -> Unit = {
-        currentTheme = it
+    private val updateTheme: (Int, Boolean) -> Unit = { th, dc ->
+        currentTheme = th
+        currentDynamicColor = dc
         AppSetup.updateSystemTheme(currentTheme)
+        AppSetup.updateDynamicColor(currentDynamicColor)
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CbCommonTheme(darkTheme = if (currentTheme == 0) isSystemInDarkTheme() else currentTheme == 1) {
+            CbCommonTheme(
+                darkTheme = if (currentTheme == 0) isSystemInDarkTheme() else currentTheme == 1,
+                dynamicColor = currentDynamicColor
+            ) {
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -63,6 +70,7 @@ class MainActivity : ComponentActivity() {
                     if (systemThemePopUp)
                         ThemePopUp(
                             currentTheme = currentTheme,
+                            currentDynamicColor = currentDynamicColor,
                             updateTheme = updateTheme
                         ) { systemThemePopUp = false }
                 }

@@ -35,6 +35,8 @@ object AppConstants {
 
     const val PREF_RATE_FLAG = "rate_dialog"
     const val SYSTEM_THEME = "SYSTEM_THEME"
+    const val DYNAMIC_COLOR = "DYNAMIC_COLOR"
+
     const val CB_SETTINGS = "CB_SETTINGS"
 
 

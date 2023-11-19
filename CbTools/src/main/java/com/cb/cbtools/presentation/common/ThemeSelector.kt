@@ -1,16 +1,21 @@
 package com.cb.cbtools.presentation.common
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.cb.cbtools.constants.ActionType
 import com.cb.cbtools.constants.enums.ThemeType
 
 @Composable
@@ -23,24 +28,54 @@ fun ThemePopUp(
         ThemeType.LIGHT.type,
     ),
     currentTheme: Int = 0,
-    updateTheme: (Int) -> Unit,
+    currentDynamicColor: Boolean = false,
+    updateTheme: (Int, Boolean) -> Unit,
     dismiss: () -> Unit,
 ) {
-    val theme: MutableState<Int> = remember { mutableIntStateOf(currentTheme) }
+    var theme by remember { mutableIntStateOf(currentTheme) }
+    var dynamicColor by remember { mutableStateOf(currentDynamicColor) }
+
     CbGenericDialog(
         onDismissClick = {
             dismiss()
         }, onConfirmClick = {
-            updateTheme(theme.value)
+            updateTheme(theme, dynamicColor)
             dismiss()
         },
         title = title,
         text = {
-            ThemeSelector(
-                selectedOption = theme.value,
-                radioOptions = radioOptions,
-            ) {
-                theme.value = it
+            Column {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
+                ) {
+                    CbListItem(
+                        titleUnit = {
+                            CbListItemTitle(
+                                text = "Use dynamic color",
+                            )
+                        },
+                        actionUnit = {
+                            CbListItemAction(
+                                actionType = ActionType.CHECKBOX,
+                                state = dynamicColor
+                            ) {
+                                dynamicColor = !dynamicColor
+                            }
+                        },
+                        onClick = {
+                            dynamicColor = !dynamicColor
+                        }
+                    )
+                }
+                Spacer(modifier = Modifier.height(2.dp))
+                ThemeSelector(
+                    selectedOption = theme,
+                    radioOptions = radioOptions,
+                ) {
+                    theme = it
+                }
             }
         },
         confirmText = confirmText,
@@ -57,8 +92,7 @@ fun ThemeSelector(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 10.dp),
+            .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
 
@@ -77,7 +111,9 @@ fun ThemeSelector(
 @Preview
 fun ThemeSelectorPreview() {
     ThemePopUp(
-        updateTheme = {}
+        updateTheme = { a, b ->
+
+        }
     ) {}
 
 
