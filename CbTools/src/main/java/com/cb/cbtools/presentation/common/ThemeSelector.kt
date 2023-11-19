@@ -1,5 +1,6 @@
 package com.cb.cbtools.presentation.common
 
+import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -113,7 +114,8 @@ fun ThemeSelector(
 @Preview
 fun ThemeSelectorPreview() {
     ThemePopUp(
-        updateTheme = { a, b ->
+        dynamicColorApplicable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
+        updateTheme = { _, _ ->
 
         }
     ) {}

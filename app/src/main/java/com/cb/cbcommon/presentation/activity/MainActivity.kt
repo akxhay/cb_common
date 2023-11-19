@@ -1,6 +1,7 @@
 
 package com.cb.cbcommon.presentation.activity
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -71,6 +72,7 @@ class MainActivity : ComponentActivity() {
                         ThemePopUp(
                             currentTheme = currentTheme,
                             currentDynamicColor = currentDynamicColor,
+                            dynamicColorApplicable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S,
                             updateTheme = updateTheme
                         ) { systemThemePopUp = false }
                 }
