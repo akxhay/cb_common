@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="SplashStyle" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_round_cropped</item>
-        <item name="windowSplashScreenBackground">#1C2427</item>
-        <item name="postSplashScreenTheme">@style/Theme.CbCommon</item>
-    </style>
-</resources>
