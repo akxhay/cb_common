@@ -1,8 +1,10 @@
 package com.cb.cbcommon.data.di
 
+import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import com.cb.cbcommon.data.constant.AppConstants.CB_SETTINGS
+import com.cb.cbcommon.util.common.NotificationWriteHelper
 import com.cb.cbtools.data.repository.ExceptionRepository
 import com.cb.cbtools.dynamic.DynamicConfig
 import com.cb.cbtools.service.ExceptionHelper
@@ -32,4 +34,14 @@ class CBModule {
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
         context.getSharedPreferences(CB_SETTINGS, Context.MODE_PRIVATE)
+
+    @Provides
+    fun provideNotificationManager(@ApplicationContext context: Context): NotificationManager =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    @Provides
+    fun providesNotificationWriteHelper(
+        @ApplicationContext context: Context,
+        notificationManager: NotificationManager
+    ): NotificationWriteHelper =
+        NotificationWriteHelper(context, notificationManager)
 }

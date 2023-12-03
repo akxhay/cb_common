@@ -1,6 +1,7 @@
 package com.cb.cbtools.notifications
 
 import android.content.Intent
+import android.graphics.Bitmap
 
 interface SendNotification {
     fun showNotification(
@@ -10,7 +11,8 @@ interface SendNotification {
         flag: Int = Intent.FLAG_ACTIVITY_NEW_TASK,
         notificationId: Int = GENERAL_NOTIFICATION_ID,
         notificationChannelId: String,
-        smallIcon: Int
+        smallIcon: Int,
+        largeIcon: Bitmap? = null
     )
 
     companion object {

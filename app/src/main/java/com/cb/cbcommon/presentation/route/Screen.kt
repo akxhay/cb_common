@@ -31,4 +31,8 @@ sealed class Screen(val route: String) {
     data object TabScreen : Screen(
         "tab_screen"
     )
+
+    data object TestChatBinScreen : Screen(
+        "test_chat_bin_screen"
+    )
 }

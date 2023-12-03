@@ -155,6 +155,16 @@ fun HomeScreenContent(padding: PaddingValues, navController: NavController) {
                     navController.navigate(Screen.TabScreen.route)
                 }
             )
+            CbListItem(
+                iconUnit = {
+                    CbListItemIconImageVectorPrimary(imageVector = Icons.Default.ChatBubble) {
+                    }
+                },
+                titleUnit = { CbListItemTitle(text = "Test chat bin") },
+                onClick = {
+                    navController.navigate(Screen.TestChatBinScreen.route)
+                }
+            )
         }
 
     }

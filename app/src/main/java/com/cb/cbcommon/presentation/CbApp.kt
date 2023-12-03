@@ -15,6 +15,7 @@ import com.cb.cbcommon.presentation.page.HomeScreen
 import com.cb.cbcommon.presentation.page.InputScreen
 import com.cb.cbcommon.presentation.page.ListItemsScreen
 import com.cb.cbcommon.presentation.page.TabScreen
+import com.cb.cbcommon.presentation.page.TestChatBinScreen
 import com.cb.cbcommon.presentation.route.Screen
 import com.cb.cbtools.presentation.composable.ExceptionScreen
 import com.cb.cbtools.presentation.composable.SettingsScreen
@@ -76,6 +77,12 @@ fun CbApp(
             route = Screen.TabScreen.route
         ) {
             OpenTabScreen(navController)
+        }
+
+        composable(
+            route = Screen.TestChatBinScreen.route
+        ) {
+            OpenTestChatBinScreen(navController)
         }
     }
 
@@ -149,5 +156,9 @@ fun OpenTabScreen(navController: NavHostController) {
     TabScreen(navController = navController)
 }
 
+@Composable
+fun OpenTestChatBinScreen(navController: NavHostController) {
+    TestChatBinScreen(navController = navController)
+}
 
 

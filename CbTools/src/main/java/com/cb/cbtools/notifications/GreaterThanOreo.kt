@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -20,7 +21,8 @@ class GreaterThanOreo(
         flag: Int,
         notificationId: Int,
         notificationChannelId: String,
-        smallIcon: Int
+        smallIcon: Int,
+        largeIcon: Bitmap?
     ) {
         notificationManager.notify(
             notificationId,
@@ -36,6 +38,7 @@ class GreaterThanOreo(
                 .setContentTitle(title)
                 .setContentText(text)
                 .setSmallIcon(smallIcon)
+                .setLargeIcon(largeIcon)
                 .setChannelId(notificationChannelId)
                 .setContentTitle(title)
                 .setContentText(text).build()
