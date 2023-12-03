@@ -22,7 +22,8 @@ class LessThanOreo(
         notificationId: Int,
         notificationChannelId: String,
         smallIcon: Int,
-        largeIcon: Bitmap?
+        largeIcon: Bitmap?,
+        replyAction: NotificationCompat.Action?
     ) {
         val pIntent = PendingIntent.getActivity(context, notificationId, intent, 0)
         val mBuilder = NotificationCompat.Builder(context, notificationChannelId)
@@ -33,6 +34,7 @@ class LessThanOreo(
         mBuilder.setContentTitle(title)
         mBuilder.setContentText(text)
         mBuilder.setAutoCancel(true)
+        mBuilder.addAction(replyAction)
         notificationManager.notify(notificationId, mBuilder.build())
     }
 }

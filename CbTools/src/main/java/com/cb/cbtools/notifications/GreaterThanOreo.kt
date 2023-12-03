@@ -22,7 +22,8 @@ class GreaterThanOreo(
         notificationId: Int,
         notificationChannelId: String,
         smallIcon: Int,
-        largeIcon: Bitmap?
+        largeIcon: Bitmap?,
+        replyAction: NotificationCompat.Action?
     ) {
         notificationManager.notify(
             notificationId,
@@ -39,10 +40,10 @@ class GreaterThanOreo(
                 .setContentText(text)
                 .setSmallIcon(smallIcon)
                 .setLargeIcon(largeIcon)
+                .addAction(replyAction)
                 .setChannelId(notificationChannelId)
                 .setContentTitle(title)
                 .setContentText(text).build()
         )
     }
-
 }

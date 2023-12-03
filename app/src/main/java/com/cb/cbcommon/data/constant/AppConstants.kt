@@ -39,5 +39,10 @@ object AppConstants {
 
     const val CB_SETTINGS = "CB_SETTINGS"
 
+    const val REPLY_ACTION="REPLY_ACTION"
+
+    const val KEY_REPLY="KEY_REPLY"
+
+
 
 }

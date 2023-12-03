@@ -5,6 +5,7 @@ package com.cb.cbcommon.presentation.page
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,13 +28,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.cb.cbcommon.BaseApplication
 import com.cb.cbcommon.R
+import com.cb.cbcommon.data.dto.Person
 import com.cb.cbtools.presentation.common.CbAppBar
 import com.cb.cbtools.presentation.common.CbListItem
 import com.cb.cbtools.presentation.common.CbListItemActionCustom
@@ -68,6 +70,30 @@ val dp = listOf(
     R.drawable.pic8,
     R.drawable.pic9,
     R.drawable.pic10,
+)
+val firstNames = listOf(
+    "Akshay",
+    "Pankaj",
+    "John",
+    "Jane",
+    "Alice",
+    "Bob",
+    "Charlie",
+    "David",
+    "Emily",
+    "Frank"
+)
+val lastNames = listOf(
+    "Smith",
+    "Johnson",
+    "Williams",
+    "Jones",
+    "Brown",
+    "Davis",
+    "Miller",
+    "Wilson",
+    "Moore",
+    "Taylor"
 )
 
 @ExperimentalAnimationApi
@@ -109,12 +135,9 @@ fun TestChatBinScreen(
 @Composable
 fun TestChatBin() {
     val person = remember {
-        mutableStateOf(0)
+        mutableStateOf(generateRandomPerson())
     }
 
-    val message = remember {
-        mutableStateOf(generateRandomSentence())
-    }
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -122,7 +145,7 @@ fun TestChatBin() {
         CbListItem(
             iconUnit = {
                 CbListItemIconDrawablePrimary(
-                    drawable = BaseApplication.getInstance().getDrawable(dp[person.value])
+                    drawable = BaseApplication.getInstance().getDrawable(person.value.dpDrawable)
                 ) {
 
                 }
@@ -132,60 +155,61 @@ fun TestChatBin() {
                     CbListItemIconImageVectorSecondary(
                         imageVector = Icons.Default.Refresh,
                     ) {
-                        message.value = generateRandomSentence()
+                        person.value = generateRandomPerson()
                     }
                 }
             },
-            titleUnit = { CbListItemTitle(text = names[person.value]) },
-            summaryUnit = { CbListItemSummary(text = message.value) },
+            titleUnit = { CbListItemTitle(text = person.value.name) },
+            summaryUnit = { CbListItemSummary(text = person.value.message) },
 
             )
 
-        TwoButtonRow("Next", "Send", {
-            if (person.value == 9) {
-                person.value = 0
-            } else {
-                person.value += 1;
-            }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            StyledButton("DP") {
+                person.value = Person(person.value.name, dp.random(), person.value.message)
 
-        },
-            {
+            }
+            Spacer(modifier = Modifier.width(5.dp))
+            StyledButton("Name") {
+                person.value =
+                    Person(generateRandomName(), person.value.dpDrawable, person.value.message)
+            }
+            Spacer(modifier = Modifier.width(5.dp))
+            StyledButton("Message") {
+                person.value =
+                    Person(person.value.name, person.value.dpDrawable, generateRandomSentence())
+
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Box(modifier = Modifier.align(alignment = Alignment.CenterHorizontally)) {
+            StyledButton(
+                "Send"
+            ) {
                 BaseApplication.getInstance().notificationWriteHelper.showNotification(
-                    title = names[person.value],
-                    text = message.value,
+                    title = person.value.name,
+                    text = person.value.message,
                     largeIcon = IconUtil.drawableToBitmap(
-                        BaseApplication.getInstance().getDrawable(dp[person.value])
+                        BaseApplication.getInstance().getDrawable(person.value.dpDrawable)
                     )
                 )
-            })
+            }
+        }
     }
 }
 
-@Composable
-fun TwoButtonRow(
-    buttonText1: String = "Button 1",
-    buttonText2: String = "Button 2",
-    onButtonClick1: () -> Unit,
-    onButtonClick2: () -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        StyledButton(buttonText1, onButtonClick1)
-        Spacer(modifier = Modifier.width(16.dp))
-        StyledButton(buttonText2, onButtonClick2)
-    }
-}
 
 @Composable
 fun StyledButton(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier
-            .width(150.dp)
+            .width(120.dp)
             .height(50.dp)
             .clip(CircleShape)
             .padding(2.dp)
@@ -194,10 +218,14 @@ fun StyledButton(text: String, onClick: () -> Unit) {
     }
 }
 
-@Composable
-@Preview
-fun Prev() {
-    TwoButtonRow("generate", "send", {}, { })
+fun generateRandomPerson(): Person {
+    return Person(generateRandomName(), dp.random(), generateRandomSentence())
+}
+
+fun generateRandomName(): String {
+    val firstName = firstNames.random()
+    val lastName = lastNames.random()
+    return "$firstName $lastName"
 }
 
 fun generateRandomSentence(): String {

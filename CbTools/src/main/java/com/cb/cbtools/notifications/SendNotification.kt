@@ -2,6 +2,7 @@ package com.cb.cbtools.notifications
 
 import android.content.Intent
 import android.graphics.Bitmap
+import androidx.core.app.NotificationCompat
 
 interface SendNotification {
     fun showNotification(
@@ -12,7 +13,9 @@ interface SendNotification {
         notificationId: Int = GENERAL_NOTIFICATION_ID,
         notificationChannelId: String,
         smallIcon: Int,
-        largeIcon: Bitmap? = null
+        largeIcon: Bitmap? = null,
+        replyAction: NotificationCompat.Action? = null
+
     )
 
     companion object {
@@ -20,4 +23,5 @@ interface SendNotification {
         const val GENERAL_NOTIFICATION_ID = 1420
 
     }
+
 }
