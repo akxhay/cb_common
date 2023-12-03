@@ -52,6 +52,9 @@ android {
 
 dependencies {
     implementation project(path: ':CbTools')
+
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+
     implementation "androidx.compose.runtime:runtime-livedata:1.5.4"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
     implementation "androidx.compose.runtime:runtime:1.5.4"
