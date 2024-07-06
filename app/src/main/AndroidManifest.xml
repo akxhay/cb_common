@@ -78,7 +78,7 @@
         <receiver
             android:name=".receiver.CBBroadcastReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

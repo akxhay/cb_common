@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import androidx.core.app.NotificationCompat
 
 interface SendNotification {
-    fun showNotification(
+    fun showNotification(   
         title: String,
         text: String,
         intent: Intent,

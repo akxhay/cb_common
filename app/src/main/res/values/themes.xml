@@ -2,7 +2,7 @@
 <resources>
     <style name="Theme.CbCommon" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="SplashStyle" parent="Theme.SplashScreen">
+    <style name="SplashStyle" parent="Theme.CbCommon">
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_round_cropped</item>
         <item name="windowSplashScreenBackground">#1C2427</item>
         <item name="postSplashScreenTheme">@style/Theme.CbCommon</item>

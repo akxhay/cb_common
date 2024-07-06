@@ -4,10 +4,21 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +30,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,80 +44,76 @@ fun CbAppBar(
     appbarBackgroundColor: Color = MaterialTheme.colorScheme.primary,
     appbarTitleColor: Color = MaterialTheme.colorScheme.onPrimary,
     appBarMenuIconColor: Color = MaterialTheme.colorScheme.onPrimary,
-
-    ) {
+) {
     TopAppBar(
         title = {
             Row(
                 modifier = Modifier
                     .background(appbarBackgroundColor)
-            )
-            {
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 if (byteArray != null || icon != null || drawable != null) {
                     Box(
                         modifier = Modifier.padding(end = 5.dp),
                         contentAlignment = Alignment.Center
                     ) {
-                        if (byteArray != null) {
-                            val bitmap = BitmapFactory.decodeByteArray(
-                                byteArray,
-                                0,
-                                byteArray.size
-                            ).asImageBitmap()
-                            Image(
-                                modifier = Modifier.size(primaryIconSize),
-                                painter = BitmapPainter(image = bitmap),
-                                contentDescription = "dp",
-                                contentScale = ContentScale.Crop,
-                            )
+                        when {
+                            byteArray != null -> {
+                                val bitmap = BitmapFactory.decodeByteArray(
+                                    byteArray,
+                                    0,
+                                    byteArray.size
+                                ).asImageBitmap()
+                                Image(
+                                    modifier = Modifier.size(primaryIconSize),
+                                    painter = BitmapPainter(image = bitmap),
+                                    contentDescription = "Icon Image",
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
 
-                        } else if (icon != null) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(primaryIconSize)
-                                    .padding(bottom = 3.dp, end = 3.dp),
-                                imageVector = icon,
-                                contentDescription = "icon",
-                                tint = appBarMenuIconColor
-                            )
-                        } else {
-                            Image(
-                                modifier = Modifier
-                                    .size(primaryIconSize)
-                                    .padding(bottom = 3.dp, end = 3.dp),
-                                painter = rememberDrawablePainter(
-                                    drawable = drawable
-                                ),
-                                contentDescription = "icon",
-                            )
+                            icon != null -> {
+                                Icon(
+                                    modifier = Modifier.size(primaryIconSize),
+                                    imageVector = icon,
+                                    contentDescription = "Icon",
+                                    tint = appBarMenuIconColor
+                                )
+                            }
 
+                            drawable != null -> {
+                                Image(
+                                    modifier = Modifier.size(primaryIconSize),
+                                    painter = rememberDrawablePainter(drawable = drawable),
+                                    contentDescription = "Icon"
+                                )
+                            }
                         }
                     }
                 }
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        title,
-                        color = appbarTitleColor,
-                        modifier = Modifier.padding(start = 8.dp, top = 3.dp),
-                        maxLines = 1,
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
-                }
+                Text(
+                    text = title,
+                    color = appbarTitleColor,
+                    modifier = Modifier.padding(start = 8.dp),
+                    maxLines = 1,
+                    style = MaterialTheme.typography.headlineSmall
+                )
             }
         },
         navigationIcon = {
-            backAction?.let { it ->
-                IconButton(onClick = { it() }) {
+            backAction?.let {
+                IconButton(onClick = it) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBackIosNew,
-                        contentDescription = "ArrowBack",
+                        contentDescription = "Back",
                         tint = appBarMenuIconColor
                     )
                 }
             }
         },
-        colors =
-        TopAppBarDefaults.topAppBarColors(containerColor = appbarBackgroundColor),
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = appbarBackgroundColor),
         actions = actions
     )
 }
+

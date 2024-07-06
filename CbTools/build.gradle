@@ -27,7 +27,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.5.5'
+        kotlinCompilerExtensionVersion '1.5.12'
     }
     buildTypes {
         release {
@@ -45,57 +45,57 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.9.21'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.1.0'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:2.0.0'
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
-    implementation "androidx.compose.runtime:runtime-livedata:1.5.4"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.3'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.6.8'
 
-    implementation "androidx.hilt:hilt-navigation-compose:1.1.0"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
 
-    implementation('androidx.room:room-runtime:2.6.1')
-    implementation('androidx.room:room-ktx:2.6.1')
-    implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3')
+    implementation 'androidx.room:room-runtime:2.6.1'
+    implementation 'androidx.room:room-ktx:2.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
     implementation 'androidx.sqlite:sqlite-ktx:2.4.0'
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.compose.ui:ui-text-google-fonts:1.5.4'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.compose.ui:ui-text-google-fonts:1.6.8'
 
-    ksp('androidx.room:room-compiler:2.6.1')
+    ksp 'androidx.room:room-compiler:2.6.1'
 
-    annotationProcessor('androidx.room:room-compiler:2.6.1')
-    implementation('com.google.dagger:hilt-android:2.48.1')
-    ksp('com.google.dagger:hilt-android-compiler:2.48.1')
+    annotationProcessor 'androidx.room:room-compiler:2.6.1'
+    implementation 'com.google.dagger:hilt-android:2.51.1'
+    ksp 'com.google.dagger:hilt-android-compiler:2.51.1'
 
-    implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
+    implementation 'androidx.hilt:hilt-navigation-fragment:1.2.0'
 
     //Moshi
-    implementation 'com.squareup.moshi:moshi:1.15.0'
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
+    implementation 'com.squareup.moshi:moshi:1.15.1'
+    ksp 'com.squareup.moshi:moshi-kotlin-codegen:1.15.1'
 
-    implementation("com.google.accompanist:accompanist-drawablepainter:0.32.0")
-    implementation('com.google.accompanist:accompanist-navigation-animation:0.32.0')
+    implementation 'com.google.accompanist:accompanist-drawablepainter:0.34.0'
+    implementation 'com.google.accompanist:accompanist-navigation-animation:0.34.0'
     
-    implementation 'androidx.compose.material3:material3:1.2.0-alpha12'
-    implementation "androidx.compose.material:material-icons-extended:1.5.4"
-    implementation "com.google.code.gson:gson:2.10.1"
+    implementation 'androidx.compose.material3:material3:1.2.1'
+    implementation 'androidx.compose.material:material-icons-extended:1.6.8'
+    implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'com.caverock:androidsvg-aar:1.4'
-    implementation('com.googlecode.libphonenumber:libphonenumber:8.13.26')
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.40'
 
-    implementation ("androidx.compose.ui:ui-tooling:1.5.4")
-    implementation "androidx.compose.ui:ui-tooling-preview:1.5.4"
-    implementation 'androidx.compose.material:material:1.5.4'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.accompanist:accompanist-permissions:0.32.0'
+    implementation 'androidx.compose.ui:ui-tooling:1.6.8'
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.6.8'
+    implementation 'androidx.compose.material:material:1.6.8'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.accompanist:accompanist-permissions:0.34.0'
 
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
-    implementation 'androidx.activity:activity-compose:1.8.1'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.3'
+    implementation 'androidx.activity:activity-compose:1.9.0'
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
-    implementation 'androidx.core:core-ktx:1.12.0'
-    implementation 'com.google.android.material:material:1.10.0'
-    implementation 'androidx.navigation:navigation-runtime-ktx:2.7.5'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.7.7'
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
